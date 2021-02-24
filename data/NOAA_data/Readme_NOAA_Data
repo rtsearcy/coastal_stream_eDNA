@@ -1,0 +1,12 @@
+Readme
+------
+
+This document provides information about the  data files provided by NOAA  
+
+
+I. File List
+------------
+
+ScottCreek_TrapSummary_WY2019.xlsx			Contains weir and smolt trap daily capture data for water year 2019. The adult trap operated (occasionally intermittently due to storm events) from Jan 5 through May 31, 2019, whereas the downstream migrant (smolt) trap operated primarily from April 16 through May 31.
+ScottCreek_WY2019_GageData_191206.xlsx 		Contains temperature and stage data collected by Cal Poly. We identified some QA/QC issues with the stage data that we were not able to resolve satisfactorily.  More comprehensive water quality information (e.g., pH, Conductance, turbidity, DO) is available from the NOAA sonde located in the estuary - about 700 m below the weir. 
+Coho_Release.png							Png figure shows table summarizing releases of juvenile coho salmon to the Scott Creek watershed during 2019. 
