@@ -60,7 +60,7 @@ def do_regression(data):
 def get_lod_loq(df, t, method):
     if method == 'klymus':
         print('Using Klymus et al. 2020 for LOD/LOQ Calculation')
-        dfk = pd.read_csv('/Users/rtsearcy/Box/mbari_eDNA/data/eDNA/LOD_LOQ_R_script/Assay summary.csv')
+        dfk = pd.read_csv('../data/eDNA/LOD_LOQ_R_script/Assay summary.csv')
         lod = float(dfk[dfk['Assay']==t]['LOD'])
         loq = float(dfk[dfk['Assay']==t]['LOQ'])
         
@@ -131,6 +131,10 @@ for t in ['coho','trout']:
     print('N (plates) - ' + str(len(files)))
     for f in files:  # Iterate individual standard runs
         data = df[(df.target == t) & (df.source_file==f)]
+        
+        if (data.Ct == 'Undetermined').sum() == len(data): # Check if all Undet.
+            print('  skipping ' + f)
+            continue
         
         ### Regression on individual standards
         reg = do_regression(data)

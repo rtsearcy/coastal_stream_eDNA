@@ -22,7 +22,7 @@ import seaborn as sns
 import statsmodels.api as sm
 import os
 
-folder = '/Users/rtsearcy/Box/mbari_eDNA/data/'  # Data folder
+folder = '../data/'  # Data folder
 
 ### Load Combined ESP logs
 # Contains sampling times, volumes, ESP name
@@ -259,9 +259,9 @@ plt.legend(['coho','trout'], frameon=False, loc='lower right')
 #%% eDNA Time Series
 
 ### Trout/Coho TS 1:5 Dilutions
-A = trout1
+A = trout5
 A = A.sort_values('dt')
-B = coho1
+B = coho5
 B = B.sort_values('dt')
 
 A = A[A.BLOQ == 0]  # Remove samples BLOQ

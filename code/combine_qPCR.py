@@ -18,7 +18,7 @@ import numpy as np
 import os
 
 folder = '../data/eDNA/'  # Location of qPCR files folder and output location
-subfolder = 'qpcr_csv_results_020921'                 # location of up to date qPCR spreadsheets (from Google Drive)
+subfolder = 'qpcr_csv_results_022621'                 # location of up to date qPCR spreadsheets (from Google Drive)
 
 ### Aggregate individual qPCR result files
 df = pd.DataFrame()
@@ -78,7 +78,8 @@ for i in df.id.unique():               # iterate through samples with sample IDs
             if len(idx)>0:
                 df.loc[idx.index,'replicate'] = np.arange(1,len(idx)+1)
 
-rgt3 = len(df.loc[df.replicate > 3,'id'].unique())  # Check more than 3 replicates
+# Check more than 3 replicates
+rgt3 = len(df.loc[df.replicate > 3,'id'].unique())  
 print('# samples w > 3 replicates: ' + str(rgt3))
 
 ### Check NTC

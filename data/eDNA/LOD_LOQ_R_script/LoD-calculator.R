@@ -14,7 +14,7 @@ library(ggplot2)
 library(drc)
 
 ## Set your working directory to where your csv file is saved (MODIFY AS NEEDED):
-setwd("/Users/rtsearcy/Box/mbari_eDNA/data/eDNA/LOD_LOQ_R_script")
+setwd("/Users/rtsearcy/Box/MBARI_eDNA/coastal_stream_eDNA/data/eDNA/LOD_LOQ_R_script")
 
 ## Read in your data file (MODIFY FILE NAME AS NEEDED):
 DAT <- read.csv("standard_data_R.csv")
