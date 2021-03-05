@@ -1,4 +1,4 @@
-Analysis started: Fri Feb 26 09:20:35 2021
+Analysis started: Thu Mar  4 14:51:37 2021
 
 
 WARNING: 3 data points excluded without a valid starting quantity (SQ)!
