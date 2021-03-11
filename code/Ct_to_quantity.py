@@ -114,7 +114,8 @@ for t in df.target.unique():
     print('  BLOQ: ' + str(df.loc[(df.target==t),'BLOQ'].sum()))
 
 ### Factor Dilutions
-df.loc[df.dilution == '1:5','conc'] *= 5
+# df.loc[df.dilution == '1:5','conc'] *= 5
+df.loc[(df.dilution == '1:5') & (df.BLOD == 0 ),'conc'] *= 5  # convert conc > LOD
 df['log10conc'] = np.log10(df.conc)
 
 ### Save and Plot All Replicate Concentrations
@@ -294,20 +295,29 @@ plt.tight_layout()
 plt.savefig(os.path.join(folder,'delta_Ct.png'),dpi=500)
 
 
-### Save ΔCt
+### Use ΔCt to Indicate Inhibition
 df_delta['dilution'] = '1:1'
 df_delta = df_delta.reset_index().set_index(['id','target','dilution']).sort_index()
 df_delta = pd.merge(Ct,df_delta,how='left',left_index=True,right_index=True)
-df_delta[['Ct_Mean','delta_Ct']].to_csv(os.path.join(folder,'delta_Ct.csv'))
+df_delta = df_delta.reset_index().set_index(['id','target'])
 
+df_mean['delta_Ct'] = np.nan
+df_mean['inhibition'] = np.nan
+for i in df_delta.index.unique():  
+    dct = df_delta.loc[i,'delta_Ct'].max()
+    df_delta.loc[i,'delta_Ct'] = dct   # Save delta_Ct to both dilutions
+    
+    df_mean.loc[(df_mean.id == i[0]) & (df_mean.target == i[1]),'delta_Ct'] = dct
+    if dct > inh_thresh:
+        df_mean.loc[(df_mean.id == i[0]) & (df_mean.target == i[1]),'inhibition'] = 1  # inhibited
+    elif dct < over_dil_thresh:
+        df_mean.loc[(df_mean.id == i[0]) & (df_mean.target == i[1]),'inhibition'] = -1 # overdiluted
+    elif (dct >= -2.8) & (dct <= -1.8):
+        df_mean.loc[(df_mean.id == i[0]) & (df_mean.target == i[1]),'inhibition'] = 0  # in range
+    
+df_delta[['Ct_Mean','delta_Ct']].to_csv(os.path.join(folder,'delta_Ct.csv'))  # separate dataframe with delta_Ct
 
 ### Save reaction concentration means
-df_mean['delta_Ct'] = np.nan
-for i in df_delta.index:
-    df_mean.loc[(df_mean.id == i[0]) & 
-                (df_mean.target == i[1]) & 
-                (df_mean.dilution == i[2]),'delta_Ct'] = df_delta.loc[i,'delta_Ct']
-
 df_mean = df_mean[[
          'id', 
          'target', 
@@ -324,7 +334,9 @@ df_mean = df_mean[[
          'Ct_Mean',
          'Ct_sd',
          'delta_Ct',
+         'inhibition',
          'dilution', 
          'source_file']]
+df_mean = df_mean.sort_values(['id','target','dilution'])
 df_mean.to_csv(os.path.join(folder,'qPCR_calculated_mean.csv'),index=False)  # Save
 print('\nMean concentrations saved')

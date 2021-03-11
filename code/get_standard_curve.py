@@ -63,6 +63,8 @@ def get_lod_loq(df, t, method):
         dfk = pd.read_csv('../data/eDNA/LOD_LOQ_R_script/Assay summary.csv')
         lod = float(dfk[dfk['Assay']==t]['LOD'])
         loq = float(dfk[dfk['Assay']==t]['LOQ'])
+        if loq == np.inf:  # No LOQ found through modeling
+            loq = lod
         
     else:
         df_lod = df.loc[df.target==t,['detect','Ct','logQ']].dropna()

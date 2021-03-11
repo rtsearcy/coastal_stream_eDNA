@@ -23,6 +23,7 @@ from matplotlib.lines import Line2D
 import seaborn as sns
 import os
 import datetime
+from eDNA_corr import eDNA_corr
 
 def print_df(df, date_range):
     print('  N obs.: ' + str(len(df)))
@@ -54,7 +55,7 @@ def fill_plot(df, plot_range, y, c):
             plt.fill_between(x=[s,e], y1=y, y2=y+0.9, facecolor=c, edgecolor=None, alpha=0.3)   
         
 
-#%% Plot parameters
+### Plot parameters
 params = {
    'axes.labelsize': 11,
    'font.size': 11,
@@ -73,14 +74,14 @@ pal = sns.color_palette(pal)
 pal4c = ['#253494','#2c7fb8','#41b6c4','#a1dab4'] # grey, black
 pal4c = sns.color_palette(pal4c)
 
-#%% Inputs
 
+### Inputs
 folder = '../data/'  # Data base folder
 
 today = str(datetime.datetime.today())[0:10]
 print('- - - DATA INVENTORY (AS OF ' + today + ') - - -')
 
-### Project Start/End
+## Project Start/End
 ps = '2019-03-25' # Project start
 pe = '2020-04-16' # end
 date_range = pd.date_range(ps,pe)
@@ -88,7 +89,9 @@ plot_range = pd.date_range('2019-01-01','2020-07-01')
 print('\nProject Dates: ' + ps + ' to ' + pe + \
       ' (' + str(len(date_range)) + ' d)')
 
-#%% Combined ESP logs
+#%% Load Data
+
+### Combined ESP logs
 # Contains sampling times, volumes, ESP name
 ESP = pd.read_csv(os.path.join(folder,'ESP_logs','ESP_logs_combined.csv'), 
                  parse_dates = ['sample_wake','sample_start','sample_mid','sample_end'])  # can also use sample_start, but probably little diff.
@@ -103,11 +106,12 @@ ESP.set_index('sample_wake',inplace=True)
 print('\nESP\n  Freq: 1-3x daily')
 print_df(ESP, date_range)
 
-#%% eDNA Data
+
+### eDNA Data
 # Contains target, replicate #,dilution level, concentration (post-dilution factor)
-eDNA = pd.read_csv(os.path.join(folder,'eDNA','qPCR_calculated.csv'))
-eDNA['eDNA'] = eDNA.conc
-eDNA.drop('conc', axis=1, inplace=True)
+eDNA = pd.read_csv(os.path.join(folder,'eDNA','eDNA.csv'), parse_dates=['dt','date'])
+#eDNA['eDNA'] = eDNA.conc
+#eDNA.drop('conc', axis=1, inplace=True)
 
 print('\neDNA Samples\n')
 print('   Unique Sample IDs: ' + str(len(eDNA.id.unique())))
@@ -115,7 +119,8 @@ eDNA_miss = [i for i in ESP.id.unique() if i not in eDNA.id.unique()]  # List of
 ESP_miss =  [i for i in eDNA.id.unique() if i not in ESP.id.unique()]  # IDs in qPCR data not in ESP data
 print('   Missing Sample IDs: ' + str(len(eDNA_miss)))
 
-#%% NOAA Data
+
+### NOAA Data
 # Contains daily fish count, NOAA stream gage, hatchery data
 print('\n\nNOAA Data')
 
@@ -140,7 +145,7 @@ print('\nStream Gage\n  Freq: 1 / 15 min')
 print_df(gage, date_range)
 
 
-#%% Load Met Data
+### Load Met Data
 # Daily AND Hourly:  Air/dew temp, wind speed, solar rad, precip
 print('\n\nMeteorological')
 daily_file = 'Pescadero_CIMIS_day_met_20190101_20200501.csv'
@@ -158,7 +163,8 @@ met_h = met_h.dropna(how='all')
 print('\nHourly')
 print_df(met_h, date_range)
 
-#%% Load Sonde Data
+
+### Load Sonde Data
 # Water temp and other WQ parameters
 sonde = pd.read_csv(os.path.join(folder,'sonde','YSI_6000_20191218_Scott_Creek.csv'))
 sonde = sonde.iloc[1:]
@@ -169,7 +175,8 @@ sonde = sonde.astype(float)  # Skip units header
 print('\n\nYSI Sonde\n  Freq: 1 / 15 min')
 print_df(sonde, date_range)
 
-#%% Plot
+
+#%% Data Inventory Plot
 plt.figure(figsize=(12,6))
 # 3 subplots: EPS/eDNA data, Fish data, Enviro data
 
@@ -234,3 +241,16 @@ left=0.044,
 right=0.954,
 hspace=0.2,
 wspace=0.2)
+
+
+#%% Stats
+
+trout = eDNA[eDNA.target=='trout'].set_index('id').sort_values('dt')
+coho = eDNA[eDNA.target=='coho'].set_index('id').sort_values('dt')
+
+### Correlation between eDNA and other vars
+eDNA_corr(trout, met_d, x_col='log10eDNA', y_col='temp_avg', on='date',corr_type='spearman')
+eDNA_corr(coho, met_d, x_col='log10eDNA', y_col='temp_avg', on='date',corr_type='spearman')
+
+eDNA_corr(trout, met_d, x_col='log10eDNA', y_col='rain_total', on='date',corr_type='spearman')
+eDNA_corr(coho, met_d, x_col='log10eDNA', y_col='rain_total', on='date',corr_type='spearman')
