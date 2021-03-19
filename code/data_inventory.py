@@ -94,7 +94,7 @@ print('\nProject Dates: ' + ps + ' to ' + pe + \
 ### Combined ESP logs
 # Contains sampling times, volumes, ESP name
 ESP = pd.read_csv(os.path.join(folder,'ESP_logs','ESP_logs_combined.csv'), 
-                 parse_dates = ['sample_wake','sample_start','sample_mid','sample_end'])  # can also use sample_start, but probably little diff.
+                 parse_dates = ['sample_wake','sample_start','sample_mid','sample_end','date'])  # can also use sample_start, but probably little diff.
 
 ESP.dropna(inplace=True, subset=['sample_wake', 'sample_start', 'sample_end', 'sample_duration',
         'vol_target', 'vol_actual', 'vol_diff',])  # Drop samples with not time or volume data 
@@ -132,11 +132,13 @@ print_df(trap, date_range)
 
 # Hatchery Data - Adult/Juvenile Steelhead and Coho counts
 hatch = pd.read_csv(os.path.join(folder,'NOAA_data', 'Coho_Releases_NOAA_Mar_Dec2019.csv'), 
-                 parse_dates = ['date'], index_col=['date'])
+                 parse_dates = ['date'], index_col=['date']).dropna()
 
 print('\nHatchery Releases \n   Freq: Occasional')
 print('   Releases: ' + str(len(hatch)))
+print('   Sites: ' + str(hatch.site.unique()))
 print('   Days: ' + str(len(hatch.index.unique())))
+print(hatch.groupby(hatch.index).sum())
 
 # Gage Data - Water temp, creek stage
 gage = pd.read_csv(os.path.join(folder,'NOAA_data', 'ScottCreek_WY2019_GageData_101618_093019.csv'), 
@@ -244,13 +246,13 @@ wspace=0.2)
 
 
 #%% Stats
-
 trout = eDNA[eDNA.target=='trout'].set_index('id').sort_values('dt')
 coho = eDNA[eDNA.target=='coho'].set_index('id').sort_values('dt')
 
 ### Correlation between eDNA and other vars
-eDNA_corr(trout, met_d, x_col='log10eDNA', y_col='temp_avg', on='date',corr_type='spearman')
-eDNA_corr(coho, met_d, x_col='log10eDNA', y_col='temp_avg', on='date',corr_type='spearman')
-
-eDNA_corr(trout, met_d, x_col='log10eDNA', y_col='rain_total', on='date',corr_type='spearman')
-eDNA_corr(coho, met_d, x_col='log10eDNA', y_col='rain_total', on='date',corr_type='spearman')
+print('\nTROUT')
+print(eDNA_corr(trout, met_d, x_col='log10eDNA', y_col='temp_avg', on='date',corr_type='spearman'))
+print(eDNA_corr(trout, met_d, x_col='log10eDNA', y_col='rain_total', on='date',corr_type='spearman'))
+print('\nCOHO')
+print(eDNA_corr(coho, met_d, x_col='log10eDNA', y_col='temp_avg', on='date',corr_type='spearman'))
+print(eDNA_corr(coho, met_d, x_col='log10eDNA', y_col='rain_total', on='date',corr_type='spearman'))

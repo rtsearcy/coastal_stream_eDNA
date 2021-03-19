@@ -207,7 +207,7 @@ for t in ['coho','trout']:
     c += 1
     
 plt.tight_layout()
-plt.savefig(os.path.join(folder,'standard_curves_combined.png'),dpi=300)
+plt.savefig(os.path.join('../figures/','standard_curves_combined.png'),dpi=300)
 
 ### Save
 df_stand.to_csv(os.path.join(folder,'standard_fits.csv'),index=False)# Save standard fits

@@ -11,7 +11,6 @@ Reads individual ESP sampling logs and aggregates data into a single spreadsheet
 import pandas as pd
 import os
 
-
 folder = '../data/ESP_logs'  # Location of ESP logs
 
 ### Aggregate logs into one df
@@ -33,10 +32,12 @@ for f in os.listdir(folder):
 print('\nRows in Combined: ' + str(len(df)))
 df.reset_index(inplace=True, drop = True)  # Reset index
 
+
 ### Drop columns we aren't using 
 df.drop([w for w in df.columns if 'WCR' in w], axis=1, inplace=True)  # Drop WCR columns (no data)
 df.drop([j for j in df.columns if 'Julian' in j], axis=1, inplace=True)  # Drop Julian columns (not precise)
 df.drop(['Protocol','Extract_No','Extract_Abbr'], axis = 1, inplace = True)
+
 
 ### Rename columns
 df.rename(columns = {'Start Date':'sample_wake',   # dt for Datetime
@@ -50,11 +51,13 @@ df.rename(columns = {'Start Date':'sample_wake',   # dt for Datetime
                      'Extract_ID':'id'
                      }, inplace=True)
 
+
 ### Convert times, account for time zone
 for c in ['sample_wake','sample_start','sample_end']:  # convert to Datetime, account for DST
     df[c] = pd.to_datetime(df[c], utc=True)   # converts to UTC, 
     df[c] = df[c].dt.tz_convert('Etc/GMT+8')  # then subtract 8hrs to get to PST
-    df[c] = df[c].dt.tz_localize(None)        # drop TZ info
+    df[c] = df[c].dt.tz_localize(None)          # drop TZ info
+
 
 ### Create Midpoint time (for timestamping samples)
 df['sample_mid'] = df.sample_start + (pd.to_timedelta(df['sample_duration'])/2)  # half way between start and end
@@ -65,13 +68,28 @@ df['sample_mid'] = df.sample_mid.dt.round('s')  # round to nearest second
 df['sample_duration'] = round(pd.to_timedelta(df['sample_duration']).dt.seconds/60, 2)  # convert sample duration (minutes)
 df['sample_rate'] = df.vol_actual / df.sample_duration  # avg. sampling rate
 
-df.set_index('sample_mid', inplace = True) # Sort by start date
+df.set_index('sample_mid', inplace = True)      # Sort by start date
 df.sort_index(inplace=True)
+
+
+### Deployment index
+df['date'] = df.index.date           # create date columns
+c = 1
+df['deployment'] = 1
+for i in range(1,len(df)):
+    if df.ESP.iloc[i] != df.ESP.iloc[i-1]:
+        c += 1
+    df.loc[df.index[i],'deployment'] = c
+
+print('\n')    
+print(df.groupby('deployment').agg(pd.Series.mode)[['ESP','lab_field']])  # Deployment type
+
 
 ### Identify Time of Day (Morn/Midday/Eve)
 df['morn_midday_eve'] = 2 # Sample collected morning/afternoon/evening; Evening > 5p
 df.loc[df.index.hour<17,'morn_midday_eve'] = 1  # Midday - 11a - 5p
 df.loc[df.index.hour<11,'morn_midday_eve'] = 0  # Morn < 11a 
+
 
 ### Save to new CSV
 lab_control = df[df.lab_field.isin(['control ','control','lab'])]

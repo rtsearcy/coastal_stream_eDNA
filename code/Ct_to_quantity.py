@@ -266,7 +266,7 @@ for t in df_mean.target.unique():
     plt.fill_between(x, y1=x + inh_thresh, y2=x - 2.32, color='g', edgecolor='w', alpha=0.3)
     plt.ylim(25,45)
     plt.xlim(25,45)
-    plt.ylabel('C$_t$ (1:1)')
+    plt.ylabel('C$_t$ (undiluted)')
     plt.xlabel('C$_t$ (1:5)')
     
     plt.text(25.5,43.75,t.upper() + ' (N = ' + str(len(fish))+')') # target / N pair
@@ -285,14 +285,14 @@ for t in df_mean.target.unique():
     plt.axvline(over_dil_thresh,c='g', lw=1)
     plt.axvline(inh_thresh,c='g', lw=1)
     
-    plt.xlabel(r'ΔC$_t$ [(1:1) - (1:5)]')
+    plt.xlabel(r'ΔC$_t$ [(undiluted) - (1:5)]')
     
     fish['target'] = t
     df_delta = df_delta.append(fish)
     c+=1
     
 plt.tight_layout()
-plt.savefig(os.path.join(folder,'delta_Ct.png'),dpi=500)
+plt.savefig(os.path.join('../figures/','delta_Ct.png'),dpi=500)
 
 
 ### Use ΔCt to Indicate Inhibition

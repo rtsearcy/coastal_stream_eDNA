@@ -18,7 +18,7 @@ import numpy as np
 import os
 
 folder = '../data/eDNA/'  # Location of qPCR files folder and output location
-subfolder = 'qpcr_csv_results_022621'                 # location of up to date qPCR spreadsheets (from Google Drive)
+subfolder = 'qpcr_csv_results_031721'                 # location of up to date qPCR spreadsheets (from Google Drive)
 
 ### Aggregate individual qPCR result files
 df = pd.DataFrame()
