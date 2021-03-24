@@ -192,7 +192,7 @@ for t in df_mean.target.unique():
         df_mean.loc[(df_mean.target==t) & (df_mean.conc < lod),'BLOD'] = 1
         df_mean.loc[(df_mean.target==t) & (df_mean.conc < loq),'BLOQ'] = 1
     
-
+#%%
 ### Check ΔCt between dilution pairs
 # Theory:
 # Ct1 = slope*np.log10(c1) + intercept
@@ -260,32 +260,31 @@ for t in df_mean.target.unique():
     plt.subplot(2, 2, 2*c-1)
     plt.scatter(fish['1:5'], fish['1:1'],s=3, color='k')
     x = np.arange(25,50)
-    plt.plot(x, m*x + b,c='k', lw=1)       # regression line 
-    plt.plot(x,x - 2.32,c='g',ls=':',lw=1.5) # Ideal line (ideal: m=1,b = -2.32)
-    plt.fill_between(x, y1=x + over_dil_thresh, y2=x - 2.32, color='g', edgecolor='w', alpha=0.3) # Acceptable range
-    plt.fill_between(x, y1=x + inh_thresh, y2=x - 2.32, color='g', edgecolor='w', alpha=0.3)
+    plt.plot(x, m*x + b,c='k', lw=1)         # regression line 
+    plt.plot(x,x - 2.32,c='k',ls=':',lw=2) # Ideal line (ideal: m=1,b = -2.32)
+    #plt.fill_between(x, y1=x + over_dil_thresh, y2=x - 2.32, color='g', edgecolor='w', alpha=0.3) # Acceptable range
+    #plt.fill_between(x, y1=x + inh_thresh, y2=x - 2.32, color='g', edgecolor='w', alpha=0.3)
     plt.ylim(25,45)
     plt.xlim(25,45)
-    plt.ylabel('C$_t$ (undiluted)')
-    plt.xlabel('C$_t$ (1:5)')
+    plt.ylabel('C$_T$ (undiluted)')
+    plt.xlabel('C$_T$ (1:5)')
     
-    plt.text(25.5,43.75,t.upper() + ' (N = ' + str(len(fish))+')') # target / N pair
-    # reg_text = 'Slope: ' + str(round(m,3)) + \
-    #                     '\nInt: ' + str(round(b,3)) + \
-    #                     '\n$R^2$: ' + str(round(r2,3))
-    reg_text = 'In Range: ' + str(accept.sum()) + \
-                        '\nInhibited: ' + str(inhibited.sum()) + \
-                        '\nOverdiluted: ' + str(overdiluted.sum())
-    plt.text(25.7,40.5,reg_text, fontsize=9.5) # add regression text
+    plt.text(25.5,42.25,t.upper() + '\n(N = ' + str(len(fish)) + \
+             ', Inhibited = ' + str(inhibited.sum()) + ')') # target / N pair
+    # plt.text(25.5,43.75,t.upper() + ' (N = ' + str(len(fish))+')') # target / N pair
+    # reg_text = 'In Range: ' + str(accept.sum()) + \
+    #            '\nInhibited: ' + str(inhibited.sum()) + \
+    #            '\nOverdiluted: ' + str(overdiluted.sum())
+    #plt.text(25.7,40.5,reg_text, fontsize=9.5) # add regression text
     
     ### Histogram
     plt.subplot(2,2,2*c)
     plt.hist(fish.delta_Ct, bins=50, color='k',alpha=.4)
-    plt.axvline(-2.32,c='k', ls=':', lw=1.5) # Ideal line and acceptable range
-    plt.axvline(over_dil_thresh,c='g', lw=1)
-    plt.axvline(inh_thresh,c='g', lw=1)
+    plt.axvline(-2.32,c='k', ls=':', lw=2) # Ideal line and acceptable range
+    #plt.axvline(over_dil_thresh,c='g', lw=1)
+    #plt.axvline(inh_thresh,c='g', lw=1)
     
-    plt.xlabel(r'ΔC$_t$ [(undiluted) - (1:5)]')
+    plt.xlabel(r'ΔC$_T$ [(undiluted) - (1:5)]')
     
     fish['target'] = t
     df_delta = df_delta.append(fish)

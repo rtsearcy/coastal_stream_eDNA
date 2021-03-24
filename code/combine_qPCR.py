@@ -54,8 +54,8 @@ df.loc[df.dilution.values == '5','dilution'] = '1:5'
 ### Rename targets and other columns
 df.loc[df['Target Name'] == 'O.kitsuch','Target Name'] = 'O.kisutch'   # Some misspelling
 
-df.loc[df['Target Name'] == 'O.kisutch','Target Name'] = 'coho'  # Coho Salmon
-df.loc[df['Target Name'] == 'O.mykiss','Target Name'] = 'trout'  # Rainbow/Steelhead Trout
+df.loc[df['Target Name'].isin(['O.kisutch','Okisutch','Okitsuch']),'Target Name'] = 'coho'  # Coho Salmon
+df.loc[df['Target Name'].isin(['O.mykiss','Omykiss']),'Target Name'] = 'trout'  # Rainbow/Steelhead Trout
 
 df.rename(columns = {'Cт': 'Ct',                      
                      'Cт Mean': 'Ct_Mean',            

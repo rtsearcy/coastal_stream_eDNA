@@ -125,26 +125,31 @@ print('   Missing Sample IDs: ' + str(len(eDNA_miss)))
 print('\n\nNOAA Data')
 
 # Trap Data - Adult/Juvenile Steelhead and Coho counts
-trap = pd.read_csv(os.path.join(folder,'NOAA_data', 'ScottCreek_TrapSummary_100118_053119.csv'), 
-                 parse_dates = ['date'], index_col=['date'])
+trap = pd.read_csv(os.path.join(folder,'NOAA_data', 'fish_trap.csv'), 
+                 parse_dates = ['date','dt'], index_col=['date'], encoding='latin1')
 print('\nTrap Counts\n  Freq: daily')
 print_df(trap, date_range)
 
 # Hatchery Data - Adult/Juvenile Steelhead and Coho counts
-hatch = pd.read_csv(os.path.join(folder,'NOAA_data', 'Coho_Releases_NOAA_Mar_Dec2019.csv'), 
-                 parse_dates = ['date'], index_col=['date']).dropna()
+hatch = pd.read_csv(os.path.join(folder,'NOAA_data', 'hatchery_releases.csv'), 
+                 parse_dates = ['date'], index_col=['date'])
 
 print('\nHatchery Releases \n   Freq: Occasional')
-print('   Releases: ' + str(len(hatch)))
-print('   Sites: ' + str(hatch.site.unique()))
-print('   Days: ' + str(len(hatch.index.unique())))
-print(hatch.groupby(hatch.index).sum())
+print('   Release Days: ' + str(len(hatch)))
+print('   Sites: ' + str(len(hatch.columns)-2))
+print(hatch.sum(axis=1))
+print(hatch.sum())
 
-# Gage Data - Water temp, creek stage
-gage = pd.read_csv(os.path.join(folder,'NOAA_data', 'ScottCreek_WY2019_GageData_101618_093019.csv'), 
+# Gage Data - Weir - water temp, Lagoon - WQ parameters
+gage_w = pd.read_csv(os.path.join(folder,'NOAA_data', 'weir_wtemp.csv'), 
                  parse_dates = ['dt'], index_col=['dt'])
-print('\nStream Gage\n  Freq: 1 / 15 min')
-print_df(gage, date_range)
+print('\nWeir Gage\n  Freq: 1 / 15 min')
+print_df(gage_w, date_range)
+
+gage_l = pd.read_csv(os.path.join(folder,'NOAA_data', 'lagoon_wq.csv'), 
+                 parse_dates = ['dt'], index_col=['dt'])
+print('\nLagoon Gage\n  Freq: 1 / 15 min')
+print_df(gage_l, date_range)
 
 
 ### Load Met Data
@@ -198,8 +203,8 @@ hatch_date = hatch.index.unique()
 plt.scatter(x = hatch_date , y = len(hatch_date)*[5.45], s = 24, c = 'k', marker = '*')
 
 ### Environmental Variables
-# gage, sonde, met_d, met_h
-fill_plot(gage,plot_range,4,'r')
+# weir gage, sonde, met_d, met_h
+fill_plot(gage_w,plot_range,4,'r')
 fill_plot(sonde,plot_range,3,'k')
 fill_plot(met_d,plot_range,2,'orange')
 
@@ -222,7 +227,7 @@ ax.spines['top'].set_visible(False)
 legend_elements = [
     Patch(facecolor='b', alpha=0.3, edgecolor=None,label='ESP'),
     Patch(facecolor='g', alpha=0.3, edgecolor=None,label='Trap'),
-    Patch(facecolor='r', alpha=0.3, edgecolor=None,label='NOAA Gage'),
+    Patch(facecolor='r', alpha=0.3, edgecolor=None,label='Wier Temp Gage'),
     Patch(facecolor='k', alpha=0.3, edgecolor=None,label='YSI Sonde'),
     Patch(facecolor='orange', alpha=0.3, edgecolor=None,label='Met Data'),
     Line2D([0], [0], marker='o', color='w', markerfacecolor='k', markersize=6, label='qPCR Done'),

@@ -118,10 +118,10 @@ for e in ESP.ESP.unique():
 
 ESP['date2'] = ESP.date
 df_deployment = pd.concat([ESP.groupby('date2').first().groupby('deployment').first()['ESP'],
-                           ESP.groupby('date2').first().groupby('deployment').first()['date'].rename('start_date'),
-                           ESP.groupby('date2').first().groupby('deployment').last()['date'].rename('end_date'),
-                           ESP.groupby('date2').first().groupby('deployment').count()['date'].rename('days')
-                           ], axis=1)
+                            ESP.groupby('date2').first().groupby('deployment').first()['date'].rename('start_date'),
+                            ESP.groupby('date2').first().groupby('deployment').last()['date'].rename('end_date'),
+                            ESP.groupby('date2').first().groupby('deployment').count()['date'].rename('days')
+                            ], axis=1)
 df_deployment['gap_days'] = np.nan   # No. gap days prior to deployment where samples were not collected
 for i in range(1,len(df_deployment)):
     gap = df_deployment.iloc[i]['start_date'] - df_deployment.iloc[i-1]['end_date']
@@ -136,14 +136,15 @@ df_deployment.to_csv(os.path.join(folder,'ESP_logs','deployments_summary.csv'))
 ### Time Series Plot
 ## Sample volume
 plt.figure(figsize=(12,3))
-plt.plot('vol_actual', data=ESP, color=pal[1])
+#plt.plot('vol_actual', data=ESP, color=pal[1])
+plt.stem(ESP.index, ESP['vol_actual'], linefmt='k-', markerfmt=' ', basefmt=' ')
 plt.plot([],ls=':',color=pal[0]) # for legend
 ax = plt.gca()
 plt.ylabel('Total Volume (mL)')
 
-## Sample Rate
-ax2 = ESP['sample_rate'].plot(secondary_y=True, color=pal[0], ls=':')  # secondary axes
-plt.ylabel('Average Rate (mL/min)', rotation=270, ha='center', va='baseline', rotation_mode='anchor')
+# ## Sample Rate
+# ax2 = ESP['sample_rate'].plot(secondary_y=True, color=pal[0], ls=':')  # secondary axes
+# plt.ylabel('Average Rate (mL/min)', rotation=270, ha='center', va='baseline', rotation_mode='anchor')
 
 ## Fill background by ESP name
 plt.sca(ax)  # Switch back to primary axes
@@ -156,11 +157,11 @@ x_ax = ax.lines[0].get_xdata()
 for i in df_deployment.index:
     ESP_idx = ESPlist.index(df_deployment.loc[i,'ESP'])  # which ESP
     plt.fill_between(y1=3000, 
-                     y2=-100, 
-                     x=[df_deployment.loc[i,'start_date'], df_deployment.loc[i,'end_date'] + datetime.timedelta(days=1)], 
-                     facecolor=pal4c[ESP_idx], 
-                     edgecolor=None, 
-                     alpha=0.25)
+                      y2=-100, 
+                      x=[df_deployment.loc[i,'start_date'], df_deployment.loc[i,'end_date'] + datetime.timedelta(days=1)], 
+                      facecolor=pal4c[ESP_idx], 
+                      edgecolor=None, 
+                      alpha=0.25)
 
 plt.title('Sampling Volumes/Rates', loc='left', pad=10)
 plt.xlabel('')
@@ -169,7 +170,7 @@ plt.xticks(rotation = 0, ha='center')
 plt.legend(['Total Volume',
             'Sampling Rate',  #'Target',
             ESPlist[0],ESPlist[1],ESPlist[2]],frameon=False,  
-           bbox_to_anchor=(0,1.02,1,0.2), loc="lower right", borderaxespad=0, ncol=5)
+            bbox_to_anchor=(0,1.02,1,0.2), loc="lower right", borderaxespad=0, ncol=5)
 leg = ax.get_legend()
 leg.legendHandles[2].set_color(pal4c[0])
 leg.legendHandles[3].set_color(pal4c[1])
@@ -180,72 +181,73 @@ plt.xlim(x_ax[0],x_ax[-1])
 plt.tight_layout()
 plt.savefig(os.path.join(folder.replace('data','figures'),'ESP_volume_time_series.png'),dpi=300)
 
-### Histograms
-# Volumes
-plt.figure(figsize=(4,4))
 
-plt.hist([ESP[ESP.ESP == ESPlist[0]].vol_actual,
-          ESP[ESP.ESP == ESPlist[1]].vol_actual,
-          ESP[ESP.ESP == ESPlist[2]].vol_actual], 
-          bins=20, histtype='barstacked', stacked=True, color=pal4c[0:3], alpha=0.3)
-plt.xlabel('Actual Volume (mL)')
-plt.ylabel('N')
-plt.xlim(0,2000)
-plt.legend(ESPlist, frameon=False, loc='upper right')
-plt.tight_layout()
-plt.savefig(os.path.join(folder.replace('data','figures'),'ESP_volume_histogram.png'),dpi=300)
-
-# # Duration
+# ### Histograms
+# # Volumes
 # plt.figure(figsize=(4,4))
 
-# plt.hist([ESP[ESP.ESP == ESPlist[0]].sample_duration,
-#           ESP[ESP.ESP == ESPlist[1]].sample_duration,
-#           ESP[ESP.ESP == ESPlist[2]].sample_duration],
-#           bins=40, histtype='barstacked', stacked=True, color=pal4c[0:3], alpha=0.4)
-# plt.xlabel('Sampling Duration (min)')
+# plt.hist([ESP[ESP.ESP == ESPlist[0]].vol_actual,
+#           ESP[ESP.ESP == ESPlist[1]].vol_actual,
+#           ESP[ESP.ESP == ESPlist[2]].vol_actual], 
+#           bins=20, histtype='barstacked', stacked=True, color=pal4c[0:3], alpha=0.3)
+# plt.xlabel('Actual Volume (mL)')
 # plt.ylabel('N')
-# plt.yscale('log')
-# plt.xlim(0,250)
+# plt.xlim(0,2000)
 # plt.legend(ESPlist, frameon=False, loc='upper right')
 # plt.tight_layout()
+# plt.savefig(os.path.join(folder.replace('data','figures'),'ESP_volume_histogram.png'),dpi=300)
 
-# ESP
-plt.figure(figsize=(4,4))
-plt.hist(ESP.sample_duration, density=True, cumulative=True,
-         histtype='step', bins=100, color = pal[1])
-plt.xlabel('Sampling Duration (min)')
-plt.ylabel('CDF')
-plt.xlim(0,685)
-plt.tight_layout()
-plt.savefig(os.path.join(folder.replace('data','figures'),'ESP_sample_duration_CDF.png'),dpi=300)
+# # # Duration
+# # plt.figure(figsize=(4,4))
+
+# # plt.hist([ESP[ESP.ESP == ESPlist[0]].sample_duration,
+# #           ESP[ESP.ESP == ESPlist[1]].sample_duration,
+# #           ESP[ESP.ESP == ESPlist[2]].sample_duration],
+# #           bins=40, histtype='barstacked', stacked=True, color=pal4c[0:3], alpha=0.4)
+# # plt.xlabel('Sampling Duration (min)')
+# # plt.ylabel('N')
+# # plt.yscale('log')
+# # plt.xlim(0,250)
+# # plt.legend(ESPlist, frameon=False, loc='upper right')
+# # plt.tight_layout()
+
+# # ESP
+# plt.figure(figsize=(4,4))
+# plt.hist(ESP.sample_duration, density=True, cumulative=True,
+#          histtype='step', bins=100, color = pal[1])
+# plt.xlabel('Sampling Duration (min)')
+# plt.ylabel('CDF')
+# plt.xlim(0,685)
+# plt.tight_layout()
+# plt.savefig(os.path.join(folder.replace('data','figures'),'ESP_sample_duration_CDF.png'),dpi=300)
 
 
-### Time of Day
-print('\n- - Time of Day - -\n')
-N = len(ESP)
-print('# Samples: ' + str(N))
+# ### Time of Day
+# print('\n- - Time of Day - -\n')
+# N = len(ESP)
+# print('# Samples: ' + str(N))
 
-# Before 6a, 11a, 5p
-print('\n% Samples Collected: \nBefore 06:00 PST: ' + str(round(100*len(ESP[ESP.index.hour < 6])/N,1)))
-print('Before 11:00 PST: ' + str(round(100*len(ESP[ESP.index.hour < 12])/N,1)))
-print('Before 17:00 PST: ' + str(round(100*len(ESP[ESP.index.hour < 18])/N,1)))
+# # Before 6a, 11a, 5p
+# print('\n% Samples Collected: \nBefore 06:00 PST: ' + str(round(100*len(ESP[ESP.index.hour < 6])/N,1)))
+# print('Before 11:00 PST: ' + str(round(100*len(ESP[ESP.index.hour < 12])/N,1)))
+# print('Before 17:00 PST: ' + str(round(100*len(ESP[ESP.index.hour < 18])/N,1)))
 
-print('\nN per TOD Category (0-morn,1-mid,2-eve)')
-print(ESP.groupby('morn_midday_eve').count()['ESP'])
+# print('\nN per TOD Category (0-morn,1-mid,2-eve)')
+# print(ESP.groupby('morn_midday_eve').count()['ESP'])
 
-plt.figure(figsize=(4,4))
-plt.hist(ESP.index.hour + ESP.index.minute/60, bins=48, color=pal[1])  # Sampling time distribution
-plt.ylabel('N')
-plt.xlabel('Hour of Day')
-plt.xticks(ticks= [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
-           labels = [0,'',2,'',4,'',6,'',8,'',10,'',12,'',14,'',16,'',18,'',20,'',22,''])
-plt.xlim(0,23)
+# plt.figure(figsize=(4,4))
+# plt.hist(ESP.index.hour + ESP.index.minute/60, bins=48, color=pal[1])  # Sampling time distribution
+# plt.ylabel('N')
+# plt.xlabel('Hour of Day')
+# plt.xticks(ticks= [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
+#            labels = [0,'',2,'',4,'',6,'',8,'',10,'',12,'',14,'',16,'',18,'',20,'',22,''])
+# plt.xlim(0,23)
 
-plt.axvline(11,color='k', ls='--') #morn/adt divide
-plt.axvline(17,color='k', ls='--') #aft/evening divide
+# plt.axvline(11,color='k', ls='--') #morn/adt divide
+# plt.axvline(17,color='k', ls='--') #aft/evening divide
 
-plt.subplots_adjust(top=0.917, bottom=0.139, left=0.145, right=0.967, hspace=0.2, wspace=0.2)
-plt.savefig(os.path.join(folder.replace('data','figures'),'ESP_time_of_day_histogram.png'),dpi=300)
+# plt.subplots_adjust(top=0.917, bottom=0.139, left=0.145, right=0.967, hspace=0.2, wspace=0.2)
+# plt.savefig(os.path.join(folder.replace('data','figures'),'ESP_time_of_day_histogram.png'),dpi=300)
 
 
 #%% eDNA - Stats
@@ -355,22 +357,36 @@ plt.tight_layout()
 plt.savefig(os.path.join(folder.replace('data','figures'),'eDNA_autocorrelation.png'),dpi=300)
 
 ### Spectra
-plt.figure(figsize=(6,4))
+plt.figure(figsize=(4,4))
 data = [T,C]
 col = [pal4c[2],pal4c[0]]
 for i in range(0,len(data)):
     nperseg = len(data[i]) // 4
-    f, P = signal.welch(data[i],fs=1, 
+    f, P = signal.welch(data[i],fs=1,                      # could also use signal.periodogram
                                 window='hamming',          # boxcar, hann, hamming, 
                                 nfft=None,
-                                nperseg=nperseg, # N data points per segement
+                                nperseg=nperseg,           # N data points per segement
                                 noverlap=nperseg//2,       # N data points overlapping (50% is common)
                                 detrend='constant',        # remove trend, False, 'constant'
                                 scaling='density')         # 'density' [conc^2/Hz] or 'spectrum' [conc^2]
     # f [1/day] / P [log10conc^2*day] or [log10 conc^2]
-    # could also use signal.periodogram
-        
+
     plt.plot(f,P, color=col[i],lw=1.5)
+    
+    # Confidence intervals
+    alpha = 0.05
+    DOF = 5 * len(data[i]) // nperseg                      # Degrees of Freedom, from Emery and Thomson for Hamming window
+    chi2_U = stats.chi2.ppf((alpha/2), DOF)
+    chi2_L = stats.chi2.ppf((1-alpha/2), DOF)              # Chi-squared for DOF and alpha      
+    upperCI = (DOF/chi2_U) * P
+    lowerCI = (DOF/chi2_L) * P
+    
+    #plt.plot(f,upperCI, color=col[i],lw=1, ls=':')         # Upper CI
+    #plt.plot(f,lowerCI, color=col[i],lw=1, ls=':')         # Lower CI
+    
+    plt.fill_between(y1=P, y2=upperCI, x=f, facecolor=col[i], edgecolor=None, alpha=0.2)
+    plt.fill_between(y1=lowerCI, y2=P, x=f, facecolor=col[i], edgecolor=None, alpha=0.2)
+    
 #plt.semilogx(np.flip(1/f),P, color=pal4c[c],lw=1)
 #plt.xlim(f[1],f[-1])
 ax = plt.gca()
@@ -526,6 +542,11 @@ plt.tight_layout()
 ## Daily mean
 A = df_plot[df_plot.target=='trout'].groupby('date').mean().sort_index()
 B = df_plot[df_plot.target=='coho'].groupby('date').mean().sort_index()
+
+# Rolling mean
+Arm = A['log10eDNA'].rolling(window=7,center=True).mean()
+Brm = B['log10eDNA'].rolling(window=7,center=True).mean()
+
 
 #A.loc[A.BLOD == 1,'log10eDNA'] = 0  # Remove samples BLOQ
 #B.loc[B.BLOD == 1,'log10eDNA'] = 0
