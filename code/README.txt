@@ -29,10 +29,16 @@ Analyzes the ESP and eDNA data
 	- ESP: Time of day, sampling volumes/rates, analysis by ESP
 	- eDNA: Time Series, TBD
 
+- data_inventory.py
+Inventories all datasets relevant to the project
+
+- eDNA_corr.py
+Function to correlate two time series using Pearson, Spearman, or Kendall correlations
 
 ENVIRONMENTAL/FISH DATA
 analyze_NOAA.py
 analyze_sonde.py	
 get_met_CIMIS.py	
-analyze_met.py		
+analyze_met.py	
+usgs_flow_daily.py	
 	

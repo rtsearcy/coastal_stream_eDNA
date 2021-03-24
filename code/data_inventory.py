@@ -129,7 +129,7 @@ trap = pd.read_csv(os.path.join(folder,'NOAA_data', 'fish_trap.csv'),
                  parse_dates = ['date','dt'], index_col=['date'], encoding='latin1')
 print('\nTrap Counts\n  Freq: daily')
 print_df(trap, date_range)
-
+    
 # Hatchery Data - Adult/Juvenile Steelhead and Coho counts
 hatch = pd.read_csv(os.path.join(folder,'NOAA_data', 'hatchery_releases.csv'), 
                  parse_dates = ['date'], index_col=['date'])
