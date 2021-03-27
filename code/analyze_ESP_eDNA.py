@@ -40,6 +40,14 @@ ESP.dropna(inplace=True, subset=['sample_wake', 'sample_start', 'sample_end', 's
 
 ESP = ESP[~ESP.lab_field.isin(['lab','control', 'control '])]  # Keep deployed/field/nana; Drop control/lab samples
 
+## Lists of days with sampling frequencies of 1x, 2x, and 3x per day
+three_per_day = [d for d in ESP['date'].unique() if (ESP.groupby('date').count() == 3)['id'].loc[d]]
+# morning, afternoon, and evening samples
+mae = [d for d in three_per_day if (ESP.groupby('date').sum()['morn_midday_eve']==3).loc[d]] 
+ 
+two_per_day = [d for d in ESP['date'].unique() if (ESP.groupby('date').count() == 2)['id'].loc[d]]
+one_per_day = [d for d in ESP['date'].unique() if (ESP.groupby('date').count() == 1)['id'].loc[d]]
+
 
 ### Load eDNA Data
 # Contains target, replicate #,dilution level, concentration (post-dilution factor)
@@ -49,8 +57,8 @@ eDNA = pd.read_csv(os.path.join(folder,'eDNA','eDNA.csv'), parse_dates=['dt','da
 ### Load Hatchery Data
 # For plots
 # Adult/Juvenile Steelhead and Coho counts
-hatch = pd.read_csv(os.path.join(folder,'NOAA_data', 'Coho_Releases_NOAA_Mar_Dec2019.csv'), 
-                 parse_dates = ['date'], index_col=['date']).dropna()
+hatch = pd.read_csv(os.path.join(folder,'NOAA_data', 'hatchery_releases.csv'), 
+                 parse_dates = ['date'], index_col=['date'])
 
 
 #%% Plot parameters / functions
@@ -69,15 +77,18 @@ plt.rcParams.update(params)
 
 ### Colors
 pal = ['#969696','#525252']  # grey, black
-pal = sns.color_palette(pal)
-
-pal2c = ['#ca0020', '#f4a582'] # salmon colors
-pal2c = sns.color_palette(pal2c)
-
+pal = ['#ca0020', '#f4a582'] # salmon colors
+#pal = ['#253494','#41b6c4'] # light, dark blue
+pal = ['#39778d', '#de787c'] # 
+pal = ['#de425b','#2c8380']
+#pal = sns.color_palette(pal)
 
 pal4c = ['#253494','#2c7fb8','#41b6c4','#a1dab4'] # 4 color blue tone
-pal4c = sns.color_palette(pal4c)
 
+# other pinks: '#de787c'
+# other blue/green/silver: 
+
+### Functions
 def caps_off(axx): ## Turn off caps on boxplots
     lines = axx.lines
     for i in range(0, int(len(lines)/6)):
@@ -136,23 +147,20 @@ df_deployment.to_csv(os.path.join(folder,'ESP_logs','deployments_summary.csv'))
 ### Time Series Plot
 ## Sample volume
 plt.figure(figsize=(12,3))
-#plt.plot('vol_actual', data=ESP, color=pal[1])
-plt.stem(ESP.index, ESP['vol_actual'], linefmt='k-', markerfmt=' ', basefmt=' ')
-plt.plot([],ls=':',color=pal[0]) # for legend
+plt.plot('vol_actual', data=ESP, color='k')
+#plt.stem(ESP.index, ESP['vol_actual'], linefmt='k-', markerfmt=' ', basefmt=' ')
+plt.plot([],ls=':',color='grey') # for legend
 ax = plt.gca()
 plt.ylabel('Total Volume (mL)')
 
 # ## Sample Rate
-# ax2 = ESP['sample_rate'].plot(secondary_y=True, color=pal[0], ls=':')  # secondary axes
-# plt.ylabel('Average Rate (mL/min)', rotation=270, ha='center', va='baseline', rotation_mode='anchor')
+ax2 = ESP['sample_rate'].plot(secondary_y=True, color='grey', ls=':')  # secondary axes
+plt.ylabel('Average Rate (mL/min)', rotation=270, ha='center', va='baseline', rotation_mode='anchor')
 
 ## Fill background by ESP name
 plt.sca(ax)  # Switch back to primary axes
 ESPlist = list(ESP.ESP.unique())
 x_ax = ax.lines[0].get_xdata()
-# for i in range(1,len(ESP)-1):
-#     ESP_idx = ESPlist.index(ESP.ESP.iloc[i])  # which ESP
-#     plt.fill_between(y1=3000, y2=-100, x=x_ax[i-1:i+1], facecolor=pal4c[ESP_idx], edgecolor=None, alpha=0.25)
 
 for i in df_deployment.index:
     ESP_idx = ESPlist.index(df_deployment.loc[i,'ESP'])  # which ESP
@@ -214,7 +222,7 @@ plt.savefig(os.path.join(folder.replace('data','figures'),'ESP_volume_time_serie
 # # ESP
 # plt.figure(figsize=(4,4))
 # plt.hist(ESP.sample_duration, density=True, cumulative=True,
-#          histtype='step', bins=100, color = pal[1])
+#          histtype='step', bins=100, color = 'k')
 # plt.xlabel('Sampling Duration (min)')
 # plt.ylabel('CDF')
 # plt.xlim(0,685)
@@ -236,7 +244,7 @@ plt.savefig(os.path.join(folder.replace('data','figures'),'ESP_volume_time_serie
 # print(ESP.groupby('morn_midday_eve').count()['ESP'])
 
 # plt.figure(figsize=(4,4))
-# plt.hist(ESP.index.hour + ESP.index.minute/60, bins=48, color=pal[1])  # Sampling time distribution
+# plt.hist(ESP.index.hour + ESP.index.minute/60, bins=48, color='k')  # Sampling time distribution
 # plt.ylabel('N')
 # plt.xlabel('Hour of Day')
 # plt.xticks(ticks= [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
@@ -272,7 +280,9 @@ for t in eDNA.target.unique():
     print(n_per_day.value_counts())
     
     ## Differences between time of day?
+    df_mae = eDNA[eDNA.date.isin(mae)]
     print('\nDifference between time of day?')
+    print('N=' + str(len(df_mae[df_mae.target==t])) + ' days with morn/aft/eve samples')
     morn = eDNA.loc[(eDNA.target==t) & (eDNA.morn_midday_eve==0),'log10eDNA']
     midd = eDNA.loc[(eDNA.target==t) & (eDNA.morn_midday_eve==1),'log10eDNA']
     eve = eDNA.loc[(eDNA.target==t) & (eDNA.morn_midday_eve==2),'log10eDNA']
@@ -281,10 +291,20 @@ for t in eDNA.target.unique():
           '/' + str(round(eve.median(),3)))
     print(stats.kruskal(morn,midd,eve))
     
+    # Correlation between morn/midday/eve
+    print('\nTime of day correlations')
+    mae_corr = pd.concat([
+        df_mae[(df_mae.target==t) & (df_mae.morn_midday_eve==0)].set_index('date').sort_index()['log10eDNA'],
+        df_mae[(df_mae.target==t) & (df_mae.morn_midday_eve==1)].set_index('date').sort_index()['log10eDNA'],
+        df_mae[(df_mae.target==t) & (df_mae.morn_midday_eve==2)].set_index('date').sort_index()['log10eDNA']], axis=1)
+    mae_corr.columns = ['morning', 'midday','evening']
+    print(mae_corr.corr())
+    
     ## Differences between wet and dry season?
-    print('\nDifference between wet and dry season?')
+    print('\nDifference between Dry and Wet seasons?')
     dry = eDNA.loc[(eDNA.target==t) & (eDNA.wet_season==0),'log10eDNA']
     wet = eDNA.loc[(eDNA.target==t) & (eDNA.wet_season==1),'log10eDNA']
+    print('N (Dry/Wet): ' + str(len(dry)) + '/' + str(len(wet)))
     print('Median (Dry/Wet): ' + str(round(dry.median(),3)) + '/' + str(round(wet.median(),3)))
     print(stats.mannwhitneyu(dry,wet))
     
@@ -304,13 +324,18 @@ trout = eDNA[eDNA.target=='trout'].set_index('id').sort_values('dt')
 coho = eDNA[eDNA.target=='coho'].set_index('id').sort_values('dt')
 
 
-### Correlation between signals
+### Correlations
+
+## between target's overall signals
 print('\nCorrelation between Trout and Coho signals')
+print('Overall')
 print(eDNA_corr(trout.log10eDNA,coho.log10eDNA))
 print(eDNA_corr(trout.log10eDNA,coho.log10eDNA, corr_type='spearman'))
 
 ## Difference in correlation during different conditions?
-#eDNA_corr(trout[trout.season=='spring'].log10eDNA, coho[coho.season=='spring'].log10eDNA)
+for s in eDNA.season.unique():
+    print(s.capitalize() + ' samples only')
+    print(eDNA_corr(trout[trout.season==s], coho[coho.season==s], x_col='log10eDNA', y_col='log10eDNA'))
 
 
 ### Autocorrelation  
@@ -358,8 +383,8 @@ plt.savefig(os.path.join(folder.replace('data','figures'),'eDNA_autocorrelation.
 
 ### Spectra
 plt.figure(figsize=(4,4))
-data = [T,C]
-col = [pal4c[2],pal4c[0]]
+data = [C,T]
+col = [pal[0],pal[1]]
 for i in range(0,len(data)):
     nperseg = len(data[i]) // 4
     f, P = signal.welch(data[i],fs=1,                      # could also use signal.periodogram
@@ -405,7 +430,7 @@ plt.ylabel(r'P$_{xx}$ [$(log_{10}$copies/mL)$^2$*day]')
 plt.sca(ax)
 plt.xscale('log')
 plt.yscale('log')
-plt.legend(['trout','coho'], frameon=False)
+plt.legend(['coho','trout'], frameon=False)
 plot_spines(ax)
 plt.tight_layout()
 plt.savefig(os.path.join(folder.replace('data','figures'),'eDNA_spectra.png'),dpi=300)
@@ -422,7 +447,7 @@ df_plot.loc[df_plot.BLOD == 1,'log10eDNA'] = 0
 ### All eDNA Data - Boxplot and Histogram
 plt.figure(figsize=(6,4))
 plt.subplot(1,2,1)
-sns.boxplot(x='target',y='log10eDNA', data = df_plot, width=.5, palette=[pal4c[0],pal4c[2]])
+sns.boxplot(x='target',y='log10eDNA', data = df_plot, width=.5, palette=[pal[0],pal[1]])
 plt.xlabel('')
 plt.ylabel('log$_{10}$(copies/mL)')
 ylim = plt.ylim()
@@ -432,9 +457,9 @@ plot_spines(plt.gca())
 
 plt.subplot(1,2,2)
 plt.hist(df_plot[df_plot.target=='coho']['log10eDNA'],histtype='step',
-         orientation='horizontal', color=pal4c[0])
+         orientation='horizontal', color=pal[0])
 plt.hist(df_plot[df_plot.target=='trout']['log10eDNA'],histtype='step', 
-          orientation='horizontal', color=pal4c[2])
+          orientation='horizontal', color=pal[1])
 #plt.xlabel('log$_{10}$(copies/μL)')
 plt.ylim(ylim)
 
@@ -446,8 +471,11 @@ plt.tight_layout()
 
 
 ### Boxplots by time, year/month, season
+
+## Morning, afternoon evening
+df_mae = df_plot[df_plot.date.isin(mae)]
 plt.figure(figsize=(6,4))  
-sns.boxplot(x='morn_midday_eve',y='log10eDNA', hue='target', data=df_plot, palette=pal4c[0:3:2])
+sns.boxplot(x='morn_midday_eve',y='log10eDNA', hue='target', data=df_mae, palette=pal)
 plt.xlabel('')
 plt.ylabel('log$_{10}$(copies/mL)')
 
@@ -455,8 +483,8 @@ plt.xticks(ticks=[0,1,2], labels=['Morning','Midday','Evening'])
 
 plt.legend(['coho','trout'], frameon=False, loc='upper left')
 leg = plt.gca().get_legend()
-leg.legendHandles[0].set_color(pal4c[0]) # coho
-leg.legendHandles[1].set_color(pal4c[2]) # trout
+leg.legendHandles[0].set_color(pal[0]) # coho
+leg.legendHandles[1].set_color(pal[1]) # trout
 
 caps_off(plt.gca())     # turn off caps
 flier_shape(plt.gca())  # fliers to circles
@@ -466,14 +494,14 @@ plt.tight_layout()
 
 ## Year and Month
 plt.figure(figsize=(10,4))  
-sns.boxplot(x='year_month',y='log10eDNA', hue='target', data=df_plot, palette=pal4c[0:3:2])
+sns.boxplot(x='year_month',y='log10eDNA', hue='target', data=df_plot, palette=pal)
 plt.xlabel('')
 plt.ylabel('log$_{10}$(copies/mL)')
 
 plt.legend(['coho','trout'], frameon=False, loc='upper left')
 leg = plt.gca().get_legend()
-leg.legendHandles[0].set_color(pal4c[0]) # coho
-leg.legendHandles[1].set_color(pal4c[2]) # trout
+leg.legendHandles[0].set_color(pal[0]) # coho
+leg.legendHandles[1].set_color(pal[1]) # trout
 
 caps_off(plt.gca())     # turn off caps
 flier_shape(plt.gca())  # fliers to circles
@@ -483,15 +511,15 @@ plt.tight_layout()
 
 ## Wet Season
 plt.figure(figsize=(4,4))  
-sns.boxplot(x='wet_season',y='log10eDNA', hue='target', data=df_plot,  width=.6, palette=pal4c[0:3:2])
+sns.boxplot(x='wet_season',y='log10eDNA', hue='target', data=df_plot,  width=.6, palette=pal)
 plt.xlabel('')
 plt.xticks(ticks=[0,1], labels=['Dry Season','Wet Season'])
 plt.ylabel('log$_{10}$(copies/mL)')
 
 plt.legend(['coho','trout'], frameon=False, loc='upper left')
 leg = plt.gca().get_legend()
-leg.legendHandles[0].set_color(pal4c[0]) # coho
-leg.legendHandles[1].set_color(pal4c[2]) # trout
+leg.legendHandles[0].set_color(pal[0]) # coho
+leg.legendHandles[1].set_color(pal[1]) # trout
 
 caps_off(plt.gca())     # turn off caps
 flier_shape(plt.gca())  # fliers to circles
@@ -501,14 +529,14 @@ plt.tight_layout()
 
 ## Season
 plt.figure(figsize=(6,4))  
-sns.boxplot(x='season',y='log10eDNA', hue='target', data=df_plot, palette=pal4c[0:3:2])
+sns.boxplot(x='season',y='log10eDNA', hue='target', data=df_plot, palette=pal)
 plt.xlabel('')
 plt.ylabel('log$_{10}$(copies/mL)')
 
 plt.legend(['coho','trout'], frameon=False, loc='upper right')
 leg = plt.gca().get_legend()
-leg.legendHandles[0].set_color(pal4c[0]) # coho
-leg.legendHandles[1].set_color(pal4c[2]) # trout
+leg.legendHandles[0].set_color(pal[0]) # coho
+leg.legendHandles[1].set_color(pal[1]) # trout
 
 caps_off(plt.gca())     # turn off caps
 flier_shape(plt.gca())  # fliers to circles
@@ -523,8 +551,8 @@ Xsd =  df_plot.astype(float, errors='ignore').groupby(['target','year','week']).
 #X = X.reset_index()
 
 plt.figure(figsize=(10,4))
-X.xs('coho')['log10eDNA'].plot(marker='.', yerr=Xsd.xs('coho')['log10eDNA'], color = pal4c[0])
-X.xs('trout')['log10eDNA'].plot(marker='.', yerr=Xsd.xs('trout')['log10eDNA'], color = pal4c[2])
+X.xs('coho')['log10eDNA'].plot(marker='.', yerr=Xsd.xs('coho')['log10eDNA'], color = pal[0])
+X.xs('trout')['log10eDNA'].plot(marker='.', yerr=Xsd.xs('trout')['log10eDNA'], color = pal[1])
 plt.legend(['coho','trout'], frameon=False, loc='upper left')
 
 plot_spines(plt.gca())
@@ -552,13 +580,11 @@ Brm = B['log10eDNA'].rolling(window=7,center=True).mean()
 #B.loc[B.BLOD == 1,'log10eDNA'] = 0
 
 plt.figure(figsize=(10,4))
-plt.plot(A['log10eDNA'],marker='.',ms=4, color=pal4c[2])
-plt.plot(B['log10eDNA'],marker='.',ms=4, color=pal4c[0])
+plt.plot(A['log10eDNA'],marker='.',ms=4, color=pal[1])
+plt.plot(B['log10eDNA'],marker='.',ms=4, color=pal[0])
 
 ## Hatchery releases
-plt.scatter(hatch.index.unique(), -.15*np.ones(len(hatch.index.unique())),s=18,color=pal4c[0],marker='^')
-#plt.fill_between(B.dt, B.log10eDNA - B.log10eDNA_sd, B.log10eDNA + B.log10eDNA_sd,
-#                 color=pal4c[2], alpha=0.25)
+plt.scatter(hatch.index.unique(), -.15*np.ones(len(hatch.index.unique())),s=18,color='k', marker='^')
 
 plt.xlim(ESP.index[0], ESP.index[-1])   # Range ESP was deployed
 plt.ylabel('log$_{10}$(copies/mL)')
@@ -568,6 +594,66 @@ plot_spines(plt.gca(), offset=4)
 
 plt.tight_layout()
 plt.savefig(os.path.join(folder.replace('data','figures'),'eDNA_time_series_log.png'),dpi=300)
+
+
+#%% eDNA Time Series (log, STEM)
+
+### Trout/Coho TS 
+
+## All values
+#A = df_plot[df_plot.target=='trout'].set_index('dt').sort_index()
+#B = df_plot[df_plot.target=='coho'].set_index('dt').sort_index()
+
+## Daily mean
+A = df_plot[df_plot.target=='trout'].groupby('date').mean().sort_index()
+B = df_plot[df_plot.target=='coho'].groupby('date').mean().sort_index()
+
+# Rolling mean
+Arm = A['log10eDNA'].rolling(window=7,center=True).mean()
+Brm = B['log10eDNA'].rolling(window=7,center=True).mean()
+
+#A.loc[A.BLOD == 1,'log10eDNA'] = 0  # Remove samples BLOQ
+#B.loc[B.BLOD == 1,'log10eDNA'] = 0
+
+plt.figure(figsize=(10,5))
+plt.subplot(211) # coho
+plt.bar(B.index,B.log10eDNA + 0.5, bottom = -.5, color=pal[0])
+#plt.axhline(0,color=pal[0])
+plt.scatter(B.index,B.log10eDNA, color=pal[0], s=5)
+plt.plot(Brm,color='k')
+
+
+## Hatchery releases
+plt.scatter(hatch.index.unique(), 3*np.ones(len(hatch.index.unique())),s=18,color='k',marker='$H$') # 'v'
+
+plt.ylim(-.05, 1.05*df_plot.log10eDNA.max())
+plt.xlim(ESP.index[0], ESP.index[-1])   # Range ESP was deployed
+
+plt.text(ESP.index[10],.95*plt.ylim()[1], 'COHO')
+plt.ylabel('log$_{10}$(copies/mL)')
+#plt.legend(['trout', 'coho', 'hatchery release'], frameon=False)
+plot_spines(plt.gca(), offset=0)
+
+
+plt.subplot(212)  # trout
+plt.bar(A.index, A.log10eDNA + .5, bottom=-.5, color=pal[1])
+#plt.axhline(0,color=pal[1])
+plt.scatter(A.index,A.log10eDNA, color=pal[1], s=5)
+plt.plot(Arm,color='k')
+plt.ylim(-.05, 1.05*df_plot.log10eDNA.max())
+plt.xlim(ESP.index[0], ESP.index[-1])   # Range ESP was deployed
+
+plt.text(ESP.index[10],.95*plt.ylim()[1], 'TROUT')
+plt.ylabel('log$_{10}$(copies/mL)')
+#plt.legend(['trout', 'rolling mean'], frameon=False)
+plot_spines(plt.gca(), offset=0)
+
+plt.gca().invert_yaxis()
+plt.gca().spines['top'].set_visible(True)
+plt.gca().spines['bottom'].set_visible(False)
+
+plt.tight_layout()
+plt.savefig(os.path.join(folder.replace('data','figures'),'eDNA_time_series_log_stem.png'),dpi=300)
 
 #%% eDNA Time Series (linear)
 
@@ -585,11 +671,11 @@ B = df_plot[df_plot.target=='coho'].set_index('dt').sort_index()
 #B.loc[B.BLOD == 1,'log10eDNA'] = 0
 
 plt.figure(figsize=(10,4))
-plt.plot(A['eDNA'],marker='.',ms=4, color=pal4c[2])
-plt.plot(B['eDNA'],marker='.',ms=4, color=pal4c[0])
+plt.plot(A['eDNA'],marker='.',ms=4, color=pal[1])
+plt.plot(B['eDNA'],marker='.',ms=4, color=pal[0])
 
 ## Hatchery releases
-plt.scatter(hatch.index.unique(), -250*np.ones(len(hatch.index.unique())),s=18,color=pal4c[0],marker='^')
+plt.scatter(hatch.index.unique(), -250*np.ones(len(hatch.index.unique())),s=18,color='k',marker='^')
 
 plt.xlim(ESP.index[0], ESP.index[-1])   # Range ESP was deployed
 plt.ylabel('copies/mL')
