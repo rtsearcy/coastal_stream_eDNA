@@ -652,6 +652,7 @@ plt.gca().invert_yaxis()
 plt.gca().spines['top'].set_visible(True)
 plt.gca().spines['bottom'].set_visible(False)
 
+
 plt.tight_layout()
 plt.savefig(os.path.join(folder.replace('data','figures'),'eDNA_time_series_log_stem.png'),dpi=300)
 
