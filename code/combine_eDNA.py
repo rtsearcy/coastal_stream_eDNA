@@ -17,6 +17,7 @@ ESP Sampling logs
 
 import pandas as pd
 import numpy as np
+import datetime
 import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels.api as sm
@@ -31,22 +32,53 @@ ESP = pd.read_csv(os.path.join(folder,'ESP_logs','ESP_logs_combined.csv'),
                  parse_dates = ['sample_wake','sample_start','sample_mid','sample_end'], 
                  index_col=['sample_mid'])  # can also use sample_start, but probably little diff.
 
-ESP.dropna(inplace=True, subset=['sample_wake', 'sample_start', 'sample_end', 'sample_duration',
-       'vol_target', 'vol_actual', 'vol_diff',])  # Drop samples with no time or volume data 
+# ESP.dropna(inplace=True, subset=['sample_wake', 'sample_start', 'sample_end', 'sample_duration',
+#        'vol_target', 'vol_actual', 'vol_diff',])  # Drop samples with no time or volume data 
 
-ESP = ESP[~ESP.lab_field.isin(['lab','control', 'control '])]  # Keep deployed/field/nana; Drop control/lab samples
+#ESP = ESP[~ESP.lab_field.isin(['lab','control', 'control '])]  # Keep deployed/field/nana; Drop control/lab samples
 
 
 ### Load qPCR Data
 # Contains mean qPCR concentrations, including target, n_replicates/BLOD, 
 # delta_Ct, and dilution level (post-dilution factor)
 qPCR = pd.read_csv(os.path.join(folder,'eDNA','qPCR_calculated_mean.csv'))
+
+# Type of each qPCR sample
+qPCR_ids = pd.read_csv(os.path.join(folder,'eDNA','qPCR_id_210330.csv'))
+qPCR = pd.merge(qPCR, qPCR_ids, how='left', left_on='id',right_on='id')
+
 qPCR.set_index(['id','target','dilution'], inplace=True)
 
 
-### Combine eDNA and ESP data
+### Check ESP and qPCR IDs
+print('Unique qPCR IDs: ' + str(len(qPCR.reset_index().id.unique())))
+print('Unique ESP IDs: ' + str(len(ESP.id.unique())))
+eDNA_miss = [i for i in ESP.id.unique() if i not in qPCR.reset_index().id.unique()]  # List of missing sample IDs
+ESP_miss =  [i for i in qPCR.reset_index().id.unique() if i not in ESP.id.unique()]  # IDs in qPCR data not in ESP data
+print('   Missing Sample IDs: ' + str(len(eDNA_miss)))
+
+
+### Combine eDNA and ESP data, parse our controls
 df = pd.merge(qPCR.reset_index(), ESP.reset_index(), how='left', on='id')
-df = df[~df.sample_mid.isna()]  # Drop samples w/o ESP data
+
+## Manually account for hand samples
+hand_samples = ['SCr-Hand-1A', 'SCr-Hand1B', 'SCr-hand1C']  # 2/11/20 at 7a
+for h in hand_samples:
+    df.loc[df.id==h,['sample_mid',
+                     'sample_wake',
+                     'sample_start',
+                     'sample_end']] = pd.to_datetime('2/11/2020 07:00')
+    df.loc[df.id==h,'morn_midday_eve'] = 0
+    df.loc[df.id==h,'date'] = '2020-02-11'
+    df.loc[df.id==h,'vol_actual'] = 1000
+
+## Controls
+controls = df[(df.vol_actual.isna()) | (df.lab_field.isin(['lab','control', 'control ']))]  # volume data not included
+controls = controls.sort_values('sample_type')
+controls.to_csv(os.path.join(folder,'eDNA','controls_data.csv'), index=False)
+
+## Drop controls samples
+df = df.loc[[i for i in df.index if i not in controls.index]]
 
 
 ### Convert from copies/rxn to copies/mL filtered
@@ -78,7 +110,9 @@ for i in df.id.unique():
         
 ### Create date variables
 df['dt'] = df['sample_mid']  # timestamp
+df['hour'] = df.dt.dt.round('H').dt.hour
 df['date'] = df['dt'].dt.date
+df['day_of_year'] = df.dt.dt.dayofyear
 df['year'] = df['dt'].dt.year
 df['month'] = df['dt'].dt.month
 df['year_month'] = df.year.astype(str) + '-' + df.month.astype(str).str.rjust(2,'0')
@@ -125,13 +159,15 @@ df = df[['dt',
          'wet_season',
          'week',
          'year_week',
+         'day_of_year',
+         'hour',
          'morn_midday_eve',
          'ESP_file',
          'qPCR_file']]
 df.set_index(['id','target'], inplace=True)
 df.sort_values(['dt','target'], inplace=True)  # sort by date
 df.to_csv(os.path.join(folder,'eDNA','eDNA.csv'))
-print('ESP and qPCR data aggregated. eDNA concentrations saved.')
+print('\nESP and qPCR data aggregated. eDNA concentrations saved.')
 print('\nN = ' + str(len(df)))
 print(df.reset_index().groupby('target').count()['id'])
 

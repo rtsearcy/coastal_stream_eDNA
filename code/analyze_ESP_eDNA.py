@@ -76,10 +76,10 @@ plt.rcParams.update(params)
 
 
 ### Colors
-pal = ['#969696','#525252']  # grey, black
-pal = ['#ca0020', '#f4a582'] # salmon colors
+#pal = ['#969696','#525252']  # grey, black
+#pal = ['#ca0020', '#f4a582'] # salmon colors
 #pal = ['#253494','#41b6c4'] # light, dark blue
-pal = ['#39778d', '#de787c'] # 
+#pal = ['#39778d', '#de787c'] # 
 pal = ['#de425b','#2c8380']
 #pal = sns.color_palette(pal)
 
@@ -118,8 +118,8 @@ print('\nDuration (min)')
 print(ESP.sample_duration.describe())
 # Note: 93% of samples took 60m or less to collect 
 
-print('\nAvg. Sampling Rate (mL/min)')
-print(ESP.sample_rate.describe())
+# print('\nAvg. Sampling Rate (mL/min)')
+# print(ESP.sample_rate.describe())
 
 
 ### Deployment table
@@ -139,10 +139,39 @@ for i in range(1,len(df_deployment)):
     ind = df_deployment.index[i]
     df_deployment.loc[ind,'gap_days'] = gap.days - 1
 
-# N samples during each deployment
+## N samples during each deployment
 df_deployment = pd.concat([df_deployment, ESP.groupby('deployment').count().date.rename('samples')], axis=1)
 print(df_deployment)
 df_deployment.to_csv(os.path.join(folder,'ESP_logs','deployments_summary.csv'))
+
+print('\nDays missing samples within project range')
+days_missing = [str(d.date()) for d in pd.date_range(ESP.date[0],ESP.date[-1]) if d not in ESP.date.unique()]
+print(days_missing)
+
+
+### Sample per day Plot
+ESP['sample_of_day'] = np.nan  # sample No. for each day
+for d in ESP.date.unique():
+    idx = ESP.loc[ESP.date==d].index.drop_duplicates()
+    ESP.loc[idx,'sample_of_day'] = np.arange(1, len(idx)+1)
+
+samples_of_day = ESP.groupby(['sample_of_day',
+                              'date']).max()['hour'].reset_index().pivot(index='date',
+                                                                         columns='sample_of_day',
+                                                                         values='hour')
+plt.figure(figsize=(12,3))
+# plt.scatter(samples_of_day.index, samples_of_day[1], s=5, label='1st')
+# plt.scatter(samples_of_day.index, samples_of_day[2], s=5, label='2nd')
+# plt.scatter(samples_of_day.index, samples_of_day[3], s=5, label='3rd')
+plt.bar(samples_of_day.index, samples_of_day[3], label='3rd')
+plt.bar(samples_of_day.index, samples_of_day[2], label='2nd')
+plt.bar(samples_of_day.index, samples_of_day[1], label='1st')
+plt.autoscale(enable=True, axis='x', tight=True)
+plt.ylabel('Hour of Day')
+plt.legend(frameon=False, title='Sample of Day:')
+plt.title('Sample Time by Day')
+plt.tight_layout()
+
 
 ### Time Series Plot
 ## Sample volume
@@ -171,10 +200,17 @@ for i in df_deployment.index:
                       edgecolor=None, 
                       alpha=0.25)
 
+## remove fill for missing days
+for i in days_missing:
+    plt.fill_between(y1=3000, 
+                      y2=-100, 
+                      x= [pd.to_datetime(i), pd.to_datetime(i) + datetime.timedelta(days=1)], 
+                      facecolor='w', 
+                      edgecolor=None)
+
 plt.title('Sampling Volumes/Rates', loc='left', pad=10)
 plt.xlabel('')
 plt.xticks(rotation = 0, ha='center')
-
 plt.legend(['Total Volume',
             'Sampling Rate',  #'Target',
             ESPlist[0],ESPlist[1],ESPlist[2]],frameon=False,  
@@ -183,6 +219,9 @@ leg = ax.get_legend()
 leg.legendHandles[2].set_color(pal4c[0])
 leg.legendHandles[3].set_color(pal4c[1])
 leg.legendHandles[4].set_color(pal4c[2])
+
+## Mark Hand sample
+plt.scatter(pd.to_datetime('2/11/2020 07:00'), 1000, s=20,c='k',marker='*')
 
 plt.ylim(-10,2050)
 plt.xlim(x_ax[0],x_ax[-1])
@@ -601,12 +640,12 @@ plt.savefig(os.path.join(folder.replace('data','figures'),'eDNA_time_series_log.
 ### Trout/Coho TS 
 
 ## All values
-#A = df_plot[df_plot.target=='trout'].set_index('dt').sort_index()
-#B = df_plot[df_plot.target=='coho'].set_index('dt').sort_index()
+A = df_plot[df_plot.target=='trout'].set_index('dt').sort_index()
+B = df_plot[df_plot.target=='coho'].set_index('dt').sort_index()
 
 ## Daily mean
-A = df_plot[df_plot.target=='trout'].groupby('date').mean().sort_index()
-B = df_plot[df_plot.target=='coho'].groupby('date').mean().sort_index()
+#A = df_plot[df_plot.target=='trout'].groupby('date').mean().sort_index()
+#B = df_plot[df_plot.target=='coho'].groupby('date').mean().sort_index()
 
 # Rolling mean
 Arm = A['log10eDNA'].rolling(window=7,center=True).mean()
@@ -621,7 +660,6 @@ plt.bar(B.index,B.log10eDNA + 0.5, bottom = -.5, color=pal[0])
 #plt.axhline(0,color=pal[0])
 plt.scatter(B.index,B.log10eDNA, color=pal[0], s=5)
 plt.plot(Brm,color='k')
-
 
 ## Hatchery releases
 plt.scatter(hatch.index.unique(), 3*np.ones(len(hatch.index.unique())),s=18,color='k',marker='$H$') # 'v'
@@ -651,7 +689,6 @@ plot_spines(plt.gca(), offset=0)
 plt.gca().invert_yaxis()
 plt.gca().spines['top'].set_visible(True)
 plt.gca().spines['bottom'].set_visible(False)
-
 
 plt.tight_layout()
 plt.savefig(os.path.join(folder.replace('data','figures'),'eDNA_time_series_log_stem.png'),dpi=300)

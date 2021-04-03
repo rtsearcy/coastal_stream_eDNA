@@ -9,6 +9,7 @@ Reads individual ESP sampling logs and aggregates data into a single spreadsheet
 """
 
 import pandas as pd
+import numpy as np
 import os
 
 folder = '../data/ESP_logs'  # Location of ESP logs
@@ -63,6 +64,8 @@ for c in ['sample_wake','sample_start','sample_end']:  # convert to Datetime, ac
 df['sample_mid'] = df.sample_start + (pd.to_timedelta(df['sample_duration'])/2)  # half way between start and end
 df['sample_mid'] = df.sample_mid.dt.round('s')  # round to nearest second
 
+# Set mid time for samples with only wake time
+df.loc[df.sample_mid.isna(),'sample_mid'] = df.loc[df.sample_mid.isna(),'sample_wake'] 
 
 ### Sample Duration and Rate
 df['sample_duration'] = round(pd.to_timedelta(df['sample_duration']).dt.seconds/60, 2)  # convert sample duration (minutes)
@@ -72,8 +75,15 @@ df.set_index('sample_mid', inplace = True)      # Sort by start date
 df.sort_index(inplace=True)
 
 
+### Identify Time of Day (Morn/Midday/Eve)
+df['date'] = df.index.date                      # create date column
+df['hour'] = df.index.round('H').hour           # create hour column (round to nearest hour)
+df['morn_midday_eve'] = 2 # Sample collected morning/afternoon/evening; Evening > 5p
+df.loc[df.index.hour<17,'morn_midday_eve'] = 1  # Midday - 11a - 5p
+df.loc[df.index.hour<11,'morn_midday_eve'] = 0  # Morn < 11a
+
+
 ### Deployment index
-df['date'] = df.index.date           # create date columns
 c = 1
 df['deployment'] = 1
 for i in range(1,len(df)):
@@ -85,15 +95,9 @@ print('\n')
 print(df.groupby('deployment').agg(pd.Series.mode)[['ESP','lab_field']])  # Deployment type
 
 
-### Identify Time of Day (Morn/Midday/Eve)
-df['morn_midday_eve'] = 2 # Sample collected morning/afternoon/evening; Evening > 5p
-df.loc[df.index.hour<17,'morn_midday_eve'] = 1  # Midday - 11a - 5p
-df.loc[df.index.hour<11,'morn_midday_eve'] = 0  # Morn < 11a 
-
-
 ### Save to new CSV
 lab_control = df[df.lab_field.isin(['control ','control','lab'])]
-print('   # Lab/Control: ' + str(len(lab_control)))
+print('\n# Lab/Control: ' + str(len(lab_control)))
 print('\nMissing:')
 print(df.isnull().sum())  # print missing 
 

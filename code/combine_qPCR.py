@@ -18,7 +18,8 @@ import numpy as np
 import os
 
 folder = '../data/eDNA/'  # Location of qPCR files folder and output location
-subfolder = 'qpcr_csv_results_031721'                 # location of up to date qPCR spreadsheets (from Google Drive)
+subfolder = 'qpcr_csv_results_040121'                 # location of up to date qPCR spreadsheets (from Google Drive)
+
 
 ### Aggregate individual qPCR result files
 df = pd.DataFrame()
@@ -39,11 +40,13 @@ for f in os.listdir(os.path.join(folder,subfolder)):
 print('\nRows in Combined: ' + str(len(df)))
 df.reset_index(inplace=True, drop=True)  # Reset index
 
+
 ### Drop columns we aren't using 
 df.drop(['Reporter','Quencher', 'Automatic Ct Threshold',
          'Ct Threshold','Automatic Baseline', 'Comments',
          'Baseline Start', 'Baseline End', 'Comments', 'HIGHSD', 'NOAMP',
        'EXPFAIL','OUTLIERRG'], axis = 1, inplace = True)
+
 
 #### Parse Sample ID and Dilutions
 df[['id','dilution']] = df['Sample Name'].str.split('-1:', expand=True)
@@ -51,9 +54,9 @@ df.drop('Sample Name', axis=1, inplace=True)
 df.loc[df.dilution.values == None,'dilution'] = '1:1'
 df.loc[df.dilution.values == '5','dilution'] = '1:5'
                 
+
 ### Rename targets and other columns
 df.loc[df['Target Name'] == 'O.kitsuch','Target Name'] = 'O.kisutch'   # Some misspelling
-
 df.loc[df['Target Name'].isin(['O.kisutch','Okisutch','Okitsuch']),'Target Name'] = 'coho'  # Coho Salmon
 df.loc[df['Target Name'].isin(['O.mykiss','Omykiss']),'Target Name'] = 'trout'  # Rainbow/Steelhead Trout
 
@@ -68,30 +71,40 @@ df.rename(columns = {'Cт': 'Ct',
                      'Well':'well'
                       }, inplace=True)
 
+
 ### Index Replicates
-print('\nIndexing replicates...')
+print('\nIndexing replicates, dropping repeated samples...')
 df['replicate'] = np.nan
 for i in df.id.unique():               # iterate through samples with sample IDs
     for t in df.target.unique():       # iterate through target names
         for d in df.dilution.unique(): # iterate through dilutions
             idx = df.loc[(df.id == i) & (df.target == t) & (df.dilution == d)]
-            if len(idx)>0:
+            if len(idx)>3:             # remove duplicate samples
+                new_source = idx.source_file.unique()[-1]  # identify the source file with newest data
+                idx = idx[idx.source_file == new_source]   
+            if len(idx)>0:             # add replicate #s
                 df.loc[idx.index,'replicate'] = np.arange(1,len(idx)+1)
+
+df = df.drop(df[(df.task=='UNKNOWN') & (df.replicate.isna())].index) # Drop duplicate ID replicates
 
 # Check more than 3 replicates
 rgt3 = len(df.loc[df.replicate > 3,'id'].unique())  
-print('# samples w > 3 replicates: ' + str(rgt3))
+print('   # samples w > 3 replicates: ' + str(rgt3))
+
 
 ### Check NTC
 NTC = df[df.task == 'NTC']
 NTC_amp = NTC[NTC.Ct != 'Undetermined']
 print('\n# NTC samples amplified: ' + str(len(NTC_amp)))
 
-### Adjust IDs
+
+### Manually adjust IDs
 df['id'] = df['id'].str.replace('--','-')
+df['id'] = df['id'].str.replace('Scr','SCr')
 df['id'] =  df.id.str.replace('-00','-')  # remove zero padding
 df['id'] =  df.id.str.replace('-0','-')
-                
+               
+ 
 ### Save file
 df.index.name = 'index'
 # column order

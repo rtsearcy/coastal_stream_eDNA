@@ -29,6 +29,8 @@ folder = '../data/'  # Data folder
 df = pd.read_csv(os.path.join(folder,'NOAA_data', 'fish_trap.csv'), 
                  parse_dates = ['date','dt'], index_col=['id'], encoding='latin1')
 
+df['N'] = 1  # count for grouping
+
 ### Date variables
 df = df.sort_values('dt')  # Sort by datetime
 df['year'] = df['dt'].dt.year
@@ -67,10 +69,11 @@ plt.rcParams.update(params)
 
 ### Colors
 pal = ['#969696','#525252']  # grey, black
+pal = ['#de425b','#2c8380']
 pal = sns.color_palette(pal)
 
-pal2c = ['#ca0020', '#f4a582'] # salmon colors
-pal2c = sns.color_palette(pal2c)
+# pal2c = ['#ca0020', '#f4a582'] # salmon colors
+# pal2c = sns.color_palette(pal2c)
 
 
 pal4c = ['#253494','#2c7fb8','#41b6c4','#a1dab4'] # 4 color blue tone
@@ -121,48 +124,47 @@ A = A.reindex(index=date_range)  # reindex to entire date range
 A = A.fillna(value=0)
 
 ### Adult / juvenille barcharts
-plt.figure(figsize=(10,10))
+plt.figure(figsize=(10,5))
 
 plt.subplot(2,1,1)  # coho
-plt.bar(A.index, A['coho','Juvenile'], label='Juvenile')
-plt.bar(A.index, A['coho','Adult'], bottom=A['coho','Juvenile'],label='Adult')
+plt.bar(A.index, A['coho','Juvenile'], label='Juvenile', color=pal[0])
+plt.bar(A.index, A['coho','Adult'], bottom=A['coho','Juvenile'],label='Adult', color='k')
 plt.ylabel('COHO')
-#plt.ylim(0,1.1*A.max().max())
+
 plt.legend(frameon=False)
 
-# plt.twinx(plt.gca())
-# plt.plot(Brm, label='eDNA (7d rolling)',color='k',lw=1)
+plt.yscale('log')
+plt.ylim(0.5,1.1*A.max().max())
+
 
 plt.subplot(2,1,2)  # trout
-plt.bar(A.index, A['trout','Juvenile'], label='Juvenile')
-plt.bar(A.index, A['trout','Adult'], bottom=A['trout','Juvenile'],label='Adult')
+plt.bar(A.index, A['trout','Juvenile'], label='Juvenile', color=pal[1])
+plt.bar(A.index, A['trout','Adult'], bottom=A['trout','Juvenile'],label='Adult', color='k')
 plt.ylabel('TROUT')
-#plt.ylim(0,1.1*A.max().max())
+
 plt.legend(frameon=False)
 
-# plt.twinx(plt.gca())
-# plt.plot(Arm, label='eDNA (7d rolling)',color='k',lw=1)
+plt.yscale('log')
+plt.ylim(0.5,1.1*A.max().max())
 
 plt.tight_layout()
 
+
 ### Adult only
-plt.figure(figsize=(10,10))
+plt.figure(figsize=(10,5))
 
 plt.subplot(2,1,1)  # coho
-plt.bar(A.index, A['coho','Adult'], label='Adult')
+plt.bar(A.index, A['coho','Adult'], label='Adult', color=pal[0])
 plt.ylabel('N')
 #plt.ylim(0,1.1*A.max().max())
 plt.legend(frameon=False)
-#plt.twinx(plt.gca())
-#plt.plot(Brm, label='eDNA (7d rolling)',color='k',lw=1)
+
 
 plt.subplot(2,1,2)  # trout
-plt.bar(A.index, A['trout','Adult'],label='Adult')
+plt.bar(A.index, A['trout','Adult'],label='Adult', color=pal[1])
 plt.ylabel('N')
 #plt.ylim(0,1.1*A.max().max())
 plt.legend(frameon=False)
-#plt.twinx(plt.gca())
-#plt.plot(Arm, label='eDNA (7d rolling)',color='k',lw=1)
 
 plt.tight_layout()
 
@@ -182,24 +184,26 @@ df.groupby(['year_month', 'species','life_stage']).count()['date'].rename('N')
 ### Bar plot - season
 season_plot = season_count.reset_index().pivot(index='season',columns=['life_stage','species'],values='N')
 season_plot = season_plot.loc[['spring','summer','fall','winter']].fillna(0)  # sort by season, fill NAN with 0 count
-plt.figure(figsize=(5,5))
+plt.figure(figsize=(4,5))
 
 plt.subplot(211)  # Adult
-plt.bar(1.5*np.arange(0,len(season_plot.index)) + 1/4, season_plot['Adult','coho'], width=.5, color=pal4c[0])
-plt.bar(1.5*np.arange(0,len(season_plot.index)) - 1/4, season_plot['Adult','trout'], width=.5, color=pal4c[2])
+plt.bar(1.5*np.arange(0,len(season_plot.index)) + 1/4, season_plot['Adult','coho'], width=.5, color=pal[0])
+plt.bar(1.5*np.arange(0,len(season_plot.index)) - 1/4, season_plot['Adult','trout'], width=.5, color=pal[1])
 plt.xticks(ticks=1.5*np.arange(0,len(season_plot.index)), labels=season_plot.index)
 plt.title('N Adults')
 plt.yscale('log')
-plt.legend(['coho','trout'], frameon=False)
+plt.ylim(1,season_plot.max().max())
+#plt.legend(['coho','trout'], frameon=False)
 plot_spines(plt.gca(), offset=0)
 
 plt.subplot(212)  # Juvenile
-plt.bar(1.5*np.arange(0,len(season_plot.index)) + 1/4, season_plot['Juvenile','coho'], width=.5, color=pal4c[0])
-plt.bar(1.5*np.arange(0,len(season_plot.index)) - 1/4, season_plot['Juvenile','trout'], width=.5, color=pal4c[2])
+plt.bar(1.5*np.arange(0,len(season_plot.index)) + 1/4, season_plot['Juvenile','coho'], width=.5, color=pal[0])
+plt.bar(1.5*np.arange(0,len(season_plot.index)) - 1/4, season_plot['Juvenile','trout'], width=.5, color=pal[1])
 plt.xticks(ticks=1.5*np.arange(0,len(season_plot.index)), labels=season_plot.index)
 plt.title('N Juveniles')
 plt.yscale('log')
-#plt.legend(['coho','trout'], frameon=False)
+plt.ylim(1,season_plot.max().max())
+plt.legend(['coho','trout'], frameon=False)
 plot_spines(plt.gca(), offset=0)
 
 plt.tight_layout()

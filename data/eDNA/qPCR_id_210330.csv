@@ -1,0 +1,836 @@
+id,sample_type
+EB3520A,Extraction Blank
+EB3520B,Extraction Blank
+SCr-1,Control
+SCr-10,Deployed
+SCr-100,Deployed
+SCr-101,Deployed
+SCr-102,Deployed
+SCr-103,Deployed
+SCr-104,Deployed
+SCr-105,Deployed
+SCr-106,Deployed
+SCr-107,Deployed
+SCr-108,Deployed
+SCr-109,Deployed
+SCr-11,Deployed
+SCr-110,Deployed
+SCr-111,Deployed
+SCr-112,Deployed
+SCr-113,Deployed
+SCr-114,Deployed
+SCr-115,Deployed
+SCr-116,Deployed
+SCr-117,Deployed
+SCr-118,Deployed
+SCr-119,Deployed
+SCr-12,Deployed
+SCr-120,Deployed
+SCr-121,Deployed
+SCr-122,Deployed
+SCr-123,Deployed
+SCr-124,Deployed
+SCr-125,Deployed
+SCr-126,Deployed
+SCr-127,Deployed
+SCr-128,Deployed
+SCr-129,Deployed
+SCr-13,Deployed
+SCr-130,Deployed
+SCr-131,Deployed
+SCr-133,Control
+SCr-134,Control
+SCr-135,Control
+SCr-136,Control
+SCr-137,Control
+SCr-138,Control
+SCr-139,Deployed
+SCr-14,Deployed
+SCr-140,Deployed
+SCr-141,Deployed
+SCr-142,Deployed
+SCr-143,Deployed
+SCr-144,Deployed
+SCr-145,Deployed
+SCr-146,Deployed
+SCr-147,Deployed
+SCr-148,Deployed
+SCr-149,Deployed
+SCr-15,Deployed
+SCr-150,Deployed
+SCr-151,Deployed
+SCr-152,Deployed
+SCr-153,Deployed
+SCr-154,Deployed
+SCr-155,Deployed
+SCr-156,Deployed
+SCr-157,Deployed
+SCr-158,Deployed
+SCr-159,Deployed
+SCr-16,Deployed
+SCr-160,Deployed
+SCr-160506A,?
+SCr-161,Deployed
+SCr-162,Deployed
+SCr-163,Deployed
+SCr-164,Deployed
+SCr-165,Deployed
+SCr-166,Deployed
+SCr-167,Deployed
+SCr-168,Deployed
+SCr-169,Deployed
+SCr-17,Deployed
+SCr-170,Deployed
+SCr-171,Deployed
+SCr-172,Deployed
+SCr-173,Deployed
+SCr-174,Deployed
+SCr-175,Deployed
+SCr-176,Deployed
+SCr-177,Deployed
+SCr-178,Deployed
+SCr-179,Deployed
+SCr-18,Deployed
+SCr-180,Deployed
+SCr-181,Deployed
+SCr-1814,Deployed
+SCr-182,Deployed
+SCr-183,Deployed
+SCr-184,Deployed
+SCr-185,Deployed
+SCr-186,Deployed
+SCr-187,Deployed
+SCr-188,Deployed
+SCr-189,Deployed
+SCr-19,Deployed
+SCr-190,Deployed
+SCr-190506,Match SCr-136
+SCr-190506A,Match SCr-136
+SCr-190506B,Match SCr-136
+SCr-191,Deployed
+SCr-192,Deployed
+SCr-193,Deployed
+SCr-194,Deployed
+SCr-195,Deployed
+SCr-196,Deployed
+SCr-197,Deployed
+SCr-198,Deployed
+SCr-199,Deployed
+SCr-2,Control
+SCr-20,Deployed
+SCr-200,Deployed
+SCr-201,Deployed
+SCr-202,Deployed
+SCr-203,Deployed
+SCr-204,Deployed
+SCr-205,Deployed
+SCr-206,Deployed
+SCr-207,Deployed
+SCr-208,Deployed
+SCr-209,Deployed
+SCr-21,Deployed
+SCr-210,Deployed
+SCr-211,Deployed
+SCr-212,Deployed
+SCr-213,Deployed
+SCr-214,Deployed
+SCr-215,Deployed
+SCr-216,Deployed
+SCr-217,Deployed
+SCr-218,Deployed
+SCr-219,Deployed
+SCr-22,Deployed
+SCr-220,Deployed
+SCr-221,Deployed
+SCr-222,Deployed
+SCr-223,Deployed
+SCr-224,Deployed
+SCr-225,Deployed
+SCr-226,Deployed
+SCr-227,Deployed
+SCr-228,Deployed
+SCr-229,Deployed
+SCr-23,Deployed
+SCr-230,Deployed
+SCr-231,Deployed
+SCr-232,Deployed
+SCr-233,Deployed
+SCr-234,Deployed
+SCr-235,Deployed
+SCr-236,Deployed
+SCr-237,Deployed
+SCr-238,Deployed
+SCr-239,Deployed
+SCr-24,Deployed
+SCr-240,Deployed
+SCr-241,Deployed
+SCr-242,Deployed
+SCr-243,Deployed
+SCr-244,Deployed
+SCr-245,Deployed
+SCr-246,Deployed
+SCr-247,Deployed
+SCr-248,Deployed
+SCr-249,Deployed
+SCr-25,Deployed
+SCr-250,Deployed
+SCr-251,Deployed
+SCr-252,Deployed
+SCr-253,Deployed
+SCr-254,Deployed
+SCr-255,Deployed
+SCr-256,Deployed
+SCr-257,Deployed
+SCr-258,Deployed
+SCr-259,Deployed
+SCr-26,Deployed
+SCr-260,Deployed
+SCr-261,Deployed
+SCr-262,Control
+SCr-263,Control
+SCr-264,Control
+SCr-265,Control
+SCr-266,Control 
+SCr-267,Control 
+SCr-268,Deployed
+SCr-269,Deployed
+SCr-27,Deployed
+SCr-270,Deployed
+SCr-271,Deployed
+SCr-272,Deployed
+SCr-273,Deployed
+SCr-274,Deployed
+SCr-275,Deployed
+SCr-276,Deployed
+SCr-277,Deployed
+SCr-278,Deployed
+SCr-279,Deployed
+SCr-28,Deployed
+SCr-280,Deployed
+SCr-281,Deployed
+SCr-282,Deployed
+SCr-283,Deployed
+SCr-28326,?
+SCr-284,Deployed
+SCr-285,Deployed
+SCr-286,Deployed
+SCr-287,Deployed
+SCr-288,Deployed
+SCr-289,Deployed
+SCr-29,Deployed
+SCr-290,Deployed
+SCr-291,Deployed
+SCr-292,Deployed
+SCr-293,Deployed
+SCr-294,Deployed
+SCr-295,Deployed
+SCr-296,Deployed
+SCr-297,Deployed
+SCr-298,Deployed
+SCr-299,Deployed
+SCr-3,Control
+SCr-30,Deployed
+SCr-300,Deployed
+SCr-301,Deployed
+SCr-302,Deployed
+SCr-303,Deployed
+SCr-304,Deployed
+SCr-305,Deployed
+SCr-306,Deployed
+SCr-307,Deployed
+SCr-308,Deployed
+SCr-309,Deployed
+SCr-31,Deployed
+SCr-310,Deployed
+SCr-311,Deployed
+SCr-312,Deployed
+SCr-313,Deployed
+SCr-314,Deployed
+SCr-315,Deployed
+SCr-316,Deployed
+SCr-317,Deployed
+SCr-318,Deployed
+SCr-319,Deployed
+SCr-32,Deployed
+SCr-320,Deployed
+SCr-321,Deployed
+SCr-322,Deployed
+SCr-323,Deployed
+SCr-324,Deployed
+SCr-325,Deployed
+SCr-326,Deployed
+SCr-327,Deployed
+SCr-328,Deployed
+SCr-329,Deployed
+SCr-33,Deployed
+SCr-330,Deployed
+SCr-331,Deployed
+SCr-332,Deployed
+SCr-333,Deployed
+SCr-334,Deployed
+SCr-335,Deployed
+SCr-336,Deployed
+SCr-337,Deployed
+SCr-338,Deployed
+SCr-339,Deployed
+SCr-34,Deployed
+SCr-340,Deployed
+SCr-341,Deployed
+SCr-342,Deployed
+SCr-343,Deployed
+SCr-344,Deployed
+SCr-345,Deployed
+SCr-346,Deployed
+SCr-347,Deployed
+SCr-348,Deployed
+SCr-349,Deployed
+SCr-35,Deployed
+SCr-350,Deployed
+SCr-351,Deployed
+SCr-352,Deployed
+SCr-353,Deployed
+SCr-354,Deployed
+SCr-355,Deployed
+SCr-356,Deployed
+SCr-357,Deployed
+SCr-358,Deployed
+SCr-359,Deployed
+SCr-36,Deployed
+SCr-360,Deployed
+SCr-361,Deployed
+SCr-362,Deployed
+SCr-363,Deployed
+SCr-364,Deployed
+SCr-365,Deployed
+SCr-366,Deployed
+SCr-367,Deployed
+SCr-368,Deployed
+SCr-369,Deployed
+SCr-37,Deployed
+SCr-370,Deployed
+SCr-371,Deployed
+SCr-372,Deployed
+SCr-373,Deployed
+SCr-374,Deployed
+SCr-375,Deployed
+SCr-376,Deployed
+SCr-377,Deployed
+SCr-378,Deployed
+SCr-379,Deployed
+SCr-38,Deployed
+SCr-380,Deployed
+SCr-381,Deployed
+SCr-382,Deployed
+SCr-383,Deployed
+SCr-384,Deployed
+SCr-385,Deployed
+SCr-386,Deployed
+SCr-387,Deployed
+SCr-388,Deployed
+SCr-389,Deployed
+SCr-39,Deployed
+SCr-390,Deployed
+SCr-391,Deployed
+SCr-392,Deployed
+SCr-393,Deployed
+SCr-394,Deployed
+SCr-395,Deployed
+SCr-396,Deployed
+SCr-397,Deployed
+SCr-398,Deployed
+SCr-399,Deployed
+SCr-4,Deployed
+SCr-40,Deployed
+SCr-400,Deployed
+SCr-401,Deployed
+SCr-402,Deployed
+SCr-403,Deployed
+SCr-404,Deployed
+SCr-405,Deployed
+SCr-406,Deployed
+SCr-407,Deployed
+SCr-408,Deployed
+SCr-409,Deployed
+SCr-41,Deployed
+SCr-410,Deployed
+SCr-411,Deployed
+SCr-412,Deployed
+SCr-413,Deployed
+SCr-414,Deployed
+SCr-415,Deployed
+SCr-416,Deployed
+SCr-417,Deployed
+SCr-418,Deployed
+SCr-419,Deployed
+SCr-42,Deployed
+SCr-420,Deployed
+SCr-421,Deployed
+SCr-422,Deployed
+SCr-423,Deployed
+SCr-424,Deployed
+SCr-425,Deployed
+SCr-426,Deployed
+SCr-427,Deployed
+SCr-428,Deployed
+SCr-429,Deployed
+SCr-43,Deployed
+SCr-430,Deployed
+SCr-431,Deployed
+SCr-432,Deployed
+SCr-433,Deployed
+SCr-434,Deployed
+SCr-435,Deployed
+SCr-436,Deployed
+SCr-437,Deployed
+SCr-438,Deployed
+SCr-439,Deployed
+SCr-43943,?
+SCr-44,Deployed
+SCr-440,Deployed
+SCr-441,Deployed
+SCr-442,Deployed
+SCr-443,Deployed
+SCr-444,Deployed
+SCr-445,Deployed
+SCr-446,Deployed
+SCr-447,Deployed
+SCr-448,Deployed
+SCr-449,Deployed
+SCr-45,Deployed
+SCr-450,Deployed
+SCr-451,Deployed
+SCr-452,Deployed
+SCr-453,Deployed
+SCr-454,Deployed
+SCr-455,Deployed
+SCr-456,Deployed
+SCr-457,Deployed
+SCr-458,Deployed
+SCr-459,Deployed
+SCr-46,Deployed
+SCr-460,Deployed
+SCr-461,Deployed
+SCr-462,Deployed
+SCr-463,Deployed
+SCr-464,Deployed
+SCr-4642,Deployed
+SCr-465,Deployed
+SCr-466,Deployed
+SCr-467,Deployed
+SCr-468,Deployed
+SCr-469,Deployed
+SCr-47,Deployed
+SCr-470,Deployed
+SCr-471,Deployed
+SCr-472,Deployed
+SCr-473,Deployed
+SCr-474,Deployed
+SCr-475,Deployed
+SCr-476,Deployed
+SCr-477,Deployed
+SCr-478,Deployed
+SCr-479,Deployed
+SCr-48,Deployed
+SCr-480,Deployed
+SCr-481,Deployed
+SCr-482,Deployed
+SCr-483,Deployed
+SCr-484,Deployed
+SCr-485,Deployed
+SCr-486,Deployed
+SCr-487,Deployed
+SCr-488,Deployed
+SCr-489,Deployed
+SCr-49,Deployed
+SCr-490,Deployed
+SCr-491,Deployed
+SCr-492,Deployed
+SCr-493,Deployed
+SCr-494,Deployed
+SCr-495,Deployed
+SCr-496,Deployed
+SCr-497,Deployed
+SCr-498,Deployed
+SCr-499,Deployed
+SCr-5,Deployed
+SCr-50,Deployed
+SCr-500,Deployed
+SCr-501,Deployed
+SCr-502,Deployed
+SCr-503,Deployed
+SCr-504,Deployed
+SCr-505,Deployed
+SCr-506,Deployed
+SCr-507,Deployed
+SCr-508,Deployed
+SCr-509,Deployed
+SCr-51,Deployed
+SCr-510,Deployed
+SCr-511,Deployed
+SCr-512,Deployed
+SCr-513,Deployed
+SCr-514,Deployed
+SCr-515,Deployed
+SCr-516,Deployed
+SCr-517,Deployed
+SCr-518,Deployed
+SCr-519,Deployed
+SCr-52,Deployed
+SCr-520,Deployed
+SCr-521,Deployed
+SCr-522,Deployed
+SCr-523,Deployed
+SCr-524,Deployed
+SCr-525,Deployed
+SCr-526,Deployed
+SCr-527,Deployed
+SCr-528,Deployed
+SCr-529,Deployed
+SCr-53,Deployed
+SCr-530,Deployed
+SCr-531,Deployed
+SCr-532,Deployed
+SCr-533,Deployed
+SCr-534,Deployed
+SCr-535,Deployed
+SCr-536,Deployed
+SCr-537,Deployed
+SCr-538,Deployed
+SCr-539,Deployed
+SCr-54,Deployed
+SCr-540,Deployed
+SCr-541,Deployed
+SCr-542,Deployed
+SCr-543,Deployed
+SCr-544,Deployed
+SCr-545,Deployed
+SCr-546,Deployed
+SCr-547,Deployed
+SCr-548,Deployed
+SCr-549,Deployed
+SCr-55,Deployed
+SCr-550,Deployed
+SCr-551,Deployed
+SCr-552,Deployed
+SCr-553,Deployed
+SCr-554,Deployed
+SCr-555,Deployed
+SCr-556,Deployed
+SCr-557,Deployed
+SCr-558,Deployed
+SCr-559,Deployed
+SCr-56,Deployed
+SCr-560,Deployed
+SCr-561,Deployed
+SCr-562,Deployed
+SCr-563,Deployed
+SCr-564,Deployed
+SCr-565,Deployed
+SCr-566,Deployed
+SCr-567,Deployed
+SCr-568,Deployed
+SCr-569,Deployed
+SCr-57,Deployed
+SCr-570,Deployed
+SCr-571,Deployed
+SCr-572,Deployed
+SCr-573,Deployed
+SCr-574,Deployed
+SCr-575,Deployed
+SCr-576,Deployed
+SCr-577,Deployed
+SCr-578,Deployed
+SCr-579,Deployed
+SCr-58,Deployed
+SCr-580,Deployed
+SCr-581,Deployed
+SCr-582,Deployed
+SCr-583,Deployed
+SCr-584,Deployed
+SCr-585,Deployed
+SCr-586,Deployed
+SCr-587,Deployed
+SCr-588,Deployed
+SCr-589,Deployed
+SCr-59,Deployed
+SCr-590,Deployed
+SCr-591,Deployed
+SCr-592,Deployed
+SCr-593,Deployed
+SCr-594,control 
+SCr-595,control 
+SCr-596,control 
+SCr-597,Deployed
+SCr-598,Deployed
+SCr-599,Deployed
+SCr-6,Deployed
+SCr-60,Deployed
+SCr-600,Deployed
+SCr-61,Deployed
+SCr-62,Deployed
+SCr-63,Deployed
+SCr-64,Deployed
+SCr-65,Deployed
+SCr-66,Deployed
+SCr-67,Deployed
+SCr-68,Deployed
+SCr-69,Deployed
+SCr-7,Deployed
+SCr-70,Deployed
+SCr-71,Deployed
+SCr-72,Deployed
+SCr-725,Deployed
+SCr-726,Deployed
+SCr-727,Deployed
+SCr-728,Deployed
+SCr-729,Deployed
+SCr-73,Deployed
+SCr-730,Deployed
+SCr-731,Deployed
+SCr-732,Deployed
+SCr-733,Deployed
+SCr-734,Deployed
+SCr-735,Deployed
+SCr-736,Deployed
+SCr-737,Deployed
+SCr-738,Deployed
+SCr-739,Deployed
+SCr-74,Deployed
+SCr-740,Deployed
+SCr-741,Deployed
+SCr-742,Deployed
+SCr-743,Deployed
+SCr-744,Deployed
+SCr-745,Deployed
+SCr-746,Deployed
+SCr-747,Deployed
+SCr-748,Deployed
+SCr-749,Deployed
+SCr-75,Deployed
+SCr-750,Deployed
+SCr-751,Deployed
+SCr-752,Deployed
+SCr-753,Deployed
+SCr-754,Deployed
+SCr-755,Deployed
+SCr-756,Deployed
+SCr-757,Deployed
+SCr-758,Deployed
+SCr-759,Deployed
+SCr-76,Deployed
+SCr-760,Deployed
+SCr-761,Deployed
+SCr-762,Deployed
+SCr-763,Deployed
+SCr-764,Deployed
+SCr-765,Deployed
+SCr-766,Deployed
+SCr-767,Deployed
+SCr-768,Deployed
+SCr-769,Deployed
+SCr-77,Deployed
+SCr-770,Deployed
+SCr-771,Deployed
+SCr-772,Deployed
+SCr-773,Deployed
+SCr-774,Deployed
+SCr-775,Deployed
+SCr-776,Deployed
+SCr-777,Deployed
+SCr-778,Deployed
+SCr-779,Deployed
+SCr-78,Deployed
+SCr-780,Deployed
+SCr-781,Deployed
+SCr-782,Deployed
+SCr-783,Deployed
+SCr-784,Deployed
+SCr-785,Deployed
+SCr-786,Deployed
+SCr-787,Deployed
+SCr-788,Deployed
+SCr-789,Deployed
+SCr-79,Deployed
+SCr-790,Deployed
+SCr-791,Deployed
+SCr-792,Deployed
+SCr-793,Deployed
+SCr-794,Deployed
+SCr-795,Deployed
+SCr-796,Deployed
+SCr-797,Deployed
+SCr-798,Deployed
+SCr-799,Deployed
+SCr-8,Deployed
+SCr-80,Deployed
+SCr-800,Deployed
+SCr-801,Deployed
+SCr-802,Deployed
+SCr-803,Deployed
+SCr-804,Deployed
+SCr-805,Deployed
+SCr-806,Deployed
+SCr-807,Deployed
+SCr-808,Deployed
+SCr-809,Deployed
+SCr-81,Deployed
+SCr-810,Deployed
+SCr-811,Deployed
+SCr-812,Deployed
+SCr-813,Deployed
+SCr-814,Deployed
+SCr-815,Deployed
+SCr-816,Deployed
+SCr-817,Deployed
+SCr-818,Deployed
+SCr-819,Deployed
+SCr-82,Deployed
+SCr-820,Deployed
+SCr-821,Deployed
+SCr-822,Deployed
+SCr-823,Deployed
+SCr-824,Deployed
+SCr-825,Deployed
+SCr-826,Deployed
+SCr-827,Deployed
+SCr-828,Deployed
+SCr-829,Deployed
+SCr-83,Deployed
+SCr-830,Deployed
+SCr-831,Deployed
+SCr-832,Deployed
+SCr-833,Deployed
+SCr-834,Deployed
+SCr-835,Deployed
+SCr-836,Deployed
+SCr-837,Deployed
+SCr-838,Deployed
+SCr-839,Deployed
+SCr-84,Deployed
+SCr-840,Deployed
+SCr-841,Deployed
+SCr-842,Deployed
+SCr-843,Deployed
+SCr-844,Deployed
+SCr-845,Deployed
+SCr-846,Deployed
+SCr-847,Deployed
+SCr-848,Deployed
+SCr-849,Deployed
+SCr-85,Deployed
+SCr-850,Deployed
+SCr-851,Deployed
+SCr-852,Deployed
+SCr-853,Deployed
+SCr-854,Deployed
+SCr-855,Deployed
+SCr-856,Deployed
+SCr-857,Deployed
+SCr-86,Deployed
+SCr-87,Deployed
+SCr-88,Deployed
+SCr-89,Deployed
+SCr-9,Deployed
+SCr-90,Deployed
+SCr-91,Deployed
+SCr-92,Deployed
+SCr-93,Deployed
+SCr-94,Deployed
+SCr-95,Deployed
+SCr-96,Deployed
+SCr-97,Deployed
+SCr-98,Deployed
+SCr-99,Deployed
+SCr-BCN-101719-15A,Spatial Study
+SCr-BCN-101719-15A7,Spatial Study
+SCr-BCN-101719-15B,Spatial Study
+SCr-BCN-101719-15C,Spatial Study
+SCr-BCN-101719-15D,Spatial Study
+SCr-BCN-101719-16A,Spatial Study
+SCr-BCN-101719-16B,Spatial Study
+SCr-BCN-101719-16C,Spatial Study
+SCr-BCN-101719-16D,Spatial Study
+SCr-BCN-101719-16E,Spatial Study
+SCr-BCN-101719-16F,Spatial Study
+SCr-BCN-101719-16G,Spatial Study
+SCr-BCN-101719-17A,Spatial Study
+SCr-EB-102020,Extraction Blank
+SCr-EB06,Extraction Blank
+SCr-EB1,Extraction Blank
+SCr-EB101,Extraction Blank
+SCr-EB102,Extraction Blank
+SCr-EB11,Extraction Blank
+SCr-EB12,Extraction Blank
+SCr-EB15,Extraction Blank
+SCr-EB16,Extraction Blank
+SCr-EB17,Extraction Blank
+SCr-EB18,Extraction Blank
+SCr-EB19,Extraction Blank
+SCr-EB2,Extraction Blank
+SCr-EB20,Extraction Blank
+SCr-EB201,Extraction Blank
+SCr-EB202,Extraction Blank
+SCr-EB204,Extraction Blank
+SCr-EB205,Extraction Blank
+SCr-EB21,Extraction Blank
+SCr-EB22,Extraction Blank
+SCr-EB23,Extraction Blank
+SCr-EB24,Extraction Blank
+SCr-EB26,Extraction Blank
+SCr-EB3,Extraction Blank
+SCr-EB4,Extraction Blank
+SCr-EB5,Extraction Blank
+SCr-EB7,Extraction Blank
+SCr-EB8,Extraction Blank
+SCr-EB9,Extraction Blank
+SCr-Hand-1A,Hand - 2/11/20
+SCr-Hand1B,Hand - 2/11/20
+SCr-Match-1B,Match SCr-728
+SCr-Match1A,Match SCr-728
+SCr-Match1E,Match SCr-730
+SCr-NTC1,?
+SCr-Neg2,Control 
+SCr-Neg_3874,Control 
+SCr-SP-M-1-2A,Spatial Study
+SCr-SP-M-1-3A,Spatial Study
+SCr-SP-M-1-4A,Spatial Study
+SCr-SP-M-1-5A,Spatial Study
+SCr-SP-M-1-6A,Spatial Study
+SCr-SP-M-1-7A,Spatial Study
+SCr-SP-M-1-8A,Spatial Study
+SCr-Sp-101719-BCN,Spatial Study
+SCr-Sp-101719-BCN-17B,Spatial Study
+SCr-Sp-101719-BCN-17C,Spatial Study
+SCr-Sp-101719-BCN-17D,Spatial Study
+SCr-Sp-101719-BCN-17E,Spatial Study
+SCr-Sp-101719-BCN-17F,Spatial Study
+SCr-Sp-101719-BCN-17G,Spatial Study
+SCr-Sp-101719-BCN-18A,Spatial Study
+SCr-Sp-101719-BCN-18B,Spatial Study
+SCr-Sp-101719-BCN-18C,Spatial Study
+SCr-Sp-101719-BCN-18D,Spatial Study
+SCr-Sp-101719-BCN-18E,Spatial Study
+SCr-Sp-101719-BCN-18F,Spatial Study
+SCr-Sp-BCN-101720-18G,Spatial Study
+SCr-Sp-M-45-1C-200305,Spatial Study
+SCr-Sp-SCN-28C,Spatial Study
+SCr-Sp-SCN-28D,Spatial Study
+SCr-Sp-SCN-28E,Spatial Study
+SCr-Sp-SCN-28F,Spatial Study
+SCr-Sp-SCN-28G,Spatial Study
+SCr-Sp-SCN-28H,Spatial Study
+SCr-Sp-SCN-28I,Spatial Study
+SCr-Sp-SCN-28J,Spatial Study
+SCr-Sp-SCN21A-20200305,Spatial Study
+SCr-Sp-SCN21B-20200305,Spatial Study
+SCr-Sp-SCN21C-20200305,Spatial Study
+SCr-Sp-SCN21D-20200305,Spatial Study
+SCr-Sp-SCN22A-20200305,Spatial Study
+SCr-Sp-SCN22B-20200305,Spatial Study
+SCr-hand1C,Hand - 2/11/20
+SCr-match1C,Match SCr-728
+SCr-match1D,Match SCr-730
+SCr-match1F,Match SCr-730
+SCr-neg,ESP Negative
+SCr-neg1,ESP Negative
+Scr-176,Deployed

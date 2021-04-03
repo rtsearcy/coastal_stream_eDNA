@@ -48,7 +48,7 @@ for t in df.target.unique():
     df.loc[x.index, 'conc'] = 10**x  # copies/rxn
     
     
-### Drop High Conc. Outliers 
+### High Conc. Outliers 
 # Samples with only 1 amplified at a high conc.(> 10,000 copies/rxn)
 print('\nOutliers (single reps > 10,000 copies/rxn')
 outlier = (df[df.conc > 10000].groupby(['id','target','dilution']).count().replicate == 1)
@@ -113,10 +113,12 @@ for t in df.target.unique():
     df.loc[(df.target==t) & (df.conc < loq),'BLOQ'] = 1
     print('  BLOQ: ' + str(df.loc[(df.target==t),'BLOQ'].sum()))
 
+
 ### Factor Dilutions
 # df.loc[df.dilution == '1:5','conc'] *= 5
 df.loc[(df.dilution == '1:5') & (df.BLOD == 0 ),'conc'] *= 5  # convert conc > LOD
 df['log10conc'] = np.log10(df.conc)
+
 
 ### Save and Plot All Replicate Concentrations
 plt.figure()
@@ -313,6 +315,10 @@ for i in df_delta.index.unique():
         df_mean.loc[(df_mean.id == i[0]) & (df_mean.target == i[1]),'inhibition'] = -1 # overdiluted
     elif (dct >= -2.8) & (dct <= -1.8):
         df_mean.loc[(df_mean.id == i[0]) & (df_mean.target == i[1]),'inhibition'] = 0  # in range
+    else:  # if dct = NaN
+        d = df_delta.loc[i]
+        if (len(d) == 2) & ~np.isnan(d[d.dilution=='1:5']['Ct_Mean'].values[0]):
+            df_mean.loc[(df_mean.id == i[0]) & (df_mean.target == i[1]),'inhibition'] = 1  # inhibited
     
 df_delta[['Ct_Mean','delta_Ct']].to_csv(os.path.join(folder,'delta_Ct.csv'))  # separate dataframe with delta_Ct
 
