@@ -317,8 +317,9 @@ for i in df_delta.index.unique():
         df_mean.loc[(df_mean.id == i[0]) & (df_mean.target == i[1]),'inhibition'] = 0  # in range
     else:  # if dct = NaN
         d = df_delta.loc[i]
-        if (len(d) == 2) & ~np.isnan(d[d.dilution=='1:5']['Ct_Mean'].values[0]):
-            df_mean.loc[(df_mean.id == i[0]) & (df_mean.target == i[1]),'inhibition'] = 1  # inhibited
+        if (len(d) == 2):
+            if ~np.isnan(d[d.dilution=='1:5']['Ct_Mean'].values[0]):
+                df_mean.loc[(df_mean.id == i[0]) & (df_mean.target == i[1]),'inhibition'] = 1  # inhibited
     
 df_delta[['Ct_Mean','delta_Ct']].to_csv(os.path.join(folder,'delta_Ct.csv'))  # separate dataframe with delta_Ct
 

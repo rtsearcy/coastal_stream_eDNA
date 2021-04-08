@@ -67,6 +67,7 @@ df['sample_mid'] = df.sample_mid.dt.round('s')  # round to nearest second
 # Set mid time for samples with only wake time
 df.loc[df.sample_mid.isna(),'sample_mid'] = df.loc[df.sample_mid.isna(),'sample_wake'] 
 
+
 ### Sample Duration and Rate
 df['sample_duration'] = round(pd.to_timedelta(df['sample_duration']).dt.seconds/60, 2)  # convert sample duration (minutes)
 df['sample_rate'] = df.vol_actual / df.sample_duration  # avg. sampling rate
@@ -78,7 +79,7 @@ df.sort_index(inplace=True)
 ### Identify Time of Day (Morn/Midday/Eve)
 df['date'] = df.index.date                      # create date column
 df['hour'] = df.index.round('H').hour           # create hour column (round to nearest hour)
-df['morn_midday_eve'] = 2 # Sample collected morning/afternoon/evening; Evening > 5p
+df['morn_midday_eve'] = 2 # Sample collected morning/afternoon/evening; Evening >= 5p
 df.loc[df.index.hour<17,'morn_midday_eve'] = 1  # Midday - 11a - 5p
 df.loc[df.index.hour<11,'morn_midday_eve'] = 0  # Morn < 11a
 

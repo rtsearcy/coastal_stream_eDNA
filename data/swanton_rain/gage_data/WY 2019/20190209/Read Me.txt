@@ -1,0 +1,5 @@
+Pendant logger at HS were set to increments of 1 rather than 0.01. The values for each event unit (inches of rainfall) need to be adjusted. 
+
+Data from around Jan 30- Feb 2 2019 needs to be reviewed and adjusted.
+
+HS pendant logger increments were corrected 2/9/18

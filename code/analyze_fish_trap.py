@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#%% Load Data
+#%% Initialize
 """
 Created on Wed Jan 13 21:03:18 2021
 
@@ -22,38 +22,7 @@ import os
 import datetime
 from eDNA_corr import eDNA_corr
 
-folder = '../data/'  # Data folder
-
-### Load Fish data
-# Contains sampling times, volumes, ESP name
-df = pd.read_csv(os.path.join(folder,'NOAA_data', 'fish_trap.csv'), 
-                 parse_dates = ['date','dt'], index_col=['id'], encoding='latin1')
-
-df['N'] = 1  # count for grouping
-
-### Date variables
-df = df.sort_values('dt')  # Sort by datetime
-df['year'] = df['dt'].dt.year
-df['month'] = df['dt'].dt.month
-df['year_month'] = df.year.astype(str) + '-' + df.month.astype(str).str.rjust(2,'0')
-df['week'] = df['dt'].dt.isocalendar().week
-df['year_week'] = df.year.astype(str) + '-' + df.week.astype(str).str.rjust(2,'0')
-
-df['wet_season'] = 0  # dry season
-df.loc[df.month.isin([10,11,12,1,2,3,4]),'wet_season'] = 1 # wet season
-df['season'] = 'winter' # Dec-Feb
-df.loc[df.month.isin([3,4,5]),'season'] = 'spring'
-df.loc[df.month.isin([6,7,8]),'season'] = 'summer'
-df.loc[df.month.isin([9,10,11]),'season'] = 'fall'
-
-### Load Hatchery Data
-# For plots
-# Adult/Juvenile Steelhead and Coho counts
-hatch = pd.read_csv(os.path.join(folder,'NOAA_data', 'hatchery_releases.csv'), 
-                 parse_dates = ['date'], index_col=['date'])
-
-
-#%% Plot parameters / functions
+### Plot parameters / functions
 params = {
    'axes.labelsize': 11,
    'font.size': 11,
@@ -97,7 +66,131 @@ def plot_spines(axx, offset=8): # Offset position, Hide the right and top spines
     axx.spines['right'].set_visible(False)
     axx.spines['top'].set_visible(False)
 
-#%% - Stats - 
+#%%Load Data
+
+folder = '../data/'  # Data folder
+
+### Load Fish data
+# Contains sampling times, volumes, ESP name
+df = pd.read_csv(os.path.join(folder,'NOAA_data', 'fish_trap.csv'), 
+                 parse_dates = ['date','dt'], index_col=['id'], encoding='latin1')
+
+df['N'] = 1  # count for grouping
+
+### Date variables
+df = df.sort_values('dt')  # Sort by datetime
+df['year'] = df['dt'].dt.year
+df['month'] = df['dt'].dt.month
+df['year_month'] = df.year.astype(str) + '-' + df.month.astype(str).str.rjust(2,'0')
+df['week'] = df['dt'].dt.isocalendar().week
+df['year_week'] = df.year.astype(str) + '-' + df.week.astype(str).str.rjust(2,'0')
+
+df['wet_season'] = 0  # dry season
+df.loc[df.month.isin([10,11,12,1,2,3,4]),'wet_season'] = 1 # wet season
+df['season'] = 'winter' # Dec-Feb
+df.loc[df.month.isin([3,4,5]),'season'] = 'spring'
+df.loc[df.month.isin([6,7,8]),'season'] = 'summer'
+df.loc[df.month.isin([9,10,11]),'season'] = 'fall'
+
+### Load Hatchery Data
+# For plots
+# Adult/Juvenile Steelhead and Coho counts
+hatch = pd.read_csv(os.path.join(folder,'NOAA_data', 'hatchery_releases.csv'), 
+                 parse_dates = ['date'], index_col=['date'])
+
+
+#%% Biomass estimation
+
+### Summary - Biomass / Length
+print('\nTotal Biomass: ' + str(df.mass.sum()/1000) + ' kg')
+print('Median mass (g) / length (mm):')
+print(pd.concat([
+    df.groupby(['species','life_stage']).count()['length'].rename('N_length'),
+    df.groupby(['species','life_stage']).median()[['length']],
+    df.groupby(['species','life_stage']).count()['mass'].rename('N_mass'),
+    df.groupby(['species','life_stage']).median()[['mass']]],
+    axis=1))
+## Not all fish had mass or length measurements
+
+
+### Seperate targets and life stage
+trout = df[df.species=='trout']
+trout_a = trout[trout.life_stage=='Adult']
+trout_j = trout[trout.life_stage=='Juvenile']
+
+coho = df[df.species=='coho']
+coho_a = coho[coho.life_stage=='Adult']
+coho_j = coho[coho.life_stage=='Juvenile']
+
+
+### Plot length vs. mass
+plt.figure(figsize=(8,4))
+ 
+plt.subplot(121) # Adults
+plt.scatter('length','mass',s=8,color=pal[1],marker='^',data=trout_a, label='O. mykiss')
+plt.scatter('length','mass',s=10,color=pal[0],marker='o',data=coho_a,label='O. kisutch')
+plt.ylabel('Mass (g)')
+plt.xlabel('Length (mm)')
+plt.title('Adults')
+plt.legend(frameon=False, loc='upper left')
+
+plot_spines(plt.gca())
+
+plt.subplot(122) # Juveniles
+plt.scatter('length','mass',s=8,color=pal[1],marker='^',data=trout_j, label='O. mykiss')
+plt.scatter('length','mass',s=10,color=pal[0],marker='o',data=coho_j,label='O. kisutch')
+#plt.ylabel('Mass (g)')
+plt.xlabel('Length (mm)')
+plt.title('Juveniles')
+
+plot_spines(plt.gca())
+
+plt.tight_layout()
+
+
+### Regression to estimate missing biomass
+print('\nRegression mass on length')
+df_reg = pd.DataFrame()
+c=0
+for d in [coho_a,trout_a,coho_j,trout_j]:
+    
+    ## simple linear regression
+    lm1 = sm.OLS(d['mass'],d['length'],missing='drop').fit()
+    
+    ## 2nd order linear regression
+    lm2 = sm.OLS(d['mass'],d['length']*d['length'],missing='drop').fit()
+    
+    reg_dict = {
+        'beta1': round(lm1.params[0],4),  # first order parameter
+        'Rsq1':round(lm1.rsquared,3),
+        'beta2': round(lm2.params[0],4),  # first order parameter
+        'Rsq2':round(lm2.rsquared,3),
+        'N reg': len(d[['mass','length']].dropna()),
+        'N all': len(d),
+        '% Missing': round(100*d.mass.isna().sum()/len(d),3)
+        }
+    df_reg = df_reg.append(pd.DataFrame(reg_dict, index=[c]))
+    c+=1
+df_reg['species'] = ['coho','trout','coho','trout']
+df_reg['life_stage']= ['Adult','Adult','Juvenile','Juvenile']
+df_reg.set_index(['species','life_stage'],inplace=True)
+print(df_reg)
+
+
+### Backfill missing mass
+print('\nEstimating mass from length')
+df['mass_est'] = df['mass']
+for i in df_reg.index:
+    print(i)
+    idx = df.loc[(df.species==i[0])&(df.life_stage==i[1])&(np.isnan(df.mass))].index
+    print(str(len(idx)) + ' missing mass points')
+    mass_est = df_reg.loc[i,'beta2'] *  (df.loc[idx,'length']**2)
+    df.loc[idx,'mass_est'] = mass_est
+    print(str(len(mass_est.dropna())) + ' points backfilled\n')
+
+g = df.groupby(['species','life_stage'])['mass_est']
+print(pd.concat([g.count(),g.mean()],axis=1))
+
 #%% Counts
 print('Date Range: ' + str(df.date.iloc[0].date()) + ' to ' + str(df.date.iloc[-1].date()))
 print('Days of counts: ' + str(len(df.date.unique())))
@@ -116,9 +209,6 @@ print(df.groupby(['species','life_stage_cat','adult_live']).count()['date'].rena
 date_range = pd.date_range(df.date.iloc[0].date(), '05-01-2020')  # date range of datasets
 # Counts
 A = df.groupby(['species','life_stage','date']).count()['year'].rename('value').reset_index()   # Find counts by species and life stage 
-# Mass (not available for every fish)
-#A = (df.groupby(['species','life_stage','date']).sum()['mass'].rename('value')/1000).reset_index()
-
 A = A.pivot(index='date',columns=['species','life_stage'],values='value')
 A = A.reindex(index=date_range)  # reindex to entire date range
 A = A.fillna(value=0)
@@ -129,13 +219,13 @@ plt.figure(figsize=(10,5))
 plt.subplot(2,1,1)  # coho
 plt.bar(A.index, A['coho','Juvenile'], label='Juvenile', color=pal[0])
 plt.bar(A.index, A['coho','Adult'], bottom=A['coho','Juvenile'],label='Adult', color='k')
-plt.ylabel('COHO')
 
+plt.ylabel('COHO')
+plot_spines(plt.gca(),0)
 plt.legend(frameon=False)
 
 plt.yscale('log')
 plt.ylim(0.5,1.1*A.max().max())
-
 
 plt.subplot(2,1,2)  # trout
 plt.bar(A.index, A['trout','Juvenile'], label='Juvenile', color=pal[1])
@@ -146,8 +236,11 @@ plt.legend(frameon=False)
 
 plt.yscale('log')
 plt.ylim(0.5,1.1*A.max().max())
-
+plot_spines(plt.gca(),0)
 plt.tight_layout()
+
+plt.savefig(os.path.join(folder.replace('data','figures'),'fish_counts_time_series.png'),dpi=300)
+
 
 
 ### Adult only
@@ -167,6 +260,12 @@ plt.ylabel('N')
 plt.legend(frameon=False)
 
 plt.tight_layout()
+
+### Time of count histogram
+# Mostly around 10a, many without timestamp (assume morning)
+plt.figure()
+df.dt.dt.hour.hist()
+plt.title('Hour of Count')
 
 
 #%% Counts by season
@@ -208,24 +307,67 @@ plot_spines(plt.gca(), offset=0)
 
 plt.tight_layout()
 
+#%% Biomass time series
+date_range = pd.date_range(df.date.iloc[0].date(), '05-01-2020')  # date range of datasets
 
-#%% Biomass / Length
-print('\nTotal Biomass: ' + str(df.mass.sum()/1000) + ' kg')
-print('Median mass (g) / length (mm):')
-print(pd.concat([
-    df.groupby(['species','life_stage']).count()['length'].rename('N_length'),
-    df.groupby(['species','life_stage']).median()[['length']],
-    df.groupby(['species','life_stage']).count()['mass'].rename('N_mass'),
-    df.groupby(['species','life_stage']).median()[['mass']]],
-    axis=1))
-## Not all fish had mass or length measurements
+# Mass (not available for every fish)
+#A = (df.groupby(['species','life_stage','date']).sum()['mass'].rename('value')/1000).reset_index()
 
-### Plot
-#sns.catplot(x='origin',y='mass',hue='species',row='life_stage',data=df)
+# Estimated mass (from regressions)
+A = (df.groupby(['species','life_stage','date']).sum()['mass_est'].rename('value')/1000).reset_index()
 
+A = A.pivot(index='date',columns=['species','life_stage'],values='value')
+A = A.reindex(index=date_range)  # reindex to entire date range
+A = A.fillna(value=0)
 
-# ### Time of count histogram
-## Mostly around 10a, many without timestamp (assume morning)
-# plt.figure()
-# df.dt.dt.hour.hist()
-# plt.title('Hour of Count')
+plt.figure(figsize=(10,5))
+
+plt.subplot(2,1,1)  # coho
+plt.bar(A.index, A['coho','Juvenile'], label='Juvenile', color=pal[0])
+plt.bar(A.index, A['coho','Adult'], bottom=A['coho','Juvenile'],label='Adult', color='k')
+#plt.plot([],color='b',lw=2,ls=':') # if loaded from analyze_ESP_eDNA.py
+plt.ylabel('Mass (kg)')
+plt.legend(frameon=False, loc = 'upper right')
+
+## Hatchery releases
+plt.scatter(hatch.index.unique(), 
+            .25*A.max().max()*np.ones(len(hatch.index.unique())),
+            s=18,color='k',marker='$H$') # 'v'
+
+plt.yscale('log')
+plt.ylim(0.5,1.1*A.max().max())
+
+# ## eDNA overlay
+# ax2 = plt.twinx()
+# C.loc[C<0] = 0
+# plt.plot(C,color='b',lw=2,ls=':') # if loaded from analyze_ESP_eDNA.py
+# plt.ylabel('log$_{10}$(copies/mL)')
+
+plt.xlim(date_range[0],date_range[-1])
+plt.text(date_range[5], .75*A.max().max(),'O. kisutch')
+plt.gca().set_xticklabels([])
+plot_spines(plt.gca(),0)
+
+plt.subplot(2,1,2)  # trout
+plt.bar(A.index, A['trout','Juvenile'], label='Juvenile', color=pal[1])
+plt.bar(A.index, A['trout','Adult'], bottom=A['trout','Juvenile'],label='Adult', color='k')
+#plt.plot([],color='b',lw=2,ls=':') # if loaded from analyze_ESP_eDNA.py
+plt.ylabel('Mass (kg)')
+plt.legend(frameon=False, loc = 'upper right')
+
+plt.yscale('log')
+plt.ylim(0.5,1.1*A.max().max())
+
+# ## eDNA overlay
+# ax2 = plt.twinx()
+# T.loc[T<0] = 0
+# plt.plot(T,color='b',lw=2,ls=':') # if loaded from analyze_ESP_eDNA.py
+# plt.ylabel('log$_{10}$(copies/mL)')
+
+plt.xlim(date_range[0],date_range[-1])
+plt.text(date_range[5], .75*A.max().max(),'O. mykiss')
+
+plot_spines(plt.gca(),0)
+plt.tight_layout()
+
+plt.savefig(os.path.join(folder.replace('data','figures'),'fish_biomass_time_series.png'),dpi=300)

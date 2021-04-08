@@ -1,0 +1,15 @@
+This folder contains rain gage downloads for the 2019 water year
+
+This folder was created by Madelyn Savan on 11/13/2018
+
+The data in this folder has been copied from WY 2019 on the Telog Computer that is kept in the water lab
+
+Each folder is named the date that the downloads were completed 
+
+Each .hobo and .csv file is named the rain gage location followed by the date of the download
+      ex: The file "waterlab_2018112" is found in R:/Data/Watershed Data/WY 2019/20181113
+
+The field notebook is titled Rain Gage Data 2018-19 and is kept in the water lab
+
+
+
