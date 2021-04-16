@@ -184,17 +184,20 @@ df_mean = df_mean[~df_mean[['id','target','dilution']].duplicated()] # drop dupl
 df_mean.drop(['conc','log10conc'], axis=1,inplace=True)
 df_mean.rename(columns={'conc_mean':'conc','log10conc_mean':'log10conc'}, inplace=True) # rename conc_mean
 
-df_mean['BLOD'] = 0   # Declare BLOD/BLOQ for sample mean
+df_mean['detected'] = 0   # Declare detected/BLOD/BLOQ for sample mean
+df_mean['BLOD'] = 0
 df_mean['BLOQ'] = 0
 for t in df_mean.target.unique():  
     for d  in df_mean.dilution.unique():
+        # If at least one replicate amplified, DNA was detected
+        df_mean.loc[(df_mean.target==t) & (df_mean.n_amplified > 0),'detected'] = 1
+        
         dil_factor = int(d[-1])
         lod = float(df_stand[df_stand.target==t]['LOD']) * dil_factor
         loq = float(df_stand[df_stand.target==t]['LOQ']) * dil_factor
         df_mean.loc[(df_mean.target==t) & (df_mean.conc < lod),'BLOD'] = 1
         df_mean.loc[(df_mean.target==t) & (df_mean.conc < loq),'BLOQ'] = 1
     
-#%%
 ### Check ΔCt between dilution pairs
 # Theory:
 # Ct1 = slope*np.log10(c1) + intercept
@@ -331,6 +334,7 @@ df_mean = df_mean[[
          'conc_sd',
          'log10conc',       
          'log10conc_sd',
+         'detected',        # at least one replicate amplified
          'BLOD',            # for mean
          'BLOQ',
          'n_replicates',
@@ -346,3 +350,13 @@ df_mean = df_mean[[
 df_mean = df_mean.sort_values(['id','target','dilution'])
 df_mean.to_csv(os.path.join(folder,'qPCR_calculated_mean.csv'),index=False)  # Save
 print('\nMean concentrations saved')
+
+
+### CV of sample Ct values
+df_mean['CV'] = df_mean['Ct_sd'] / df_mean['Ct_Mean']
+print('\nCV of Ct values')
+print(df_mean.groupby(['target','dilution'])['CV'].describe())
+plt.figure()
+sns.boxplot(x='target', y ='CV', hue='dilution', data=df_mean)
+plt.ylim(-0.01,.1)
+plt.title('CV of sample Ct values')

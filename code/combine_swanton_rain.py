@@ -31,7 +31,7 @@ for f in os.listdir(os.path.join(folder,'gage_data','raw_csv')):
     elif 'LQC' in f:
         station = 'LQC'
     elif 'Landing' in f:
-        station = 'LC'
+        station = 'LD'
     
 ### Read File    
 
