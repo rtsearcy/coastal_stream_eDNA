@@ -89,7 +89,6 @@ df['eDNA_sd'] = df.conc_sd * conv_factor
 df['log10eDNA'] = df.log10conc + np.log10(conv_factor)
 df['log10eDNA_sd'] = df.log10conc_sd  # stdev values stay same in log transform
 
-
 ### Choose dilution
 #df = df[df.dilution == '1:5'] # Use 1:5 diluted samples only
 #df = df[df.dilution == '1:1'] # Use undiluted samples only
@@ -115,9 +114,12 @@ df['date'] = df['dt'].dt.date
 df['day_of_year'] = df.dt.dt.dayofyear
 df['year'] = df['dt'].dt.year
 df['month'] = df['dt'].dt.month
+df['day_of_month'] = df['dt'].dt.day
 df['year_month'] = df.year.astype(str) + '-' + df.month.astype(str).str.rjust(2,'0')
 df['week'] = df['dt'].dt.isocalendar().week
 df['year_week'] = df.year.astype(str) + '-' + df.week.astype(str).str.rjust(2,'0')
+df.loc[df.year_week == '2019-01','year_week'] = '2019-53'
+
 
 df['wet_season'] = 0  # dry season
 df.loc[df.month.isin([10,11,12,1,2,3,4]),'wet_season'] = 1 # wet season
@@ -146,6 +148,7 @@ df = df[['dt',
          'n_amplified',
          'n_BLOD',
          'n_BLOQ',
+         'Ct_Mean',
          'dilution',
          'inhibition',
          #'delta_Ct',
@@ -156,6 +159,7 @@ df = df[['dt',
          'year',
          'month',
          'year_month',
+         'day_of_month',
          'season',
          'wet_season',
          'week',

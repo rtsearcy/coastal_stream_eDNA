@@ -288,12 +288,15 @@ plt.figure(figsize=(10,5))
 # plt.scatter(samples_of_day.index, samples_of_day[1], s=5, label='1st')
 # plt.scatter(samples_of_day.index, samples_of_day[2], s=5, label='2nd')
 # plt.scatter(samples_of_day.index, samples_of_day[3], s=5, label='3rd')
-plt.bar(samples_of_day.index, samples_of_day[3], label='3rd', align='edge')
-plt.bar(samples_of_day.index, samples_of_day[2], label='2nd', align='edge')
-plt.bar(samples_of_day.index, samples_of_day[1], label='1st', align='edge')
+plt.bar(samples_of_day.index, samples_of_day[3],color=pal4c[0], label='3rd', align='edge')
+plt.bar(samples_of_day.index, samples_of_day[2],color=pal4c[1], label='2nd', align='edge')
+plt.bar(samples_of_day.index, samples_of_day[1],color=pal4c[2], label='1st', align='edge')
 plt.autoscale(enable=True, axis='x', tight=True)
 plt.ylim(0,24)
 plt.ylabel('Hour of Day')
+plt.yticks(ticks= [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
+            labels = [0,'',2,'',4,'',6,'',8,'',10,'',12,'',14,'',16,'',18,'',20,'',22,''])
+
 plt.legend(frameon=False, title='Sample of Day:')
 plt.title('Sample Time by Day')
 

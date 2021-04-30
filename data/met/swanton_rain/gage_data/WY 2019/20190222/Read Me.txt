@@ -1,0 +1,4 @@
+190222_CB_Force_Offload.hobo is a corrupted data file that was sent to onset technical support. 
+
+The data file "190222_Cowboy_Corrected" is the recovered data file that was corrected by onset. 
+

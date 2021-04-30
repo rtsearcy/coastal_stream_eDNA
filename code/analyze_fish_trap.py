@@ -6,7 +6,7 @@ Created on Wed Jan 13 21:03:18 2021
 
 @author: rtsearcy
 
-Stats and Plots for Fish Trap data
+Stats and Plots for Fish Trap data; Create daily fish variables
 
 """
 
@@ -191,8 +191,49 @@ for i in df_reg.index:
 g = df.groupby(['species','life_stage'])['mass_est']
 print(pd.concat([g.count(),g.mean()],axis=1))
 
+#%% Daily Variables
+
+## pre-process
+df = df.drop(df[df.species=='undetermined'].index) # drop few undetermined species
+df.loc[df.life_stage == 'Unknown', 'life_stage'] = 'Juvenile'
+df['count_hour'] = df.dt.dt.round('H').dt.hour
+
+## Daily Variables
+group = df.groupby(['date','species'])
+df_vars = pd.DataFrame(index=group.first().index)
+
+df_vars['N_fish'] = group.count()['N'] # total fish counted
+
+# life stage count
+ls_count = df.groupby(['date','species','life_stage']).count()['N']
+ls_count = ls_count.reset_index().pivot(index=['date','species'], columns='life_stage',values='N').fillna(0)
+ls_count.columns = ['N_adult','N_juvenile']
+ls_count = ls_count.astype(int)
+df_vars = pd.concat([df_vars,ls_count], axis=1)
+
+# N adults live/dead
+nlive = df.groupby(['date','species','adult_live']).count()['N']
+nlive = nlive.reset_index().pivot(index=['date','species'], columns='adult_live',values='N').fillna(0)
+nlive.columns = ['N_adult_dead', 'N_adult_live']
+nlive = nlive.astype(int)
+df_vars = pd.concat([df_vars, nlive], axis=1)
+
+df_vars['biomass_total'] = round(group.sum()['mass_est'] / 1000, 3) # total biomass (kg)
+blive = round(df.groupby(['date','species','adult_live']).sum()['mass_est'] / 1000, 3) # biomass of live/dead adults
+blive = blive.reset_index().pivot(index=['date','species'], columns='adult_live',values='mass_est').fillna(0)
+blive.columns = ['biomass_adult_dead', 'biomass_adult_live']
+df_vars = pd.concat([df_vars, blive], axis=1)
+
+df_vars['count_hour'] = group.median()['count_hour']                # median hour of fish counting
+
+## Resample to include missing days
+
+## Save
+df_vars.to_csv(os.path.join(folder,'NOAA_data', 'fish_vars.csv'))
+
 #%% Counts
 print('Date Range: ' + str(df.date.iloc[0].date()) + ' to ' + str(df.date.iloc[-1].date()))
+print(str(df.date.iloc[-1].date() - df.date.iloc[0].date()))
 print('Days of counts: ' + str(len(df.date.unique())))
 
 print('\nN fish: ' + str(len(df)))
@@ -240,7 +281,6 @@ plot_spines(plt.gca(),0)
 plt.tight_layout()
 
 plt.savefig(os.path.join(folder.replace('data','figures'),'fish_counts_time_series.png'),dpi=300)
-
 
 
 ### Adult only

@@ -9,7 +9,7 @@ import requests
 import os
 
 ### Inputs
-sd = '2019-01-01'  # YYYY-MM-DD format, include one day previous
+sd = '2010-01-01'  # YYYY-MM-DD format, include one day previous
 ed = '2020-12-31'
 outfolder = '../data/flow'
 

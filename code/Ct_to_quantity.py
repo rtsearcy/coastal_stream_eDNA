@@ -173,7 +173,7 @@ for i in df_mean.id.unique():               # iterate through samples with sampl
             idx = (df_mean.id == i) & (df_mean.target == t) & (df_mean.dilution == d)
             df_mean.loc[idx, 'conc_mean'] = df_mean.loc[idx,'conc'].mean()
             df_mean.loc[idx, 'conc_sd'] = df_mean.loc[idx,'conc'].std()
-            df_mean.loc[idx, 'log10conc_mean'] = df_mean.loc[idx,'log10conc'].mean()
+            df_mean.loc[idx, 'log10conc_mean'] = df_mean.loc[idx,'log10conc'].mean()  # mean of the log10conc values
             df_mean.loc[idx, 'log10conc_sd'] = df_mean.loc[idx,'log10conc'].std()
             df_mean.loc[idx, 'n_replicates'] = int(idx.sum())
             df_mean.loc[idx, 'n_amplified'] = int(df_mean.loc[idx,'amplified'].sum())
@@ -197,7 +197,10 @@ for t in df_mean.target.unique():
         loq = float(df_stand[df_stand.target==t]['LOQ']) * dil_factor
         df_mean.loc[(df_mean.target==t) & (df_mean.conc < lod),'BLOD'] = 1
         df_mean.loc[(df_mean.target==t) & (df_mean.conc < loq),'BLOQ'] = 1
-    
+
+
+#df_mean['detected_BLOQ'] = 0
+
 ### Check ΔCt between dilution pairs
 # Theory:
 # Ct1 = slope*np.log10(c1) + intercept

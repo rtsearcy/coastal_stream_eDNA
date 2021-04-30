@@ -40,12 +40,12 @@ eDNA = pd.read_csv(os.path.join(folder,'eDNA','eDNA.csv'), parse_dates=['dt','da
 
 ### Set BLOD to 0 for stats?
 # Note: setting to NAN biases the data (excludes many samples where we know conc < lod)
-# eDNA.loc[eDNA.BLOD == 1,'eDNA'] = 0
-# eDNA.loc[eDNA.BLOD == 1,'log10eDNA'] = 0 
+eDNA.loc[eDNA.BLOD == 1,'eDNA'] = 0
+eDNA.loc[eDNA.BLOD == 1,'log10eDNA'] = 0 
 
 ## Separate targets
-trout = eDNA[eDNA.target=='trout'].set_index('id').sort_values('dt') 
-coho = eDNA[eDNA.target=='coho'].set_index('id').sort_values('dt')
+trout = eDNA[eDNA.target=='trout'].sort_values('dt') 
+coho = eDNA[eDNA.target=='coho'].sort_values('dt')
 
 
 ### Load Combined ESP logs
@@ -135,7 +135,7 @@ for t in eDNA.target.unique():
     print('N > 100 copies/mL - ' + str((target['eDNA']>100).sum()))
     
 
-### % detect / BLOD / above LOD
+### [% detect / BLOD / above LOD]
 print('\n\nNon-Detects/BLOD\n% non-detect (0 replicates amplified)')
 all_detect = pd.concat([
     eDNA[(eDNA.detected==0)].groupby(['target']).count()['id'].rename('non-detect'),
@@ -268,20 +268,22 @@ tod_detect = pd.concat([
     df_mae[(df_mae.BLOD==0)].groupby(['target','morn_midday_eve']).count()['id'].rename('above_LOD'),
     df_mae.groupby(['target','morn_midday_eve']).count()['id'].rename('N')
     ], axis=1)
-print(tod_detect)
+print(tod_detect.round(1))
 ## Detection: no seeming pattern; BLOD: maybe with trout
 
 for t in df_mae.target.unique():
     print('\n' + t.upper())
-    morn = df_mae[(df_mae.target==t) & (df_mae.morn_midday_eve==0)].set_index('date').sort_index()['eDNA']
-    midd = df_mae[(df_mae.target==t) & (df_mae.morn_midday_eve==1)].set_index('date').sort_index()['eDNA']
-    eve = df_mae[(df_mae.target==t) & (df_mae.morn_midday_eve==2)].set_index('date').sort_index()['eDNA']
+    morn = df_mae[(df_mae.target==t) & (df_mae.morn_midday_eve==0)].set_index('date').sort_index()['log10eDNA']
+    midd = df_mae[(df_mae.target==t) & (df_mae.morn_midday_eve==1)].set_index('date').sort_index()['log10eDNA']
+    eve = df_mae[(df_mae.target==t) & (df_mae.morn_midday_eve==2)].set_index('date').sort_index()['log10eDNA']
 
 ### Correlation between morn/midday/eve
     mae_corr = pd.concat([morn,midd,eve], axis=1)
     mae_corr.columns = ['morning', 'midday','evening']
     print('\nCorrelation')
     print(mae_corr.corr(method='spearman'))
+    
+    (mae_corr.sum(axis=1) > 0).sum()
     
 ### Rank of time of day
     print('\nRank of concentrations by times of day')
@@ -292,9 +294,9 @@ for t in df_mae.target.unique():
     print(temp)
     
 ### Median absolute deviation
-    print('\nMedian absolute deviation (MAD)')    
-    mae_corr['MAD'] = stats.median_abs_deviation(mae_corr,axis=1)
-    print(mae_corr.MAD.describe().round(2))
+    # print('\nMedian absolute deviation (MAD)')    
+    # mae_corr['MAD'] = stats.median_abs_deviation(mae_corr,axis=1)
+    # print(mae_corr.MAD.describe().round(2))
 
 ### Differences between time of day?
     print('\nDifference between time of day')
@@ -305,9 +307,9 @@ for t in df_mae.target.unique():
 
 ### Difference sample to sample
     print('\nDifference sample to sample (high-freq, consecutive days)')
-    temp = df_mae[(df_mae.date.isin(mae_block)) & (df_mae.target==t)][['dt','date','eDNA']]  
+    temp = df_mae[(df_mae.date.isin(mae_block)) & (df_mae.target==t)][['dt','date','log10eDNA']]  
     # only samples in consecutive days
-    print(abs(temp.eDNA.diff()).describe().round(2)) 
+    print(abs(temp.log10eDNA.diff()).describe().round(2)) 
 
 ### Hypothesis tests
     print('\nStatistical difference between time of day?')
@@ -331,27 +333,86 @@ for t in df_mae.target.unique():
 ### Variance in a day's samples
 
 ## CV
-print('\nCoefficient of Variation (CV) of 3/day samples')
-mae_CV = df_mae.groupby(['target','date']).std()['eDNA'] / df_mae.groupby(['target','date']).mean()['eDNA']
+print('\n\nCoefficient of Variation (CV) of 3/day samples')
+mae_CV = df_mae.groupby(['target','date']).std()['log10eDNA'] / df_mae.groupby(['target','date']).mean()['log10eDNA']
 mae_CV = mae_CV.reset_index().set_index('date')
 mae_CV = mae_CV.fillna(0)
 print(mae_CV.groupby(['target']).describe().round(2))
 
-stats.mannwhitneyu(mae_CV[mae_CV.target=='trout']['eDNA'], mae_CV[mae_CV.target=='coho']['eDNA'])
-stats.pearsonr(mae_CV[mae_CV.target=='trout']['eDNA'],mae_CV[mae_CV.target=='coho']['eDNA'])
-stats.spearmanr(mae_CV[mae_CV.target=='trout']['eDNA'],mae_CV[mae_CV.target=='coho']['eDNA'])
+#stats.mannwhitneyu(mae_CV[mae_CV.target=='trout']['eDNA'], mae_CV[mae_CV.target=='coho']['eDNA'])
+#stats.pearsonr(mae_CV[mae_CV.target=='trout']['eDNA'],mae_CV[mae_CV.target=='coho']['eDNA'])
+#stats.spearmanr(mae_CV[mae_CV.target=='trout']['eDNA'],mae_CV[mae_CV.target=='coho']['eDNA'])
 
-## Median absolute deviation (MAD)
-print('\nMedian absolute deviation (MAD) (log-transformed)')
-temp_mad = df_mae.groupby(['target',
-                      'date',
-                      'morn_midday_eve']).first()['log10eDNA'].reset_index().pivot(index='date',
-                                                                              columns=['target',
-                                                                                       'morn_midday_eve'],
-                                                                              values='log10eDNA')
-temp_mad['mad_coho'] = stats.median_abs_deviation(temp_mad.coho,axis=1)
-temp_mad['mad_trout'] = stats.median_abs_deviation(temp_mad.trout,axis=1)
-print(temp_mad[['mad_coho','mad_trout']].describe().round(2))
+# ## Median absolute deviation (MAD)
+# print('\nMedian absolute deviation (MAD) (log-transformed)')
+# temp_mad = df_mae.groupby(['target',
+#                       'date',
+#                       'morn_midday_eve']).first()['eDNA'].reset_index().pivot(index='date',
+#                                                                               columns=['target',
+#                                                                                        'morn_midday_eve'],
+#                                                                               values='eDNA')
+# temp_mad['mad_coho'] = stats.median_abs_deviation(temp_mad.coho,axis=1)
+# temp_mad['mad_trout'] = stats.median_abs_deviation(temp_mad.trout,axis=1)
+# print(temp_mad[['mad_coho','mad_trout']].describe().round(2))
+
+
+### Spectra on subdaily signal
+tod_data = df_mae[(df_mae.date.isin(mae_block))].groupby(['dt',
+                                                          'target']).first().log10eDNA.reset_index().pivot(index='dt',
+                                                                                                           columns='target',
+                                                                                                           values='log10eDNA')
+data = [tod_data['coho'],tod_data['trout']]
+plt.figure(figsize=(4,4))
+col = [pal[0],pal[1]]
+for i in range(0,len(data)):
+    # ## zero padding
+    z = 2**np.ceil(np.log2(len(data[i]))) - len(data[i])  # number of zeros needed to get series to length 2^N
+    pad = np.log10(.0001)
+    if z % 2 == 0:  # eve
+        d = np.pad(data[i],(int(z/2), int(z/2)), 'constant', constant_values = (pad,pad))
+    else:
+        d = np.pad(data[i],(int(z/2 +.5), int(z/2 -.5)), 'constant', constant_values = (pad,pad))
+    data[i] = d
+    
+    nperseg = len(data[i]) // 2
+    f, P = signal.welch(data[i],fs=1/8,
+                                window='hamming',          # boxcar, hann, hamming, 
+                                nfft=None,
+                                nperseg=nperseg,           # N data points per segement (bigger windows = less smooth, more freq res)
+                                noverlap=nperseg//2,       # N data points overlapping (50% is common)
+                                detrend='constant',        # remove trend, False, 'constant'
+                                scaling='density')         # 'density' [conc^2/Hz] or 'spectrum' [conc^2]
+
+    plt.plot(f, P, color=col[i],lw=1.5)
+    
+    # Confidence intervals
+    alpha = 0.05
+    DOF = 5 * len(data[i]) // nperseg                      # Degrees of Freedom, from Emery and Thomson for Hamming window
+    chi2_U = stats.chi2.ppf((alpha/2), DOF)
+    chi2_L = stats.chi2.ppf((1-alpha/2), DOF)              # Chi-squared for DOF and alpha      
+    upperCI = (DOF/chi2_U) * P
+    lowerCI = (DOF/chi2_L) * P
+    
+    #plt.plot(f,upperCI, color=col[i],lw=1, ls=':')         # Upper CI
+    #plt.plot(f,lowerCI, color=col[i],lw=1, ls=':')         # Lower CI
+    
+    plt.fill_between(y1=P, y2=upperCI, x=f, facecolor=col[i], edgecolor=None, alpha=0.2)
+    plt.fill_between(y1=lowerCI, y2=P, x=f, facecolor=col[i], edgecolor=None, alpha=0.2)
+    
+#plt.semilogx(np.flip(1/f),P, color=pal4c[c],lw=1)
+#plt.xlim(f[1],f[-1])
+ax = plt.gca()
+plt.xlabel('f [1/hr]')
+plt.ylabel(r'P$_{xx}$ [$(log_{10}$copies/mL)$^2$*hr]')
+
+plt.sca(ax)
+plt.xscale('log')
+plt.yscale('log')
+plt.legend(['coho','trout'], frameon=False)
+plot_spines(ax)
+plt.tight_layout()
+#plt.savefig(os.path.join(folder.replace('data','figures'),'eDNA_spectra.png'),dpi=300)
+
 
 ### Plots
 df_plot = df_mae.copy()  # eDNA
@@ -414,7 +475,7 @@ plt.tight_layout()
 
 ## Boxplots of Coefficients of variation between samples
 plt.figure(figsize=(4,4))
-sns.boxplot(x='target', y='eDNA', data=mae_CV, width=0.4, palette=pal)
+sns.boxplot(x='target', y='log10eDNA', data=mae_CV, width=0.4, palette=pal)
 
 plt.ylabel('CV')
 plt.xlabel('')
@@ -430,37 +491,37 @@ plt.tight_layout()
 # plt.scatter(mae_CV[mae_CV.target=='trout'].index, mae_CV[mae_CV.target=='trout']['eDNA'], marker='^', color=pal[1])
 # plt.ylabel('CV')
 
-## Boxplots of MAD between samples
-plt.figure(figsize=(4,4))
-plt.boxplot(temp_mad[['mad_coho','mad_trout']])
-#sns.boxplot(x='target', y='eDNA', data=temp_mad, width=0.4, palette=pal)
+# ## Boxplots of MAD between samples
+# plt.figure(figsize=(4,4))
+# plt.boxplot(temp_mad[['mad_coho','mad_trout']])
+# #sns.boxplot(x='target', y='eDNA', data=temp_mad, width=0.4, palette=pal)
 
-plt.ylabel('CV')
-plt.xlabel('')
+# plt.ylabel('CV')
+# plt.xlabel('')
 
-caps_off(plt.gca())
-flier_shape(plt.gca())
-plot_spines(plt.gca())
-plt.tight_layout()
+# caps_off(plt.gca())
+# flier_shape(plt.gca())
+# plot_spines(plt.gca())
+# plt.tight_layout()
 
-#%% Time - By Hour
-print('\n - Hour of Day -\n')
+# #%% Time - By Hour
+# print('\n - Hour of Day -\n')
 
-### General
-print(eDNA.groupby(['target','hour']).describe()['eDNA'].round(3))
+# ### General
+# print(eDNA.groupby(['target','hour']).describe()['eDNA'].round(3))
 
-### BLOD / Detection
-print('\nIs there a differential amplification / quantification rate by season?')
-hour_detect = pd.concat([
-    eDNA[(eDNA.detected==0)].groupby(['target','hour']).count()['id'].rename('non-detect'),
-    eDNA[(eDNA.detected==1) & (eDNA.BLOD==1)].groupby(['target','hour']).count()['id'].rename('detect_but_BLOD'),
-    eDNA[(eDNA.BLOD==1)].groupby(['target','hour']).count()['id'].rename('total_BLOD'),
-    eDNA[(eDNA.BLOD==0)].groupby(['target','hour']).count()['id'].rename('above_LOD'),
-    ], axis=1)
-hour_detect = 100*(hour_detect.T / eDNA.groupby(['target','hour']).count()['id']).T.round(3)
-hour_detect = pd.concat([hour_detect, eDNA.groupby(['target','hour']).count()['id'].rename('N')], axis=1)
-hour_detect = hour_detect.fillna(0)
-print(hour_detect)
+# ### BLOD / Detection
+# print('\nIs there a differential amplification / quantification rate by season?')
+# hour_detect = pd.concat([
+#     eDNA[(eDNA.detected==0)].groupby(['target','hour']).count()['id'].rename('non-detect'),
+#     eDNA[(eDNA.detected==1) & (eDNA.BLOD==1)].groupby(['target','hour']).count()['id'].rename('detect_but_BLOD'),
+#     eDNA[(eDNA.BLOD==1)].groupby(['target','hour']).count()['id'].rename('total_BLOD'),
+#     eDNA[(eDNA.BLOD==0)].groupby(['target','hour']).count()['id'].rename('above_LOD'),
+#     ], axis=1)
+# hour_detect = 100*(hour_detect.T / eDNA.groupby(['target','hour']).count()['id']).T.round(3)
+# hour_detect = pd.concat([hour_detect, eDNA.groupby(['target','hour']).count()['id'].rename('N')], axis=1)
+# hour_detect = hour_detect.fillna(0)
+# print(hour_detect)
 
 
 # ## % nondetect/BLOD By hour of day
@@ -516,18 +577,33 @@ T = trout.reset_index().set_index('dt').resample('D').mean()
 C = coho.reset_index().set_index('dt').resample('D').mean()
 
 ### Downsampled
-# T = trout.reset_index().set_index('dt').resample('D').first()
-# C = coho.reset_index().set_index('dt').resample('D').first()
+#T = trout.reset_index().set_index('dt').resample('D').first()
+#C = coho.reset_index().set_index('dt').resample('D').first()
+
+
+### Detection by lunar day
+dom_detect = pd.concat([
+    eDNA[(eDNA.detected==0)].groupby(['target','day_of_month']).count()['id'].rename('non-detect'),
+    eDNA[(eDNA.detected==1) & (eDNA.BLOD==1)].groupby(['target','day_of_month']).count()['id'].rename('detect_but_BLOD'),
+    eDNA[(eDNA.BLOD==1)].groupby(['target','day_of_month']).count()['id'].rename('total_BLOD'),
+    eDNA[(eDNA.BLOD==0)].groupby(['target','day_of_month']).count()['id'].rename('above_LOD'),
+    eDNA.groupby(['target','day_of_month']).count()['id'].rename('N')
+    ], axis=1)
+print(dom_detect.round(1))
 
 
 ### Difference day to day
-print('\nDifference sample to sample (high-freq, consecutive days)')
+print('\nDifference sample to sample (high-freq, consecutive days) [COHO/TROUT]')
 data = [C,T]
 for d in data:
     #temp = d[(d.index.isin(day_block))]
     temp = d
     # only samples in consecutive days
-    print(abs(temp.log10eDNA.diff()).describe().round(2)) 
+    print('\n')
+    print(abs(temp.log10eDNA.diff()).describe().round(2))
+
+print('\n Correlation in these differences between targets:')
+print(eDNA_corr(T.log10eDNA.diff(), C.log10eDNA.diff()))
     
 ## Interpolate missing days
 T[['log10eDNA','eDNA']] = T[['log10eDNA','eDNA']].interpolate('linear')
@@ -572,7 +648,7 @@ plt.tight_layout()
 plt.savefig(os.path.join(folder.replace('data','figures'),'eDNA_autocorrelation.png'),dpi=300)
 
 
-### Spectra
+### Spectra on daily signal
 data = [C.log10eDNA,T.log10eDNA]
 plt.figure(figsize=(4,4))
 col = [pal[0],pal[1]]
@@ -636,7 +712,240 @@ plt.tight_layout()
 plt.savefig(os.path.join(folder.replace('data','figures'),'eDNA_spectra.png'),dpi=300)
 
 
+#%% Time - Months / Weeks
+print('\n - Month of Year -\n')
 
+### Months - General
+print(eDNA.groupby(['target','year_month']).describe()['eDNA'].round(2))
+
+### Months - BLOD / Detection
+print('\nIs there a differential amplification / quantification rate by month?')
+month_detect = pd.concat([
+    eDNA[(eDNA.detected==0)].groupby(['target','year_month']).count()['id'].rename('non-detect'),
+    eDNA[(eDNA.detected==1) & (eDNA.BLOD==1)].groupby(['target','year_month']).count()['id'].rename('detect_but_BLOD'),
+    eDNA[(eDNA.BLOD==1)].groupby(['target','year_month']).count()['id'].rename('total_BLOD'),
+    eDNA[(eDNA.BLOD==0)].groupby(['target','year_month']).count()['id'].rename('above_LOD'),
+    ], axis=1)
+month_detect = 100*(month_detect.T / eDNA.groupby(['target','year_month']).count()['id']).T.round(3)
+month_detect = pd.concat([month_detect, eDNA.groupby(['target','year_month']).count()['id'].rename('N')], axis=1)
+month_detect = month_detect.fillna(0)
+#print(month_detect)
+print('\nCOHO')
+print(print(month_detect.loc['coho'].describe().round(1)))
+print('\nTROUT')
+print(print(month_detect.loc['trout'].describe().round(1)))
+
+### CV by month
+print('\nCoefficient of Variation (CV) of months samples')
+month_CV = eDNA.groupby(['target','year_month']).std()['log10eDNA'] / eDNA.groupby(['target','year_month']).mean()['log10eDNA']
+month_CV = month_CV.reset_index().set_index('year_month')
+#month_CV = month_CV.fillna(0)
+#stats.mannwhitneyu(month_CV[month_CV.target=='trout']['eDNA'], month_CV[month_CV.target=='coho']['eDNA'])
+#stats.spearmanr(month_CV[month_CV.target=='trout']['eDNA'],month_CV[month_CV.target=='coho']['eDNA'])
+print(month_CV.groupby(['target']).describe().round(2))
+
+### MAD by month
+print('\nMedian Absolute Deviation (MAD) of months samples')
+month_mad = eDNA.groupby(['target',
+                      'date',
+                      'year_month']).first()['log10eDNA'].reset_index().pivot(index='year_month',
+                                                                              columns=['target',
+                                                                                       'date'],
+                                                                              values='log10eDNA')
+                                                                              
+month_mad['mad_coho'] = stats.median_abs_deviation(month_mad.coho,axis=1, nan_policy='omit')
+month_mad['mad_trout'] = stats.median_abs_deviation(month_mad.trout,axis=1, nan_policy='omit')
+print(month_mad[['mad_coho','mad_trout']].describe().round(2))
+
+
+print('\n - Week of Year -\n')
+
+### Week - General
+print(eDNA.groupby(['target','year_week']).describe()['eDNA'].round(2))
+
+### Weeks - BLOD / Detection
+print('\nIs there a differential amplification / quantification rate by week?')
+week_detect = pd.concat([
+    eDNA[(eDNA.detected==0)].groupby(['target','year_week']).count()['id'].rename('non-detect'),
+    eDNA[(eDNA.detected==1) & (eDNA.BLOD==1)].groupby(['target','year_week']).count()['id'].rename('detect_but_BLOD'),
+    eDNA[(eDNA.BLOD==1)].groupby(['target','year_week']).count()['id'].rename('total_BLOD'),
+    eDNA[(eDNA.BLOD==0)].groupby(['target','year_week']).count()['id'].rename('above_LOD'),
+    ], axis=1)
+week_detect = 100*(week_detect.T / eDNA.groupby(['target','year_week']).count()['id']).T.round(3)
+week_detect = pd.concat([week_detect, eDNA.groupby(['target','year_week']).count()['id'].rename('N')], axis=1)
+week_detect = week_detect.fillna(0)
+#print(week_detect)
+print('\nCOHO')
+print(print(week_detect.loc['coho'].describe().round(1)))
+print('\nTROUT')
+print(print(week_detect.loc['trout'].describe().round(1)))
+
+### CV by week
+print('\nCoefficient of Variation (CV) of weeks samples')
+week_CV = eDNA.groupby(['target','year_week']).std()['log10eDNA'] / eDNA.groupby(['target','year_week']).mean()['log10eDNA']
+week_CV = week_CV.reset_index().set_index('year_week')
+#stats.mannwhitneyu(week_CV[week_CV.target=='trout']['eDNA'], week_CV[week_CV.target=='coho']['eDNA'])
+#stats.spearmanr(week_CV[week_CV.target=='trout']['eDNA'],week_CV[week_CV.target=='coho']['eDNA'])
+print(week_CV.groupby(['target']).describe().round(2))
+
+### MAD by week
+print('\nMedian Absolute Deviation (MAD) of weeks samples')
+week_mad = eDNA.groupby(['target',
+                      'date',
+                      'year_week']).first()['log10eDNA'].reset_index().pivot(index='year_week',
+                                                                              columns=['target',
+                                                                                       'date'],
+                                                                              values='log10eDNA')
+                                                                              
+week_mad['mad_coho'] = stats.median_abs_deviation(week_mad.coho,axis=1, nan_policy='omit')
+week_mad['mad_trout'] = stats.median_abs_deviation(week_mad.trout,axis=1, nan_policy='omit')
+print(week_mad[['mad_coho','mad_trout']].describe().round(2))
+
+
+### Plots
+df_plot = eDNA.reset_index()  # eDNA
+
+## Set BLOD to 0 for plots?
+df_plot.loc[df_plot.BLOD == 1,'eDNA'] = 0
+df_plot.loc[df_plot.BLOD == 1,'log10eDNA'] = 0 
+
+## Boxplot time series by month
+plt.figure(figsize=(10,4))  
+sns.boxplot(x='year_month',y='log10eDNA', hue='target', data=df_plot, palette=pal)
+plt.xlabel('')
+plt.ylabel('log$_{10}$(copies/mL)')
+
+plt.legend(['coho','trout'], frameon=False, loc='upper left')
+leg = plt.gca().get_legend()
+leg.legendHandles[0].set_color(pal[0]) # coho
+leg.legendHandles[1].set_color(pal[1]) # trout
+
+caps_off(plt.gca())     # turn off caps
+flier_shape(plt.gca())  # fliers to circles
+plot_spines(plt.gca())
+
+plt.tight_layout()
+
+## Boxplot time series by week
+plt.figure(figsize=(10,4))  
+sns.boxplot(x='year_week',y='log10eDNA', hue='target', data=df_plot, palette=pal)
+plt.xlabel('')
+plt.ylabel('log$_{10}$(copies/mL)')
+
+plt.legend(['coho','trout'], frameon=False, loc='upper left')
+leg = plt.gca().get_legend()
+leg.legendHandles[0].set_color(pal[0]) # coho
+leg.legendHandles[1].set_color(pal[1]) # trout
+
+caps_off(plt.gca())     # turn off caps
+flier_shape(plt.gca())  # fliers to circles
+plot_spines(plt.gca())
+
+plt.tight_layout()
+
+
+## Time series of CV
+plt.figure(figsize=(10,7))
+
+plt.subplot(211)  # CV by week
+sns.barplot(x='year_week', y='log10eDNA', hue='target', data=week_CV.reset_index(), palette=pal)
+plt.ylabel('CV')
+plt.xlabel('')
+plt.gca().set_xticklabels([])
+plot_spines(plt.gca(), offset=0)
+plt.legend('', frameon=False)
+
+plt.subplot(212)  # CV by month
+sns.barplot(x='year_month', y='log10eDNA', hue='target', data=month_CV.reset_index(), palette=pal)
+plt.ylabel('CV')
+plt.xlabel('')
+plt.legend(frameon=False)
+plot_spines(plt.gca(), offset=0)
+
+plt.tight_layout()
+
+## Time series of MAD
+plt.figure(figsize=(10,7))
+
+plt.subplot(211)  # MADD by week
+x = np.arange(len(week_mad))  # the label locations
+width = 0.35  # the width of the bars
+
+plt.bar(x - width/2, week_mad['mad_coho'], width, color=pal[0], label='coho')
+plt.bar(x + width/2, week_mad['mad_trout'], width, color=pal[1], label='trout')
+
+plt.ylabel('MAD (copies/mL)')
+plt.xlabel('')
+plt.gca().set_xticks([])
+plt.gca().set_xticklabels([])
+plot_spines(plt.gca(), offset=0)
+plt.legend('', frameon=False)
+
+plt.subplot(212)  # by month
+x = np.arange(len(month_mad))  # the label locations
+width = 0.35  # the width of the bars
+
+plt.bar(x - width/2, month_mad['mad_coho'], width, color=pal[0], label='coho')
+plt.bar(x + width/2, month_mad['mad_trout'], width, color=pal[1], label='trout')
+
+plt.ylabel('MAD (copies/mL)')
+plt.xlabel('')
+plt.gca().set_xticks(x)
+plt.gca().set_xticklabels(month_mad.index)
+plt.legend(frameon=False)
+plot_spines(plt.gca(), offset=0)
+
+plt.tight_layout()
+
+## Line plot of data binned by week or month
+# X = df_plot.groupby(['target','year_week']).mean()[['eDNA','log10eDNA']]
+
+# #errors: std
+# #Xsd =  df_plot.astype(float, errors='ignore').groupby(['target','year_week']).std()[['eDNA','log10eDNA']]
+# #erros: IQR
+# Xsd = df_plot.groupby(['target','year_week']).quantile(.75)[['eDNA','log10eDNA']] - \
+# df_plot.groupby(['target','year_week']).quantile(.25)[['eDNA','log10eDNA']]
+# #X = X.reset_index()
+
+# plt.figure(figsize=(10,4))
+# X.xs('coho')['log10eDNA'].plot(marker='.', yerr=Xsd.xs('coho')['log10eDNA'], color = pal[0])
+# X.xs('trout')['log10eDNA'].plot(marker='.', yerr=Xsd.xs('trout')['log10eDNA'], color = pal[1])
+# plt.legend(['coho','trout'], frameon=False, loc='upper left')
+
+# plot_spines(plt.gca())
+# plt.tight_layout()
+
+# ## BLOD / Detection
+# month_detect = month_detect.reset_index()
+# t = month_detect[month_detect.target=='trout']
+# c = month_detect[month_detect.target=='coho']
+
+# plt.figure(figsize=(12,4))
+# # coho
+# x = np.arange(0,14) -.25
+# plt.bar(x,c['total_BLOD'] - c['non-detect'], 
+#         bottom=c['non-detect'], width=.05, color=pal[0], zorder=1)
+# plt.scatter(x,c['total_BLOD'], marker='^', c='k', zorder=2)
+# plt.scatter(x,c['non-detect'], marker='o',  c='k', zorder=3)
+
+# # trout
+# x = np.arange(0,14) +.25
+# plt.bar(x,t['total_BLOD'] - t['non-detect'], 
+#         bottom=t['non-detect'], width=.05, color=pal[1], zorder=1)
+# plt.scatter(x,t['total_BLOD'], marker='^', c='k', zorder=2, label='% BLOD')
+# plt.scatter(x,t['non-detect'], marker='o',  c='k', zorder=3, label='% Non-Detect')
+
+# plt.xlabel('')
+# plt.xticks(ticks=[0,1,2,4], 
+#            labels=['Spring','Summer','Fall','Winter'])
+# plt.ylabel('%')
+
+# #plt.legend(['% Non-Detect','% BLOD'], frameon=False)
+# plt.legend(loc='upper center', frameon=False, ncol=2)
+
+# plt.ylim(-3,105)
+# plot_spines(plt.gca())
+# plt.tight_layout()
 
 
 #%% Time - Season (Spring/Summer/Fall/Winter)
@@ -644,7 +953,7 @@ print('\n - Season of Year -')
 print('Spring - Mar-May; Summer - Jun-Aug; Fall - Sep-Nov; Winter - Dec-Feb')
 
 ### General
-print(eDNA.groupby(['target','season']).describe()['eDNA'].round(3))
+print(eDNA.groupby(['target','season']).describe()['eDNA'].round(1))
 
 ### BLOD / Detection
 print('\nIs there a differential amplification / quantification rate by season?')
@@ -657,16 +966,16 @@ season_detect = pd.concat([
 season_detect = 100*(season_detect.T / eDNA.groupby(['target','season']).count()['id']).T.round(3)
 season_detect = pd.concat([season_detect, eDNA.groupby(['target','season']).count()['id'].rename('N')], axis=1)
 season_detect = season_detect.reindex(['spring','summer','fall','winter'], level=1)
-print(season_detect)
+print(season_detect.round(2))
 
 ### Differences between season?
 print('\nDifference between season?')
 for t in eDNA.target.unique():
     print('\n' + t.upper())
-    spring = eDNA.loc[(eDNA.target==t) & (eDNA.season=='spring'),'eDNA']
-    summer = eDNA.loc[(eDNA.target==t) & (eDNA.season=='summer'),'eDNA']
-    fall = eDNA.loc[(eDNA.target==t) & (eDNA.season=='fall'),'eDNA']
-    winter = eDNA.loc[(eDNA.target==t) & (eDNA.season=='winter'),'eDNA']
+    spring = eDNA.loc[(eDNA.target==t) & (eDNA.season=='spring'),'log10eDNA']
+    summer = eDNA.loc[(eDNA.target==t) & (eDNA.season=='summer'),'log10eDNA']
+    fall = eDNA.loc[(eDNA.target==t) & (eDNA.season=='fall'),'log10eDNA']
+    winter = eDNA.loc[(eDNA.target==t) & (eDNA.season=='winter'),'log10eDNA']
     
     print('Median (Sp/Su/Fa/Wi): ' + str(round(spring.median(),3)) + 
           '/' + str(round(summer.median(),3)) + 
@@ -703,8 +1012,8 @@ for s in eDNA.season.unique():
     print('\n' + s.capitalize() + ' samples')
     print(eDNA_corr(trout[trout.season==s], 
                     coho[coho.season==s], 
-                    x_col='eDNA',
-                    y_col='eDNA', corr_type='spearman'))
+                    x_col='log10eDNA',
+                    y_col='log10eDNA', corr_type='spearman'))
 
 
 ### Plots
@@ -783,112 +1092,115 @@ plot_spines(plt.gca())
 plt.tight_layout()
 
 
-#%% Time - Month
-print('\n - Month of Year -\n')
+# #%% Detection/Quantification - Regression on Time Vars
+# df = trout.copy()
+# #df = df[df.date.isin(mae)]
 
-### General
-print(eDNA.groupby(['target','year_month']).describe()['eDNA'].round(2))
+# y = df['BLOQ']  # detected, BLOQ
 
-### BLOD / Detection
-print('\nIs there a differential amplification / quantification rate by month?')
-month_detect = pd.concat([
-    eDNA[(eDNA.detected==0)].groupby(['target','year_month']).count()['id'].rename('non-detect'),
-    eDNA[(eDNA.detected==1) & (eDNA.BLOD==1)].groupby(['target','year_month']).count()['id'].rename('detect_but_BLOD'),
-    eDNA[(eDNA.BLOD==1)].groupby(['target','year_month']).count()['id'].rename('total_BLOD'),
-    eDNA[(eDNA.BLOD==0)].groupby(['target','year_month']).count()['id'].rename('above_LOD'),
-    ], axis=1)
-month_detect = 100*(month_detect.T / eDNA.groupby(['target','year_month']).count()['id']).T.round(3)
-month_detect = pd.concat([month_detect, eDNA.groupby(['target','year_month']).count()['id'].rename('N')], axis=1)
-month_detect = month_detect.fillna(0)
-print(month_detect)
+# X = pd.get_dummies(df['season'], prefix='season', drop_first=True)
+# #X = pd.get_dummies(df['morn_midday_eve'], prefix='tod', drop_first=True)
+
+# lm = sm.Logit(y, sm.add_constant(X)).fit()
+
+# print(lm.summary())
+
+#%% Temporal Variability 
+
+def max_abs_deviation(x):
+    # Mean absolute deviation from the mean
+    mad = max([abs(v - np.mean(x)) for v in x])
+    return mad
+
+def bootstrap(x, alpha=0.05, num_straps = 1000, stat=np.median):
+    # Calculates standard error on the statistic using the bootstrap method
+    # Edited from http://www.jtrive.com/the-empirical-bootstrap-for-confidence-intervals-in-python.html
+    x = x.dropna()
+    simulations = list()
+    sample_size = len(x)
+    xbar_init = stat(x)
+    for i in range(num_straps):
+        itersample = np.random.choice(x, size=sample_size, replace=True)
+        simulations.append(stat(itersample))
+    simulations.sort()
+    #upper_se = simulations[int(np.floor(num_straps*(1 - alpha/2)))] - xbar_init
+    #lower_se = xbar_init - simulations[int(np.floor(num_straps*(alpha/2)))]
+    upper_se = simulations[int(np.floor(num_straps*(1 - alpha/2)))]
+    lower_se = simulations[int(np.floor(num_straps*(alpha/2)))]
+    return upper_se, lower_se
 
 
-### CV by month
-print('\nCoefficient of Variation (CV) of months samples')
-month_CV = eDNA.groupby(['target','year_month']).std()['eDNA'] / eDNA.groupby(['target','year_month']).mean()['eDNA']
-month_CV = month_CV.reset_index().set_index('year_month')
-#month_CV = month_CV.fillna(0)
-stats.mannwhitneyu(month_CV[month_CV.target=='trout']['eDNA'], month_CV[month_CV.target=='coho']['eDNA'])
-stats.spearmanr(month_CV[month_CV.target=='trout']['eDNA'],month_CV[month_CV.target=='coho']['eDNA'])
-print(month_CV.groupby(['target']).describe().round(2))
+### Range by Windows
+plt.figure(figsize=(6,4))
+col = {'coho':pal[0], 'trout':pal[1]}
+for t in eDNA.target.unique():
+    print('\n'+t)
+    df = eDNA[eDNA.target==t]
+    df = df.groupby('date').first()
+    df = df['log10eDNA']
+    
+    x = range(2,60)
+    max_arr = []
+    med_arr = []
+    med_diff = []
+    upperCI = []
+    lowerCI = []
+    for i in x:
+        
+        ## Variation
+        #temp = df.rolling(window= str(i)+'D').apply(stats.variation)
+        tempV = df.rolling(window= str(i)+'D', min_periods=i).max() - df.rolling(window= str(i)+'D', min_periods=i).min()
+        #np.std, stats.median_abs_deviation, stats.variation [CV]
 
-### Plots
-df_plot = eDNA.reset_index()  # eDNA
+        max_arr = max_arr + [tempV.max()]
+        med_arr = med_arr + [tempV.median()]
+        
+        #US, LS = bootstrap(temp)  # standard error
+        #upperCI = upperCI + [US]
+        #lowerCI = lowerCI + [LS]
+        
+        ## Differences
+        tempD = (df - df.shift(i)).abs()
+        med_diff = med_diff + [tempD.mean()]
+        
+    #plt.plot(x,max_arr, color=col[t], label=t+'_max')
+    plt.plot(x,med_arr,ls='-', color=col[t], label=t)
+    #plt.plot(x,med_diff,ls=':', color=col[t], label=t)
 
-## Set BLOD to 0 for plots?
-df_plot.loc[df_plot.BLOD == 1,'eDNA'] = 0
-df_plot.loc[df_plot.BLOD == 1,'log10eDNA'] = 0 
-
-## Boxplots by year/month
-plt.figure(figsize=(10,4))  
-sns.boxplot(x='year_month',y='log10eDNA', hue='target', data=df_plot, palette=pal)
-plt.xlabel('')
+    #plt.fill_between(x, y1=lowerCI, y2=upperCI, color=col[t], alpha=0.5)
+    
+plt.xlabel('Window Size (Days)')
+plt.minorticks_on()
 plt.ylabel('log$_{10}$(copies/mL)')
-
-plt.legend(['coho','trout'], frameon=False, loc='upper left')
-leg = plt.gca().get_legend()
-leg.legendHandles[0].set_color(pal[0]) # coho
-leg.legendHandles[1].set_color(pal[1]) # trout
-
-caps_off(plt.gca())     # turn off caps
-flier_shape(plt.gca())  # fliers to circles
+plt.title('Median Concentration Range By Sample Window Size')
+#plt.yscale('log')
 plot_spines(plt.gca())
-
+plt.legend(frameon=False, loc='lower right')
 plt.tight_layout()
 
-## Time series of CV
-# plt.figure(figsize=(10,4))
-# plt.plot(month_CV[month_CV.target=='coho'].index, month_CV[month_CV.target=='coho']['eDNA'], marker='o', color=pal[0])
-# plt.plot(month_CV[month_CV.target=='trout'].index, month_CV[month_CV.target=='trout']['eDNA'], marker='^', color=pal[1])
-# plt.ylabel('CV')
+### Differences
+df_diff = pd.DataFrame()
+periods = [1,2,3,5,7,20,14,30]
+df = eDNA.groupby(['target','date']).first()['log10eDNA'].reset_index()
+df = df.pivot(index='date',columns='target',values='log10eDNA')
 
+for p in periods:
+    for t in eDNA.target.unique():
+        temp = df[t].diff(p).abs().rename('diff')
+        temp = temp.to_frame().dropna()
+        temp['target'] = t
+        temp['period'] = str(p)
+        
+        df_diff = df_diff.append(temp)
 
-
-# ## Line plot of data binned by week or month
-# X = df_plot.groupby(['target','year','week']).mean()[['eDNA','log10eDNA']]
-# Xsd =  df_plot.astype(float, errors='ignore').groupby(['target','year','week']).std()[['eDNA','log10eDNA']]
-# #X = X.reset_index()
-
-# plt.figure(figsize=(10,4))
-# X.xs('coho')['log10eDNA'].plot(marker='.', yerr=Xsd.xs('coho')['log10eDNA'], color = pal[0])
-# X.xs('trout')['log10eDNA'].plot(marker='.', yerr=Xsd.xs('trout')['log10eDNA'], color = pal[1])
-# plt.legend(['coho','trout'], frameon=False, loc='upper left')
-
-# plot_spines(plt.gca())
-# plt.tight_layout()
-
-# ## BLOD / Detection
-# month_detect = month_detect.reset_index()
-# t = month_detect[month_detect.target=='trout']
-# c = month_detect[month_detect.target=='coho']
-
-# plt.figure(figsize=(12,4))
-# # coho
-# x = np.arange(0,14) -.25
-# plt.bar(x,c['total_BLOD'] - c['non-detect'], 
-#         bottom=c['non-detect'], width=.05, color=pal[0], zorder=1)
-# plt.scatter(x,c['total_BLOD'], marker='^', c='k', zorder=2)
-# plt.scatter(x,c['non-detect'], marker='o',  c='k', zorder=3)
-
-# # trout
-# x = np.arange(0,14) +.25
-# plt.bar(x,t['total_BLOD'] - t['non-detect'], 
-#         bottom=t['non-detect'], width=.05, color=pal[1], zorder=1)
-# plt.scatter(x,t['total_BLOD'], marker='^', c='k', zorder=2, label='% BLOD')
-# plt.scatter(x,t['non-detect'], marker='o',  c='k', zorder=3, label='% Non-Detect')
-
-# plt.xlabel('')
-# plt.xticks(ticks=[0,1,2,4], 
-#            labels=['Spring','Summer','Fall','Winter'])
-# plt.ylabel('%')
-
-# #plt.legend(['% Non-Detect','% BLOD'], frameon=False)
-# plt.legend(loc='upper center', frameon=False, ncol=2)
-
-# plt.ylim(-3,105)
-# plot_spines(plt.gca())
-# plt.tight_layout()
-
+plt.figure(figsize=(6,4))
+sns.boxplot(x='period',y='diff',hue='target',data=df_diff, width=.6, palette=pal)
+plt.ylabel('Concentration Difference')
+plt.xlabel('Differencing Period (days)')
+plt.legend(frameon=False)
+plot_spines(plt.gca(), offset=0)
+plt.tight_layout()
+        
 
 #%% eDNA Time Series (log, STEM)
 
@@ -903,12 +1215,16 @@ B = df_plot[df_plot.target=='coho'].set_index('dt').sort_index()
 #A = df_plot[df_plot.target=='trout'].groupby('date').mean().sort_index()
 #B = df_plot[df_plot.target=='coho'].groupby('date').mean().sort_index()
 
+A.loc[A.BLOD == 1,'log10eDNA'] = 0  # Remove samples BLOQ
+B.loc[B.BLOD == 1,'log10eDNA'] = 0
+
+# A.loc[A.detected == 0,'log10eDNA'] = 0  # Remove samples BLOQ
+# B.loc[B.detected == 0,'log10eDNA'] = 0
+
 # Rolling mean
 Arm = A['log10eDNA'].rolling(window=7,center=True).mean()
 Brm = B['log10eDNA'].rolling(window=7,center=True).mean()
 
-A.loc[A.BLOD == 1,'log10eDNA'] = 0  # Remove samples BLOQ
-B.loc[B.BLOD == 1,'log10eDNA'] = 0
 
 plt.figure(figsize=(10,5))
 plt.subplot(211) # coho
