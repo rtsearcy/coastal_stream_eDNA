@@ -67,14 +67,16 @@ def get_lod_loq(df, t, method):
             loq = lod
         
     else:
-        df_lod = df.loc[df.target==t,['detect','Ct','logQ']].dropna()
+        df_lod = df.loc[df.target==t,['detect','Ct','logQ']].dropna(subset=['logQ'])
         df_lod.Ct = pd.to_numeric(df_lod.Ct, errors='coerce')  # Set Undetermined to NaNs
         
-        # med_stand = df_lod.groupby('logQ').median()  # Detect values far from median
-        # for s in med_stand.index:
-        #     med = med_stand.loc[s,'Ct']
-        #     drop_ind = df_lod.loc[(df_lod.logQ == s) & ((df_lod.Ct>1.1*med)|(df_lod.Ct<0.9*med))].index
-        #     df_lod = df_lod.drop(drop_ind)
+        lowIQR = df_lod.groupby('logQ').quantile(.25)  # Detect values out of IQR
+        highIQR = df_lod.groupby('logQ').quantile(.75)
+        for s in lowIQR.index:
+            li = lowIQR.loc[s,'Ct']
+            hi = highIQR.loc[s,'Ct']
+            drop_ind = df_lod.loc[(df_lod.logQ == s) & ((df_lod.Ct>hi)|(df_lod.Ct<li))].index
+            df_lod = df_lod.drop(drop_ind)
         
         lm = sm.Logit(df_lod.detect,df_lod.logQ).fit(disp=False)
         print('Psuedo-R2: ' + str(round(lm.prsquared,3)))
@@ -98,6 +100,7 @@ def get_lod_loq(df, t, method):
         # plt.xlabel('log(copies/rxn)')
         # plt.ylabel('CV')
         # plt.title(t)
+        
         loq = lod
         
     print('\n' + t.upper() + ' LOD: ' + str(round(lod,2))  + ' copies/rxn' )
@@ -110,25 +113,32 @@ folder = '../data/eDNA/'
 df = pd.read_csv(os.path.join(folder,'qPCR_raw_combined.csv'), index_col=['index'])
 
 drop_poor = False  # Drop Poor Efficiency Data from Plots and Master Curve
+targets = {'coho':'O. kisutch',
+           'trout':'O. mykiss',
+           'bass':'M. saxatilis',
+           'nzms': 'P. antipodarum'}
 
 df = df[df.task == 'STANDARD']
 df['logQ'] = np.log10(df['quantity'])   # log(copies/rxn)
 df['detect'] = 1                        # detect/nondetect
 df.loc[df.Ct=='Undetermined','detect'] = 0
 
+## Drop bad plate (no standards loaded)
+df = df.drop(df[df.source_file == '20201123_Scott_Creek_Okisutch_Kevan_P1.xls'].index) 
+
 df.to_csv(os.path.join(folder,'standard_data.csv')) # Save standard data separately
 
 ### Iterate through Targets
 df_stand = pd.DataFrame()
-plt.figure(figsize=(10,4)) # Plot of individual standard runs and combined
+plt.figure(figsize=(10,8)) # Plot of individual standard runs and combined
 c=1  # subplot index
 i=0  # standard plate index
 
-for t in ['coho','trout']:
+for t in targets:
     print('\n- - Standards for ' + t + ' - -')
     poor_sum = 0  # Poor efficiency curve counter
     
-    plt.subplot(1,2,c)
+    plt.subplot(2,2,c)
     files = df[df.target == t].source_file.unique()  # list of source files
     print('N (plates) - ' + str(len(files)))
     for f in files:  # Iterate individual standard runs
@@ -187,20 +197,20 @@ for t in ['coho','trout']:
     plt.semilogx(x,y,color='r',alpha=.75,lw=2.5)
     # Note CIs too small to see on plot
     
-    # Plot LOD
-    plt.axvline(x=lod, color='k',alpha=0.5,ls=':')
+    # Plot LOQ
+    plt.axvline(x=loq, color='k',alpha=0.5,ls=':')
     
-    plt.xlim(min(x),1000000)
+    plt.xlim(5,1000000)
     plt.ylim(15,40)
     plt.xlabel('log$_{10}$copies/rxn')
     plt.ylabel('$C_T$')
-    plt.title('Target = ' + t.upper())
+    plt.title('$\it{' + targets[t] + '}$')
     
     reg_text = 'Slope: ' + str(round(reg['slope'],3)) + \
                         ' [' + str(round(reg['slope_LC'],3)) + ', ' + str(round(reg['slope_UC'],3))  + ']' \
                         '\nInt: ' + str(round(reg['intercept'],3)) + \
                         ' [' + str(round(reg['intercept_LC'],3)) + ', ' + str(round(reg['intercept_UC'],3))  + ']' \
-                        '\n$R^2$: ' + str(reg['Rsq']) + \
+                        '\n$R^2$: ' + str(round(reg['Rsq'],3)) + \
                         '\nEff: ' + str(reg['E']) + ' (' + str(reg['%E']) + '%)'
     plt.text(8,18,reg_text, bbox=dict(facecolor='white', lw = 1)) # add regression text
     

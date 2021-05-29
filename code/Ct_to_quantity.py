@@ -28,6 +28,7 @@ df_stand = df_stand[df_stand.source == 'combined']  # Master curve
 ### Load qPCR Data
 df = pd.read_csv(os.path.join(folder,'qPCR_raw_combined.csv'), index_col=['index'])
 df = df[(df.task != 'STANDARD') & (df.task != 'NTC')]  # remove standard and NTC data
+df = df[df.target.isin(['coho','trout'])]  ## Drop NZMS and Bass targets
 
 print('qPCR data and standards loaded')
 print('\n- - Replicates - -')
@@ -69,7 +70,7 @@ df.loc[und.index,'amplified'] = 0
 reps_ampd = df.groupby(['id','target','dilution']).count()['conc']  # Num reps/sample amplified
 reps_ampd.name = 'replicates'
 print('\nNumber of replicates amplified per sample')
-print(reps_ampd.reset_index().groupby(['dilution','replicates']).count()['id'])  # all samples
+print(reps_ampd.reset_index().groupby(['target','dilution','replicates']).count()['id'])  # all samples
 # reps_ampd.reset_index().groupby(['target','dilution','replicates']).count() # by target/dilution
 
 rep_check = reps_ampd[reps_ampd == 1].reset_index()  # Check mean concentration of remaining detected reps
@@ -102,22 +103,28 @@ for t in df.target.unique():
     lod = float(df_stand[df_stand.target==t]['LOD'])
     loq = float(df_stand[df_stand.target==t]['LOQ'])
     
-    # Replace non-detects and detected samples below the LOD: Use half the LOD
-    df.loc[(np.isnan(df.conc)) & (df.target==t),'conc'] = 0.5 * lod  
-    df.loc[(df.conc < lod)  & (df.target==t),'conc'] = 0.5 * lod
+    ## Replace non-detects and detected samples below the LOD: 
+    # Value = 0 (minimize FPR, does not artificially amplify low volume samples)
+    
+    df.loc[(df.conc < lod)  & (df.target==t),'conc'] = 0     # detect but below LOQ (BLOQ)
+    df.loc[(np.isnan(df.conc)) & (df.target==t),'conc'] = 0  # non-detects
 
-    # Index LOD/LOQ
+    ## Index LOD/LOQ
     print('\n  ' + t.upper() + ' (' + str(int(lod)) + '/' + str(int(loq)) +')')
+    df.loc[(df.amplified==0) & (df.target==t),'BLOD'] = 1
     df.loc[(df.target==t) & (df.conc < lod),'BLOD'] = 1
     print('  BLOD: ' + str(df.loc[(df.target==t),'BLOD'].sum()))
+    df.loc[(df.amplified==0) & (df.target==t),'BLOQ'] = 1
     df.loc[(df.target==t) & (df.conc < loq),'BLOQ'] = 1
     print('  BLOQ: ' + str(df.loc[(df.target==t),'BLOQ'].sum()))
 
 
 ### Factor Dilutions
-# df.loc[df.dilution == '1:5','conc'] *= 5
-df.loc[(df.dilution == '1:5') & (df.BLOD == 0 ),'conc'] *= 5  # convert conc > LOD
-df['log10conc'] = np.log10(df.conc)
+## Apply after LOQ detection so as to treat NDs and BLOQ similarly
+## Otherwise, 1:5 replicates would be skewed above LOQ despite high Ct values
+
+df.loc[df.dilution == '1:5','conc'] *= 5
+# df.loc[(df.dilution == '1:5') & (df.BLOD == 0 ),'conc'] *= 5  # only convert conc > LOD
 
 
 ### Save and Plot All Replicate Concentrations
@@ -129,8 +136,9 @@ plt.xlabel(r'C$_t$')
 plt.legend(list(df.target.unique()), frameon=False, loc='upper left')
 
 plt.subplot(1,2,2)  # log(copies/rxn)
-sns.boxplot(x='target', y='log10conc', data=df)
-plt.ylabel(r'log$_{10}$(copies/rxn)')
+sns.boxplot(x='target', y='conc', data=df)
+plt.ylabel(r'copies/rxn')
+plt.yscale('log')
 plt.xlabel('')
 
 plt.tight_layout()
@@ -140,15 +148,15 @@ df = df[['id',
          'target', 
          'dilution', 
          'replicate',
-         'conc',       # Calculated from Ct and regression
-         'log10conc',
+         'conc',         # Calculated from Ct and regression
+         #'log10conc',
          'amplified',
          'BLOD',
          'BLOQ',
          'Ct', 
          'Ct_Mean',
          'Ct_sd',
-         #'quantity',    # From PCR machine
+         #'quantity',    # From PCR machine (single plate standards)
          'well',
          'source_file']]
 
@@ -164,8 +172,9 @@ df_mean['n_BLOD'] = 0
 df_mean['n_BLOQ'] = 0
 df_mean['conc_mean'] = np.nan
 df_mean['conc_sd'] = np.nan   # replicate error = std
-df_mean['log10conc_mean'] = np.nan
-df_mean['log10conc_sd'] = np.nan 
+#df_mean['log10conc_mean'] = np.nan
+#df_mean['log10conc_sd'] = np.nan 
+
 print('\nAveraging replicates (N=' + str(len(df)) + ') ...')
 for i in df_mean.id.unique():               # iterate through samples with sample IDs
     for t in df_mean.target.unique():       # iterate through target names
@@ -173,35 +182,45 @@ for i in df_mean.id.unique():               # iterate through samples with sampl
             idx = (df_mean.id == i) & (df_mean.target == t) & (df_mean.dilution == d)
             df_mean.loc[idx, 'conc_mean'] = df_mean.loc[idx,'conc'].mean()
             df_mean.loc[idx, 'conc_sd'] = df_mean.loc[idx,'conc'].std()
-            df_mean.loc[idx, 'log10conc_mean'] = df_mean.loc[idx,'log10conc'].mean()  # mean of the log10conc values
-            df_mean.loc[idx, 'log10conc_sd'] = df_mean.loc[idx,'log10conc'].std()
+            #df_mean.loc[idx, 'log10conc_mean'] = df_mean.loc[idx,'log10conc'].mean()  # mean of the log10conc values
+            #df_mean.loc[idx, 'log10conc_sd'] = df_mean.loc[idx,'log10conc'].std()
+            
             df_mean.loc[idx, 'n_replicates'] = int(idx.sum())
             df_mean.loc[idx, 'n_amplified'] = int(df_mean.loc[idx,'amplified'].sum())
             df_mean.loc[idx, 'n_BLOD'] = int(df_mean.loc[idx,'BLOD'].sum())
             df_mean.loc[idx, 'n_BLOQ'] = int(df_mean.loc[idx,'BLOQ'].sum())
             
 df_mean = df_mean[~df_mean[['id','target','dilution']].duplicated()] # drop duplicated rows so to keep means
-df_mean.drop(['conc','log10conc'], axis=1,inplace=True)
-df_mean.rename(columns={'conc_mean':'conc','log10conc_mean':'log10conc'}, inplace=True) # rename conc_mean
+#df_mean.drop(['conc','log10conc'], axis=1,inplace=True)
+df_mean.drop(['conc'], axis=1,inplace=True)
+df_mean.rename(columns={
+                        'conc_mean':'conc',
+                        #'log10conc_mean':'log10conc'
+                        }, inplace=True) # rename conc_mean
 
-df_mean['detected'] = 0   # Declare detected/BLOD/BLOQ for sample mean
+### Declare detected/BLOD/BLOQ for sample mean
+df_mean['detected'] = 0   
 df_mean['BLOD'] = 0
 df_mean['BLOQ'] = 0
 for t in df_mean.target.unique():  
-    for d  in df_mean.dilution.unique():
-        # If at least one replicate amplified, DNA was detected
-        df_mean.loc[(df_mean.target==t) & (df_mean.n_amplified > 0),'detected'] = 1
-        
-        dil_factor = int(d[-1])
-        lod = float(df_stand[df_stand.target==t]['LOD']) * dil_factor
-        loq = float(df_stand[df_stand.target==t]['LOQ']) * dil_factor
-        df_mean.loc[(df_mean.target==t) & (df_mean.conc < lod),'BLOD'] = 1
-        df_mean.loc[(df_mean.target==t) & (df_mean.conc < loq),'BLOQ'] = 1
-
+    # If at least one replicate amplified, DNA was detected
+    df_mean.loc[(df_mean.target==t) & (df_mean.n_amplified > 0),'detected'] = 1
+    
+    #dil_factor = int(d[-1])
+    lod = float(df_stand[df_stand.target==t]['LOD'])
+    loq = float(df_stand[df_stand.target==t]['LOQ'])
+    
+    ## Indicate BLOD/BLOQ
+    df_mean.loc[(df_mean.target==t) & (df_mean.conc < lod),'BLOD'] = 1
+    df_mean.loc[(df_mean.target==t) & (df_mean.conc < loq),'BLOQ'] = 1
+    
+    ## Replace sample mean concentrations BLOQ with a replacement value
+    df_mean.loc[(df_mean.target==t) & (df_mean.conc < loq),'conc'] = 0
+    #df_mean.loc[(df_mean.target==t) & (df_mean.detected == 0),'conc'] = 0
 
 #df_mean['detected_BLOQ'] = 0
 
-### Check ΔCt between dilution pairs
+### Check Inhibition (ΔCt between dilution pairs)
 # Theory:
 # Ct1 = slope*np.log10(c1) + intercept
 # Ct5 = slope*np.log10(c5) + intercept
@@ -268,7 +287,7 @@ for t in df_mean.target.unique():
     plt.subplot(2, 2, 2*c-1)
     plt.scatter(fish['1:5'], fish['1:1'],s=3, color='k')
     x = np.arange(25,50)
-    plt.plot(x, m*x + b,c='k', lw=1)         # regression line 
+    #plt.plot(x, m*x + b,c='k', lw=1)         # regression line 
     plt.plot(x,x - 2.32,c='k',ls=':',lw=2) # Ideal line (ideal: m=1,b = -2.32)
     #plt.fill_between(x, y1=x + over_dil_thresh, y2=x - 2.32, color='g', edgecolor='w', alpha=0.3) # Acceptable range
     #plt.fill_between(x, y1=x + inh_thresh, y2=x - 2.32, color='g', edgecolor='w', alpha=0.3)
@@ -333,10 +352,11 @@ df_delta[['Ct_Mean','delta_Ct']].to_csv(os.path.join(folder,'delta_Ct.csv'))  # 
 df_mean = df_mean[[
          'id', 
          'target', 
+         'dilution',
          'conc',            # Mean of replicates
          'conc_sd',
-         'log10conc',       
-         'log10conc_sd',
+         #'log10conc',       
+         #'log10conc_sd',
          'detected',        # at least one replicate amplified
          'BLOD',            # for mean
          'BLOQ',
@@ -348,14 +368,13 @@ df_mean = df_mean[[
          'Ct_sd',
          'delta_Ct',
          'inhibition',
-         'dilution', 
          'source_file']]
 df_mean = df_mean.sort_values(['id','target','dilution'])
 df_mean.to_csv(os.path.join(folder,'qPCR_calculated_mean.csv'),index=False)  # Save
 print('\nMean concentrations saved')
 
 
-### CV of sample Ct values
+### Side analysis: CV of sample Ct values
 df_mean['CV'] = df_mean['Ct_sd'] / df_mean['Ct_Mean']
 print('\nCV of Ct values')
 print(df_mean.groupby(['target','dilution'])['CV'].describe())

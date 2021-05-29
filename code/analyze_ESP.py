@@ -38,6 +38,9 @@ ESP = pd.read_csv(os.path.join(folder,'ESP_logs','ESP_logs_combined.csv'),
 # ESP.dropna(inplace=True, subset=['sample_wake', 'sample_start', 'sample_end', 'sample_duration',
 #        'vol_target', 'vol_actual', 'vol_diff',])  # Drop samples with no time or volume data 
 
+dr = pd.date_range('2019-03-25', '2020-04-04')  # project dates
+ESP = ESP[ESP.date.isin(dr)]  
+
 ESP = ESP[~ESP.lab_field.isin(['lab','control', 'control '])]  # Keep deployed/field/nana; Drop control/lab samples
 ESP.drop(ESP[ESP.id.isin(['SCr-181', 'SCr-286', 'SCr-479', 'SCr-549'])].index, inplace=True) # Drop duplicate (no qPCR IDs)
 
@@ -111,7 +114,8 @@ print(ESP.sample_duration.describe())
 
 
 ### Deployment table
-print('\nTotal Days Deployed: ' + str(ESP.date.nunique()))
+print('\nProject Period: ' + str(min(ESP.date)) + ' to ' + str(max(ESP.date)) + ' (' + str(len(dr)) + ' days)')
+print('Total Days Deployed: ' + str(ESP.date.nunique()))
 for e in ESP.ESP.unique():
     print(e + ' - ' + str(len(ESP.loc[ESP.ESP==e,'date'].unique())))    
 
@@ -134,7 +138,7 @@ print(df_deployment)
 df_deployment.to_csv(os.path.join(folder,'ESP_logs','deployments_summary.csv'))
 
 print('\nDays missing samples within project range')
-days_missing = [str(d.date()) for d in pd.date_range(ESP.date[0],ESP.date[-1]) if d not in ESP.date.unique()]
+days_missing = [str(d.date()) for d in dr if d not in ESP.date.unique()]
 print(days_missing)
 
 
@@ -280,8 +284,8 @@ samples_of_day = ESP.groupby(['sample_of_day',
 print('\nNumber of Samples Per Day: ')
 print(samples_of_day.count())
 
-print('\Median Sample Time by Sample of Day: ')
-print(samples_of_day.count())
+print('\nMedian Sample Time by Sample of Day: ')
+print(samples_of_day.median())
       
                                                                  
 plt.figure(figsize=(10,5))

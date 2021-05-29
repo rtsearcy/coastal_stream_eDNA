@@ -18,7 +18,7 @@ import numpy as np
 import os
 
 folder = '../data/eDNA/'  # Location of qPCR files folder and output location
-subfolder = 'qpcr_csv_results_040121'                 # location of up to date qPCR spreadsheets (from Google Drive)
+subfolder = 'qpcr_csv_results_052721'                 # location of up to date qPCR spreadsheets (from Google Drive)
 
 
 ### Aggregate individual qPCR result files
@@ -59,6 +59,8 @@ df.loc[df.dilution.values == '5','dilution'] = '1:5'
 df.loc[df['Target Name'] == 'O.kitsuch','Target Name'] = 'O.kisutch'   # Some misspelling
 df.loc[df['Target Name'].isin(['O.kisutch','Okisutch','Okitsuch']),'Target Name'] = 'coho'  # Coho Salmon
 df.loc[df['Target Name'].isin(['O.mykiss','Omykiss']),'Target Name'] = 'trout'  # Rainbow/Steelhead Trout
+df.loc[df['Target Name'].isin(['NZMS_CO1']),'Target Name'] = 'nzms'  # New Zealand Mud Snail
+df.loc[df['Target Name'].isin(['M.saxatilis', 'm.saxatilis', 'msaxatilis']),'Target Name'] = 'bass'  # Striped Bass
 
 df.rename(columns = {'Cт': 'Ct',                      
                      'Cт Mean': 'Ct_Mean',            

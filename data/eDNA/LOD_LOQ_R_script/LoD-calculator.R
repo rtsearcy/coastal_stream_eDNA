@@ -7,7 +7,8 @@
 ##   curve of low-copy standards into a single csv file with the following headings:
 ##   Target, Cq, SQ (Note: headings are not case-sensitive, but must be spelled the same.)
 ##   Additional columns may be included for readability but are not used in calculations.
-##   SQ (Starting Quantity) should be the expected values for your standards.
+##   SQ (Starting Quan
+##   tity) should be the expected values for your standards.
 
 ## Load packages:
 library(ggplot2)
@@ -17,7 +18,7 @@ library(drc)
 setwd("/Users/rtsearcy/Box/MBARI_eDNA/coastal_stream_eDNA/data/eDNA/LOD_LOQ_R_script")
 
 ## Read in your data file (MODIFY FILE NAME AS NEEDED):
-DAT <- read.csv("standard_data_R.csv")
+DAT <- read.csv("standard_data.csv")
 
 ## Define your CV threshold for LoQ:
 LOQ.Threshold <- 0.35

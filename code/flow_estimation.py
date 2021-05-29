@@ -29,10 +29,10 @@ flowp['stage'] = np.sqrt((flowp['flow'] / 19.7514))
 flowp.columns = [c+'_p' for c in flowp.columns]
 ## from quadratic regression on Pescadero stage-discharge rating (Rsq = .994, underest low flow)
 
-# Soquel Creek
-flows = pd.read_csv(os.path.join(folder,'flow','soquel_creek_usgs_flow_20100101_20201231.csv'), parse_dates=['date'], index_col=['date'])
-flows['stage'] = np.sqrt((flows['flow'] / 25.5105))  
-flows.columns = [c+'_s' for c in flows.columns]
+# # Soquel Creek
+# flows = pd.read_csv(os.path.join(folder,'flow','soquel_creek_usgs_flow_20100101_20201231.csv'), parse_dates=['date'], index_col=['date'])
+# flows['stage'] = np.sqrt((flows['flow'] / 25.5105))  
+# flows.columns = [c+'_s' for c in flows.columns]
 ## from quadratic regression on Soquel stage-discharge rating (Rsq = .995, underest low flow)
 
 

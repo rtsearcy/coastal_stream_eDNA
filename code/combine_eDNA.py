@@ -61,8 +61,9 @@ print('   Missing Sample IDs: ' + str(len(eDNA_miss)))
 ### Combine eDNA and ESP data, parse our controls
 df = pd.merge(qPCR.reset_index(), ESP.reset_index(), how='left', on='id')
 
-## Manually account for hand samples
-hand_samples = ['SCr-Hand-1A', 'SCr-Hand1B', 'SCr-hand1C']  # 2/11/20 at 7a
+
+### Manually add metadata for hand samples
+hand_samples = ['SCr-Hand-1A', 'SCr-Hand1B', 'SCr-hand1C']  # 2/11/20 at 7a (triplicate field samples)
 for h in hand_samples:
     df.loc[df.id==h,['sample_mid',
                      'sample_wake',
@@ -85,11 +86,15 @@ df = df.loc[[i for i in df.index if i not in controls.index]]
 conv_factor = 66.67 / df.vol_actual     # conversion from MBARI
 df['eDNA'] = df.conc * conv_factor
 df['eDNA_sd'] = df.conc_sd * conv_factor
+df['log10eDNA'] = np.log10(df.eDNA + 1)  # log of mean conc, +1 to avoid log(0)
 
-df['log10eDNA'] = df.log10conc + np.log10(conv_factor)
-df['log10eDNA_sd'] = df.log10conc_sd  # stdev values stay same in log transform
+# df['log10eDNA'] = df.log10conc + np.log10(conv_factor) # mean on logs, NOT USING
+# df['log10eDNA_sd'] = df.log10conc_sd  # stdev values stay same in log transform
+
 
 ### Choose dilution
+
+# Simple
 #df = df[df.dilution == '1:5'] # Use 1:5 diluted samples only
 #df = df[df.dilution == '1:1'] # Use undiluted samples only
 
@@ -106,6 +111,16 @@ for i in df.id.unique():
             if idx.sum() == 2:  # If both samples undetected, use 1:1
                   df.drop(df.loc[idx & (df.dilution=='1:5')].index, inplace=True)
         
+
+### Combine hand samples into one sample
+for t in df.target.unique():
+    temp = df[(df.id.isin(hand_samples)) & (df.target==t)]
+    hand = temp.copy().iloc[0]
+    hand.loc['id'] = 'SCr-Hand'
+    hand.loc[['Ct_Mean','dilution','inhibition','eDNA_sd']] = np.nan
+    hand.loc[['eDNA','log10eDNA']] = temp.copy().loc[:,['eDNA','log10eDNA']].mean()
+    df = df.drop(index=temp.index)
+    df = df.append(hand)
         
 ### Create date variables
 df['dt'] = df['sample_mid']  # timestamp
@@ -119,7 +134,6 @@ df['year_month'] = df.year.astype(str) + '-' + df.month.astype(str).str.rjust(2,
 df['week'] = df['dt'].dt.isocalendar().week
 df['year_week'] = df.year.astype(str) + '-' + df.week.astype(str).str.rjust(2,'0')
 df.loc[df.year_week == '2019-01','year_week'] = '2019-53'
-
 
 df['wet_season'] = 0  # dry season
 df.loc[df.month.isin([10,11,12,1,2,3,4]),'wet_season'] = 1 # wet season
@@ -140,7 +154,7 @@ df = df[['dt',
          'eDNA',
          'eDNA_sd',
          'log10eDNA',
-         'log10eDNA_sd',
+         #'log10eDNA_sd',
          'detected',
          'BLOD',
          'BLOQ',
@@ -169,6 +183,7 @@ df = df[['dt',
          'morn_midday_eve',
          'ESP_file',
          'qPCR_file']]
+
 df.set_index(['id','target'], inplace=True)
 df.sort_values(['dt','target'], inplace=True)  # sort by date
 df.to_csv(os.path.join(folder,'eDNA','eDNA.csv'))

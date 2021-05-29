@@ -69,6 +69,7 @@ def plot_spines(axx, offset=8): # Offset position, Hide the right and top spines
 #%%Load Data
 
 folder = '../data/'  # Data folder
+dr = pd.date_range('2019-03-25', '2020-04-04')
 
 ### Load Fish data
 # Contains sampling times, volumes, ESP name
@@ -177,7 +178,7 @@ df_reg.set_index(['species','life_stage'],inplace=True)
 print(df_reg)
 
 
-### Backfill missing mass
+### Backfill missing mass from regression
 print('\nEstimating mass from length')
 df['mass_est'] = df['mass']
 for i in df_reg.index:
@@ -190,6 +191,14 @@ for i in df_reg.index:
 
 g = df.groupby(['species','life_stage'])['mass_est']
 print(pd.concat([g.count(),g.mean()],axis=1))
+
+
+### Fill missing with mean of species/life stage
+mean_mass = df.groupby(['species','life_stage']).mean()[['mass_est']]
+for i in mean_mass.index:
+    df.loc[(df.mass_est.isna()) & 
+           (df.species == i[0]) & 
+           (df.life_stage== i[1]),'mass_est'] = mean_mass.loc[i,'mass_est']
 
 #%% Daily Variables
 
@@ -218,7 +227,15 @@ nlive.columns = ['N_adult_dead', 'N_adult_live']
 nlive = nlive.astype(int)
 df_vars = pd.concat([df_vars, nlive], axis=1)
 
-df_vars['biomass_total'] = round(group.sum()['mass_est'] / 1000, 3) # total biomass (kg)
+## Mass
+df_vars['biomass'] = round(group.sum()['mass_est'] / 1000, 3) # total biomass (kg)
+
+ls_mass = df.groupby(['date','species','life_stage']).sum()['mass_est'] / 1000
+ls_mass = ls_mass.reset_index().pivot(index=['date','species'], columns='life_stage',values='mass_est').fillna(0)
+ls_mass.columns = ['biomass_adult','biomass_juvenile']
+df_vars = pd.concat([df_vars, ls_mass], axis=1)
+
+# Live/Dead Adults
 blive = round(df.groupby(['date','species','adult_live']).sum()['mass_est'] / 1000, 3) # biomass of live/dead adults
 blive = blive.reset_index().pivot(index=['date','species'], columns='adult_live',values='mass_est').fillna(0)
 blive.columns = ['biomass_adult_dead', 'biomass_adult_live']
@@ -226,7 +243,19 @@ df_vars = pd.concat([df_vars, blive], axis=1)
 
 df_vars['count_hour'] = group.median()['count_hour']                # median hour of fish counting
 
-## Resample to include missing days
+## Fill in 0 counts for species
+for i in df.date.unique():
+    if len(df_vars.loc[i]) == 2:  # if observation for both trout and coho
+        continue
+    elif len(df_vars.loc[i]) == 0:
+        print('No obs for ' + str(i))
+    else:
+        s = [x for x in df.species.unique() if x != df_vars.loc[i].index[0]][0] # missing species
+        temp = pd.DataFrame({'N_fish':0},index=[(i,s)])
+        df_vars = df_vars.append(temp)
+df_vars.sort_index(inplace=True)
+
+df_vars = df_vars.fillna(0)
 
 ## Save
 df_vars.to_csv(os.path.join(folder,'NOAA_data', 'fish_vars.csv'))
