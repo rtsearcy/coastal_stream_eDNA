@@ -1,35 +1,29 @@
 Readme
 ------
 
-This document provides information about the raw data files downloaded from the ESP logs.  
+This document provides information about the COMBINED data files downloaded from the ESP logs.  
+
+RTS - 1/14/2021
 
 
-
-I. File List
-------------
-
-Gordon_2019_Scott_Creek.csv			CSV file containing ESP Gordon sampling data from ESP logs. Four instrument deployments - (1) 6/25/19 to 8/22/19, (2) 11/21/19 to 11/25/19 and (3) 12/03/19 to 1/30/20, and (4) 2/10/20 to 4/04/20 
-Moe_2019_Scott_Creek_1.csv 			CSV file containing ESP Moe sampling data from ESP logs. One instrument deployments - (1)  8/25/19 to 12/02/19
-Moe_2019_Scott_Creek_2.csv 			CSV file containing ESP Moe sampling data from ESP logs. One instrument deployments - (1) 5/01/19 to 6/26/19
-Waldo_2019_Scott_Creek.csv 			CSV file containing ESP Waldo sampling data from ESP logs. One instrument deployments - (1) 2/22/2019 - 5/06/2020
-
-II. Variables
+I. Variables
 -------------
 
-Protocol						ESP sampling method
-Start dates 					ESP start up (wake up) time - Format "YYYY-MM-DD HH:MM:SS - GMT Offset" 
-Start Date (Julian)				ESP start up (wake up) time - Format Julian with origin at January 1 of current year
-Sample Start Date				ESP sampling start time - SP sampling start time - Format "YYYY-MM-DD HH:MM:SS - GMT Offset"  
-Sample Start Date (Julian)		ESP sampling start time - Format Julian with origin at January 1 of current year
-Sample End Date 				ESP sampling end time - FFormat "YYYY-MM-DD HH:MM:SS - GMT Offset" 
-Sample End Date (Julian)		ESP sampling end time - Format Julian with origin at January 1 of current year
-Time To Sample (hh:mm:ss)		ESP sampling time duration - SP sampling start time - Format "HH:MM:SS" 
-Target Volume (ml)				ESP target sample volume in milliliters; preset sampling volume defined in the mission
-Actual Volume (ml)				ESP actual sample volume in milliliters
-Difference (ml)					ESP difference between the target sample volume and the actual sample volume
+sample_wake 				ESP start up (wake up) time *
+sample_start				ESP sampling start time *
+sample_mid 				ESP sampling mid time (start + end / 2) *
+sample_end 				ESP sampling end time *
+sample_duration				ESP sampling time duration (minutes,  with 2 decimal precision) 
+vol_target				ESP target sample volume in milliliters; preset sampling volume defined in the mission
+vol_actual 				ESP actual sample volume in milliliters
+vol_diff				ESP difference between the target sample volume and the actual sample volume
+ESP					Name of the deployed ESP
+log_file				Raw data source file
+
+* Time formats (dt, sample_start, sample_mid, sample_end) - "YYYY-MM-DD HH:MM:SS" (PST or GMT -8) 
 
 
-III. Observation Notes
+II. Observation Notes
 ----------------------
 
 A. Target Volumes = 2000 mL are generally deployed sample volumes
@@ -38,7 +32,7 @@ C. Actual Volumes < 25 mL are generally samples that failed during the sampling 
 
 
 
-IV. Instrument Deployment Notes
+III. Instrument Deployment Notes
 -------------------------------
 
 Deployment Date 		Recovery Date 			Instrument Name				Notes
@@ -52,6 +46,12 @@ Deployment Date 		Recovery Date 			Instrument Name				Notes
 02/12/20				04/04/20				Gordon
 
 
+IV. Source Files of Log Data
+------------
 
+Gordon_2019_Scott_Creek.csv			CSV file containing ESP Gordon sampling data from ESP logs. Four instrument deployments - (1) 6/25/19 to 8/22/19, (2) 11/21/19 to 11/25/19 and (3) 12/03/19 to 1/30/20, and (4) 2/10/20 to 4/04/20 
+Moe_2019_Scott_Creek_1.csv 			CSV file containing ESP Moe sampling data from ESP logs. One instrument deployments - (1)  8/25/19 to 12/02/19
+Moe_2019_Scott_Creek_2.csv 			CSV file containing ESP Moe sampling data from ESP logs. One instrument deployments - (1) 5/01/19 to 6/26/19
+Waldo_2019_Scott_Creek.csv 			CSV file containing ESP Waldo sampling data from ESP logs. One instrument deployments - (1) 2/22/2019 - 5/06/2020
 
 

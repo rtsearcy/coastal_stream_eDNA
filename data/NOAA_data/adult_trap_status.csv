@@ -1,0 +1,304 @@
+﻿MouthOpen,Date,Trap_Performance,StartTime,EndTime,Personnel,ActivityCode,Watershed,Stream,ReachID,Site,panel_arrival,panel_depart,ReaderID,BalanceID,NoteRecords,No_fish
+Y,1/7/19,3,8:00,9:30,,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,7,,,,
+Y,1/8/19,1,9:00,11:15,"AHay, AMOsterback, JKiernan, KLiddy, LHansen, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,First full day of trapping.,
+Y,1/9/19,1,9:20,10:00,"AHay, CKern, JKiernan, KLiddy, LHansen, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Transported two coho salmon to KFH.,
+Y,1/10/19,1,9:20,9:42,"AHay, CKern, JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Mouth starting to restrict. One Steelhead in box.,
+Y,1/11/19,1,9:20,9:26,"CKern, JKiernan, JPerez, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish today,1
+Y,1/16/19,3,9:30,9:50,"AHay, JPerez, KLiddy, LHansen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,7,HPR_24,Weir_Balance,Weir panels down upon arrival. All panels up upon departure but significant storm forecasted in next 24 h.,
+Y,1/17/19,3,9:00,10:15,"JKiernan, JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,,Weir_Balance,"Big storm yesterday afternoon and overnight. Scott Creek gage peaked at 5.6 feet at 01:30. Cleaned trap box and fence, all panels still down.",
+Y,1/18/19,2,17:00,17:30,JPerez,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,4,7,,Weir_Balance,Jeff cleared weir panels in evening (second visit). Weir was partially fishing,
+Y,1/19/19,2,9:30,10:20,"JKiernan, KLiddy, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_25,Weir_Balance,"Mouth very shallow, very dynamic with considerable of overwash on the sandbar. Cone partially clogged with debris. Lots of fishing pressure (7-8 cars in first pullout). No fish, one Onki-hatchery carcass on weir panels.",1
+N,1/20/19,1,9:50,10:22,"JKiernan, KLiddy",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_25,Weir_Balance,"Mouth appeared to be closed this morning, lots of overwash but no clear channel. 4 fish in weir trap.",
+Y,1/21/19,1,9:47,10:14,"JKiernan, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_25,Weir_Balance,"Mouth open, more to the North. Three fish in weir trap.",
+Y,1/22/19,1,9:16,9:35,"JKiernan, KLiddy, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_25,Weir_Balance,Three steelhead in weir trap,
+Y,1/23/19,1,9:15,9:41,"AMOsterback, JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_25,Weir_Balance,two female Onmy in weir box,
+Y,1/24/19,1,9:25,9:30,"AMOsterback, JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish today,1
+Y,1/28/19,1,10:52,10:54,"AHay, JKiernan, JPerez, KLiddy, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,brought Trap 2 cone back to lab for repairs. No fish in trap,1
+Y,1/29/19,1,9:40,10:01,CKern,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,2 SH.,
+Y,1/30/19,1,9:25,9:45,"CKern, JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,one fish in box,
+N,1/31/19,1,9:34,10:10,"AMOsterback, JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Mouth appeared to be closed today.,
+N,2/1/19,1,9:15,10:00,"JPerez, LHansen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish in weir. Cleaned panels for upcoming storm.,1
+Y,2/2/19,3,9:30,9:30,"AMOsterback, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,"trap box over-topped. Cleared debris from fence. Probed in trap box and felt no fish. Mouth broke straight out, south of mouth still holding water. Waves pushing over sand berm.",
+Y,2/3/19,3,9:10,9:10,"AMOsterback, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,"Mouth still open straight out, but lagoon still full (maybe 2.5' on sonde). Weir still overtopped from storm, water level over weir box. Did not get in the water.",
+Y,2/4/19,3,9:00,9:20,"AHay, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,"weir, trap box under water. Mouth open straight out. Looked at Farm, Big Creek, Orchard antennas - debris on top wires, some bottom wires have been pulled out of place",
+Y,2/5/19,3,9:40,10:30,"JKiernan, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,Weir overtopping. Two Onmy in weir box.,
+Y,2/6/19,3,9:44,9:51,"AHay, AMOsterback, JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,6,HPR_24,Weir_Balance,"Weir overtopped on arrival, barely able to get panels up. Will return in afternoon to clean again.",
+Y,2/7/19,3,9:45,9:50,"JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,,Weir_Balance,"No fish. Cleaned panels, they are difficult to keep up at the current flow (~3.0 feet on stage).",1
+Y,2/8/19,1,9:25,9:43,"JKiernan, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"Mouth migrating to the North. Two fish in weir trap, one iteroparous female. Swited field cameras (from Panasonic to Olympus - one pic on panasonic; 101-0711)",
+Y,2/9/19,1,9:30,11:45,Other,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,AH and KC (ucsc intern),
+Y,2/10/19,1,9:10,9:22,"JKiernan, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,7,HPR_24,Weir_Balance,"all panels fishing, cleared some debris off, no fish in trap",1
+Y,2/11/19,1,9:10,9:23,"JPerez, KLiddy",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"all panels fishing upon arrival, cleared off some debris, no fish in trap",1
+Y,2/12/19,1,9:00,9:39,"JPerez, LHansen, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"1 coho jack in box, 1 broodstock coho female carcass on panels",
+Y,2/13/19,1,9:10,9:25,"AMOsterback, JKiernan, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,,Weir_Balance,"Heavy rain overnight, all panels underwater and river swelling (Stage 3.9' on HydroVu). No fish in trap box.",1
+Y,2/14/19,3,9:10,9:12,"JKiernan, LHansen, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,,Weir_Balance,Weir totally under water. Stage plate reading 4.92 feet.,
+Y,2/15/19,3,9:08,10:03,"JPerez, KLiddy, LHansen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,,Weir_Balance,"Water raging in creek, weir and trap box both overtopped.",
+Y,2/16/19,1,9:30,9:55,"AMOsterback, KLiddy",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,"the top of the trap is exposed, opened trap box but felt no fish movement with net",1
+Y,2/17/19,1,9:10,9:25,"KLiddy, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,"fished around in trap but did not feel any fish, the very top of the trap is exposed but rest is under water, cleared debris from left bank fence",1
+Y,2/17/19,3,16:35,17:05,"JKiernan, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,,Weir_Balance,"Second check of the day. Cleaned trap box, flow still too high to access weir panels.",
+Y,2/18/19,3,14:30,15:00,"JKiernan, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,Weren't able to get the panels up. Flow is too high (maybe tomorrow). Weir staff 0.94 @15:02.,
+Y,2/19/19,1,9:35,10:00,"JKiernan, JPerez, KLiddy",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,"checked trap and tagged one natural female SH, FLOY=PY4914",
+Y,2/20/19,1,9:21,9:54,"JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,7,HPR_24,Weir_Balance,"One CBP fish, 3 Onmy. All panels up on departure but may not fish through the night",
+Y,2/21/19,1,9:15,9:40,"AHay, KLiddy",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"one small, natural SH female had head stuck in bars of trap. Tagged and released upstream.",
+Y,2/22/19,1,9:15,9:30,"JPerez, KLiddy, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"checked trap, no fish",1
+Y,2/23/19,1,9:30,9:48,"JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,"No fish, cleaned panels and removed sand from trp box.",1
+Y,2/24/19,1,9:00,11:25,"AHay, KLiddy, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,cal poly presentation. 7fish in trap. All SH. 2 females ended up back on weir panels after release upstream. One carcass found and hog tagged,
+Y,2/25/19,1,9:00,9:44,"AHay, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,2/26/19,1,9:18,10:05,"JPerez, KLiddy, LHansen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,5 fish in trap. All SH. One recap.,
+Y,2/27/19,1,9:00,9:15,"JPerez, KLiddy, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,,Weir_Balance,Weir panels barely overtopped. No fish in trap box.,1
+Y,2/28/19,1,9:00,9:00,"AHay, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,7,HPR_24,Weir_Balance,kevin and scott from MBARI visited and took measurements for e-DNA project,
+Y,3/1/19,1,9:15,9:25,"AHay, KLiddy",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,checked trap. No fish. Cleared debris from panels.,1
+Y,3/2/19,1,9:05,9:20,"JKiernan, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"One broodstock coho on weir panels. Rain last night, stream rising. No fish in box. Weir stage 0.8",1
+Y,3/3/19,1,8:52,9:27,"JPerez, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,3 SH in trap eventhough weir pannels are overtopped.,
+Y,3/4/19,1,9:00,9:30,"AHay, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,,
+Y,3/5/19,1,9:35,9:50,"JPerez, KLiddy, LHansen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,checked trap. Suspected a sculpin. Did not get any fish.,1
+Y,3/6/19,1,9:25,9:45,"AHay, JPerez, KLiddy, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,trap performance still a 1 even though it was completely overtopped,
+Y,3/7/19,1,9:33,11:00,"AHay, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,8 sthd in weir trap,
+Y,3/8/19,1,9:15,9:30,"AHay, KLiddy, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,checked trap. No fish. AH forgot he wasn't zipped before hopping into the trap :),1
+Y,3/9/19,1,8:45,8:56,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,,
+Y,3/10/19,1,10:30,10:45,"JMeko, KLiddy, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,no fish in trap,1
+Y,3/11/19,1,9:20,9:42,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,Cleared off pannels. Tips of all pannels very close to breaking the surface.,
+Y,3/12/19,1,11:06,11:26,"KLiddy, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,7,HPR_24,Weir_Balance,checked trap- no fish. Cleared weir panels which are now barely sticking out from the water.,1
+Y,3/13/19,1,9:30,9:44,"AHay, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,,HPR_24,Weir_Balance,,
+Y,3/14/19,1,9:30,9:45,"Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,One BR Mort. With Kelley Cutsinger.,
+Y,3/15/19,1,8:19,8:35,"Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,with ZT and BT. 3 SH (two were recaps).,
+Y,3/16/19,1,9:50,10:04,"LHansen, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,2 SH (one was a recap). With KC,
+Y,3/17/19,1,9:45,10:15,"KLiddy, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,with Kelly. 4 SH (all new tags).,
+Y,3/18/19,1,,,,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,3/19/19,1,11:45,11:50,"JKiernan, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish in box,1
+Y,3/20/19,1,8:43,9:12,"CKern, JKiernan, JPerez, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"Rain last night, flows up",
+Y,3/21/19,1,8:52,9:28,"JKiernan, JMeko, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,3/22/19,1,8:30,8:45,"JPerez, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"3 SH, one found in panels.",
+Y,3/23/19,1,9:45,10:06,RBond,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Kelly,
+Y,3/24/19,1,9:15,10:47,"CKern, JKiernan",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Six fish in box,
+Y,3/25/19,1,8:30,9:30,"LHansen, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,5 SH (one was a recap).,
+Y,3/26/19,1,9:00,9:30,"AHay, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,,
+Y,3/27/19,1,9:15,9:25,"KLiddy, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,"checked trap, no fish. Flow too high to clear panels",1
+Y,3/28/19,1,9:00,9:30,"AHay, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,0,HPR_24,Weir_Balance,,
+Y,3/30/19,1,9:50,9:55,"CKern, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish,1
+Y,3/31/19,1,9:30,9:30,"JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/1/19,1,9:00,9:35,"AHay, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,1 male sthd,
+Y,4/2/19,1,8:01,8:39,"JPerez, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Four kelts found as morts on weir panels.,
+Y,4/3/19,1,8:13,9:30,"Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,1 SH and 1 SH Carc.,
+Y,4/4/19,1,11:15,11:37,"AHay, KLiddy",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"1 sthd female in trap box, 1 giant male sthd found on panels. Both released US",
+Y,4/5/19,1,9:15,9:30,"KLiddy, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,checked trap. No fish in trap. One female SH mort found on panels. Brought back to lab.,1
+Y,4/6/19,1,8:47,9:04,"JKiernan, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,With Kellie. No fish in adult trap. Spooked MA kelt from Trap 2 area and caught with dipnet on pannels (released DS).,1
+Y,4/7/19,1,9:30,9:40,"CKern, JKiernan",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish,1
+Y,4/8/19,1,9:15,10:15,"JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,kelt on panels; attempted to capture live fesh between panels and smolt trap,
+Y,4/9/19,1,9:00,9:27,"AHay, LHansen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir Panels,7,7,HPR_24,Weir_Balance,,
+Y,4/10/19,1,9:15,9:35,"KLiddy, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"checked trap. One female SH, tagged",
+Y,4/11/19,1,9:00,9:20,"JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/12/19,1,9:00,9:18,"AHay, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/13/19,1,9:40,9:59,"JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/14/19,1,9:14,9:51,"JPerez, LHansen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"One recap female SH in trap box, one mort male SH on panels (length 74.5!). Some sand build up in trap box",
+Y,4/15/19,1,9:00,9:30,"AHay, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"1 female sthd in trap, new tag.",
+Y,4/16/19,1,9:15,10:30,"AHay, JKiernan, JPerez, KLiddy, LHansen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/17/19,1,8:00,9:15,"AHay, JPerez, KLiddy, LHansen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/18/19,1,9:15,9:30,"JKiernan, JPerez, KLiddy, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,CHECKED TRAP.NO FISH.,1
+Y,4/19/19,1,8:30,9:00,"JPerez, LHansen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,NO FISH IN TRAP BOX,1
+Y,4/20/19,1,9:40,9:50,"JKiernan, KLiddy, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Checked adult trap. No fish. One adult in trap 2,1
+Y,4/21/19,1,,,,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/22/19,1,9:00,9:15,"AHay, JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish in trap.,1
+Y,4/24/19,1,9:00,9:15,"AHay, JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish in weir trap,1
+Y,4/25/19,1,9:00,9:00,"JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/26/19,1,9:00,9:30,"AHay, CKern, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"I FEMALE STHD THAT WAS JUST TAGGED IN TRAP 2 A FEW DAYS A GO, SENT BACK DS.",
+Y,4/27/19,1,9:30,9:45,"AHay, JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,I sthd male in box,
+Y,4/28/19,1,9:30,10:15,"AHay, CKern",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,1 MALE AND 1 FEMALE STHD IN BOX,
+Y,4/29/19,1,,,,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/30/19,1,9:00,9:00,"JKiernan, JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/1/19,1,9:00,9:20,"AHay, KLiddy, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,2 SH females in trap,
+Y,5/2/19,1,9:15,9:45,"AHay, JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,1 SH in trap passed US.,
+Y,5/3/19,1,9:00,9:00,"JKiernan, JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/4/19,1,9:00,9:05,"JKiernan, KLiddy, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,NO FISH in adult trap,1
+Y,5/5/19,1,9:00,9:15,"KLiddy, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"One male SH in trap, Ripe",
+Y,5/9/19,1,9:15,9:18,"AHay, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish in weir box,1
+Y,5/10/19,1,9:00,9:05,"AHay, JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,NO FISH IN WEIR BOX,1
+Y,5/11/19,1,9:30,9:35,"AHay, JMeko, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish in weir box,1
+Y,5/12/19,1,,,,,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,,,
+Y,5/13/19,3,,,,,Scott Creek,Mainstem,GRTS_103,Weir,6,6,HPR_24,,Weir Panel removed to allow adult/kelt (DOWNSTREAM) passage.,
+Y,5/14/19,3,,,,,Scott Creek,Mainstem,GRTS_103,Weir,6,6,HPR_24,,weir panel still removed,
+Y,5/15/19,3,8:23,9:55,Other,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,6,6,HPR_24,Weir_Balance,weir panel still removed,
+Y,5/16/19,3,9:00,9:10,"AHay, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,6,6,HPR_24,Weir_Balance,weir panel still removed,
+Y,5/24/19,3,9:15,9:17,"AHay, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,6,6,HPR_24,Weir_Balance,weir panel still removed,
+Y,5/26/19,3,11:15,11:20,"LHansen, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,6,6,HPR_24,Weir_Balance,"Weir panel open, no fish in trap",1
+Y,5/28/19,3,9:15,9:16,"AHay, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,6,6,HPR_24,Weir_Balance,NO FISH IN BOX.,1
+Y,5/29/19,3,9:00,9:01,"AHay, CKern, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,6,6,HPR_24,Weir_Balance,END OF ADULT TREAPPING SEASON,
+N,12/2/19,1,9:45,10:45,"AHay, JKiernan, JPerez, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,7,,Weir_Balance,Heavy rain over theweekend. Opened weir box for season. Cleaned panels. Mouth still closed,
+Y,12/3/19,1,9:00,9:20,"JKiernan, JPerez, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Lagoon opened last night to the north. Closed yesterday morning and open this morning.,
+Y,12/4/19,1,9:30,9:45,"JKiernan, JPerez, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,1 SH - sex difficult to deturmine. First fish of the 19-20 season (WY2020).,
+Y,12/5/19,1,9:00,9:16,"CKern, JKiernan, JPerez, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish. Need to bring out YSI. Mouth starting to look skinny.,
+Y,12/6/19,1,11:26,11:35,"AHay, JKiernan, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No Fish. Mouth is to the extreeeeeeem north.,
+Y,12/7/19,1,9:35,9:53,"JKiernan, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,"Mouth open, but barely",
+Y,12/8/19,1,9:35,10:01,"JKiernan, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,0,7,,Weir_Balance,Mouth open. All panels clogged with leaves on arrival. No fish,
+Y,12/9/19,1,9:00,9:20,"CKern, JKiernan, JPerez, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish.,1
+Y,12/10/19,1,9:00,9:10,"AHay, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,12/11/19,1,9:05,9:10,"CKern, JKiernan, JPerez, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,12/12/19,1,9:00,9:10,"JKiernan, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,12/13/19,1,9:00,9:15,"JKiernan, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,"No Adults in System, Closed trap for weekend",1
+Y,12/16/19,1,9:50,10:10,"JPerez, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Reopend trap box (no fish). Estuary recently cut through sandbar and is draining to the north. Likely closed over the weekend and reopened last night or early this morning.,1
+Y,12/17/19,1,9:00,9:15,"JPerez, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,12/18/19,1,9:00,9:12,"JPerez, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,Installed umbrella holder,
+Y,12/19/19,1,8:55,10:06,"JPerez, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"2 adult SH -1 male, 1 female",
+Y,12/20/19,1,9:00,9:20,"AHay, JKiernan, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,12/21/19,1,9:35,9:45,"JPerez, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,no fish,1
+Y,12/22/19,1,9:25,9:40,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,Mouth barely open,
+Y,12/23/19,1,9:00,9:15,"CKern, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No Fish.,1
+Y,12/24/19,1,9:17,9:30,"CKern, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish. Flow good. Lagoon open.,1
+Y,12/25/19,1,,,JKiernan,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,12/26/19,1,11:10,11:30,"CKern, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"No fish. Lots of swell, lagoon open to north and very full. Panels and trap: 7,7,1",1
+Y,12/27/19,1,10:10,10:20,"CKern, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish.,1
+Y,12/28/19,1,10:15,10:30,"AHay, CKern",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish. Lagoon very full. Lagoon barely open…waves overtopping bar.,1
+Y,12/29/19,1,9:35,9:45,"AHay, CKern",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish. Lagoon down just a little. Very narrow outflow.,1
+Y,12/30/19,1,9:10,9:20,"AHay, JKiernan, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,12/31/19,1,9:00,9:05,"JKiernan, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,1/1/20,1,11:15,11:25,"JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,Happy New Year.,
+Y,1/2/20,1,9:00,9:10,"JPerez, LTakata",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,1/3/20,1,9:12,9:20,"AHay, JPerez, LTakata, MGreen, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish.,1
+Y,1/4/20,1,10:00,10:15,"CKern, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish. Narrow outflow from lagoon.,1
+Y,1/5/20,1,10:00,10:15,"CKern, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish. Lagoon has narrow outflow with decent flow.,1
+Y,1/6/20,1,9:15,9:19,"JPerez, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,1/7/20,1,9:10,9:30,"CKern, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,"No fish. Lagoon barely open. Interns Daniela, Hannah, and Brandon.",1
+Y,1/8/20,1,9:30,9:45,"CKern, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,Lagoon open but only inflow.,
+Y,1/9/20,1,9:05,9:11,"JKiernan, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No Fish. With Daniela and Hannah.,1
+Y,1/10/20,1,9:00,9:20,"AHay, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,"Adult Female Steelhead, w/ Brandon Sanchez",
+Y,1/11/20,1,9:30,9:34,Other,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_25,Weir_Balance,No fish.,1
+Y,1/13/20,1,9:06,,JPerez,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,1/14/20,1,8:55,9:05,RBond,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_25,Weir_Balance,"with Daniela, Hannah, and Brandon.",
+Y,1/15/20,1,9:00,9:05,"JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,1/16/20,1,8:55,9:00,"LTakata, MGreen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"Daniela, and Hannah",
+Y,1/17/20,1,9:00,9:15,"JPerez, LTakata, MGreen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,Brandon & Charles,
+Y,1/18/20,1,9:45,10:23,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"3 fish (Fe Co, Fe SH, Ma SH) with Hannah S.",
+Y,1/19/20,1,9:25,9:30,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish. Lagoon mouth nearly closed (trickle). Lagoon is backing up (refilling).,1
+Y,1/20/20,1,9:00,10:06,"JKiernan, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,2 Female steelhead,
+Y,1/21/20,1,9:17,9:40,"AHay, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"Daniela, Hannah, Brandon",
+Y,1/22/20,1,9:40,13:10,"JKiernan, JPerez, MGreen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Rained last night. Sixteen (16) fish in the box,
+Y,1/23/20,1,9:10,10:00,RBond,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,1 fish. Mouth reopened (sandbar cut down). With Hannah S & Danniela R.,1
+Y,1/24/20,1,9:00,10:00,"AHay, JKiernan, JPerez, LTakata, MGreen, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,4 SH. Tidally influenced. Lots of swell over sandbar into and out of estuary.,
+Y,1/25/20,1,9:30,10:30,"JKiernan, MGreen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"For fish (3 Onmy, 1 jack Onki)",
+Y,1/26/20,1,9:30,10:25,"JKiernan, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,1/27/20,1,9:10,9:56,"Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"2 fish (CO FE, SH FE both recaps). Estuary is full but is open to the north downcut through sanbar.",
+Y,1/28/20,1,9:00,9:09,"JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"Hannah, Daniela",
+Y,1/29/20,1,9:00,9:08,",match(",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish. Mouth still to the north (cut through sandbar) with some backwater on the south beach.,1
+Y,1/30/20,1,9:00,9:48,"AHay, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,2 male sthd,
+Y,1/31/20,1,8:50,9:15,"LTakata, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,with Brandon Sanchez. One MOR on pannels (FLOY P/R 3525) no fish in trap.,1
+Y,2/1/20,1,9:30,9:35,"JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,"Low tide, mouth open but outlet adjacent to HWY 1 getting choked with sand. No fish.",1
+Y,2/2/20,1,9:40,10:15,"JKiernan, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Two steelhead,
+Y,2/3/20,1,9:00,9:15,"AHay, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"AH, CG, CH",
+Y,2/4/20,1,9:00,9:10,"JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"DR, HS; mended smolt trap panals",
+Y,2/5/20,1,9:05,9:10,"Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish. Cold! Mouth clearly open to the north.,1
+Y,2/6/20,1,9:02,9:06,"Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No Fish. With DR and HS. Mouth clearly to the north.,1
+Y,2/7/20,1,,,,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,2/8/20,1,9:30,10:04,"AHay, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"Hannah, one female steelhead, ripe",
+Y,2/9/20,1,9:20,9:30,"AHay, LTakata",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish in trap.,1
+Y,2/10/20,1,9:14,9:45,"JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,2 fish in trap - m and f sh,
+Y,2/11/20,1,8:48,8:55,RBond,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish.,1
+Y,2/12/20,1,,,,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,2/13/20,1,9:00,9:30,"Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_25,Weir_Balance,"Brandon, Daniela, Hannah, two female steelhead",
+Y,2/14/20,1,9:00,10:40,"JKiernan, JPerez, MGreen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,Set up v-weir upstream to trap adults coming downstream. Tarps across bottom of all 7 panels on weir. No fish.,1
+Y,2/15/20,1,9:00,9:59,"JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,hannah tagged,
+Y,2/16/20,1,9:40,9:48,"JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish,1
+Y,2/17/20,1,9:15,9:25,"JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,Mouth nearly closed. Found lathargic (but alive) HOR coho salmon just upstream of weir - captured and placed in weir box. Will likely be dead in the morning. Also one large steelhead observed just ds of the weir,
+Y,2/18/20,1,8:55,9:30,"JKiernan, JPerez, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,One Onmy + one Onki carcass placed in box yesterday,
+Y,2/19/20,1,9:00,9:05,"Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,with Charles and Carlos. No fish. New redd directly upstream of weir on left bank (looking downstream).,1
+Y,2/20/20,1,8:55,9:05,"Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,withHannah and Daniela. No fish.,1
+Y,2/21/20,1,9:00,9:35,JKiernan,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,2/22/20,1,9:30,9:40,Other,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Hannah,
+Y,2/23/20,1,9:15,10:20,"LTakata, MGreen, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,with CalPoly class. 3 fish!,
+Y,2/24/20,1,9:10,9:16,"AHay, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,2/25/20,1,9:00,9:54,"JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"Starighten T-stakes, DR, and HS",
+Y,2/26/20,1,9:05,9:12,"JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,2/27/20,1,9:10,11:00,"AHay, CKern, JPerez, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish. Put in outmigrant trap panels. The plan is to start smolt trapping early next week.,1
+Y,2/28/20,1,,,,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,,,
+Y,2/29/20,1,9:40,9:42,"JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish,1
+Y,3/1/20,1,10:15,10:34,"JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,Installed Trap 2,
+Y,3/2/20,1,9:10,9:15,"CKern, JKiernan, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No adults. Start of the outmigrant trap. With CH and CS,1
+Y,3/3/20,1,9:00,9:30,"AHay, CKern, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,1 female sh in weir. Sent upstream,
+Y,3/4/20,1,9:00,9:08,"CKern, JKiernan, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No fish. Mouth very narrow and moving south.,1
+Y,3/5/20,1,9:00,9:05,"MGreen, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish. With HS and DS.,1
+Y,3/6/20,1,9:05,9:10,"AHay, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No adult in trap.,1
+Y,3/7/20,1,9:56,10:04,"MGreen, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Hannah S.; one female steelhead.,
+Y,3/8/20,1,10:25,10:30,"CKern, LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,no fish,1
+Y,3/9/20,1,9:00,9:40,"AHay, MGreen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,2 adult female steelhead.,
+Y,3/10/20,1,8:00,8:10,"JPerez, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No adults. With HS and DR.,1
+Y,3/11/20,1,9:40,10:20,"JPerez, LTakata",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,3/12/20,1,9:00,9:40,"JPerez, MGreen, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"Other: HS, DR, BS; 3 adult SH",
+Y,3/13/20,1,9:45,10:30,"AHay, LTakata",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,3/14/20,1,9:15,10:00,"JKiernan, JPerez, Other",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"3 sh; 2 females, 1 male",
+Y,3/15/20,1,10:00,14:47,"JKiernan, JPerez, Other, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Rain last night. 34 fish today in box,
+Y,3/16/20,1,9:45,10:00,JKiernan,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,No Fish in box. Put tarps back on panels,1
+Y,3/17/20,1,9:30,9:40,"AHay, CKern, JMeko, JPerez",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,NO FISH IN TRAP,1
+Y,3/18/20,1,9:30,9:40,"JMeko, LTakata, MGreen, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,1 Captive BR Coho (from estuary release).,
+Y,3/19/20,1,10:00,10:05,"JKiernan, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,3/20/20,1,9:45,10:00,"JKiernan, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Brought out new scale for adults.,
+Y,3/21/20,1,9:40,9:45,"AHay, JPerez, LTakata",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish in trap,1
+Y,3/22/20,1,9:30,9:45,"AHay, JPerez, LTakata",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,1 FEMALE SH,
+Y,3/23/20,1,9:50,10:00,"JKiernan, MGreen, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,1 SH male,
+Y,3/24/20,1,10:00,10:05,"JMeko, JPerez, LTakata",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,3/25/20,1,9:45,9:50,"AHay, JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,NO FISH,1
+Y,3/26/20,1,9:30,9:40,"AHay, JPerez, LTakata",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,3/27/20,1,9:30,9:35,"JKiernan, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,MBARI Kelt satellite tagging,
+Y,3/28/20,1,9:50,10:15,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"No Fish in the box, but saw two fish swimming directly ds of weir with no floy tags",1
+Y,3/30/20,1,10:35,10:37,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,3/31/20,1,10:00,10:10,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No adults.,1
+Y,4/1/20,1,9:50,10:44,"JKiernan, JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"2 fish in trap box, and caught 2 kelts",
+Y,4/2/20,1,10:15,10:30,"JKiernan, JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir Panels,7,7,HPR_24,Weir_Balance,HOR coho carcass on weir panels,
+Y,4/2/20,1,,,,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/3/20,1,9:50,9:55,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No adults. Cleaned around trap to let smolts out.,1
+Y,4/4/20,1,9:40,9:45,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish in trap.,1
+Y,4/5/20,1,10:00,13:00,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Also captured 3 kelts on weir pannels. Worked up all 3 and released downstream.,
+Y,4/6/20,1,10:15,10:45,"JKiernan, JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"Cleared lots of debris from panels. Caught one fish on panels, processed and released downstream. Trap 2 partially blown out & much deeper where cone was.",
+Y,4/7/20,1,10:00,11:30,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"6 male SH, cleaned panels",
+Y,4/8/20,1,9:45,10:15,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish. 2 kelts spotted charging panels,1
+Y,4/9/20,1,9:55,10:13,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,1 SH male.,
+Y,4/10/20,1,9:55,10:37,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,2 female sthd.,
+Y,4/11/20,1,10:00,10:55,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"one fish in box, MOR on panels, put tarps back up on panels",
+Y,4/12/20,1,10:00,10:30,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,saw 2 adults 150 m upstream,
+Y,4/13/20,1,10:00,10:05,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,4/14/20,1,9:30,10:45,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"2 sthd (female/male) sent US. As well as,1 sthd slipped out of hand while taking it out of trap.",
+Y,4/15/20,1,9:45,10:00,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,4/16/20,1,10:00,10:30,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/17/20,1,9:50,10:20,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/18/20,1,9:45,9:55,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,2 FE SH.,
+Y,4/19/20,1,9:30,9:50,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/20/20,1,10:00,10:15,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish,1
+Y,4/21/20,1,9:45,10:25,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/22/20,1,9:45,11:00,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish.took down parts of smolt trap.,1
+Y,4/23/20,1,9:40,9:50,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish in trap. Spooked two large female kelts from side of trap box.,1
+Y,4/24/20,1,10:00,10:35,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,saw 12 fish swimming next ti cone of trap 2. most had floy tags. At least 4 females.,
+Y,4/25/20,1,9:30,10:00,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"2 SH (2 recap MA, 1 FE).",
+Y,4/26/20,1,9:20,9:25,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,4/27/20,1,9:45,10:30,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,,HPR_24,Weir_Balance,,
+Y,4/28/20,1,10:00,10:20,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/29/20,1,9:30,10:00,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,4/30/20,1,10:50,11:15,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/1/20,1,10:00,10:35,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Caught two kelts on/near the pannels. One male and one female. Worked up and released downstream.,
+Y,5/2/20,1,9:50,10:30,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,Spotted about 20 fish in pool above farm antenna.,
+Y,5/3/20,1,9:45,10:30,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/4/20,1,10:00,10:20,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/5/20,1,9:45,10:20,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/6/20,1,9:50,10:20,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,One FE SH Recap.,
+Y,5/7/20,1,10:00,10:27,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"1 std female caught between traps, sent DS",
+Y,5/8/20,1,9:50,10:10,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/9/20,1,10:00,12:25,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"3 fish in trap sent upstream, 9 kelts caught between weir and trap 2 sent downstream.",
+Y,5/10/20,1,9:45,10:00,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/11/20,1,,,,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/12/20,1,,,,Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/13/20,1,9:45,10:00,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/14/20,1,9:50,10:20,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,5/15/20,1,9:45,10:00,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/16/20,1,9:45,10:10,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,5/17/20,1,9:45,10:30,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/18/20,1,9:45,10:00,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/19/20,1,9:45,10:30,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/20/20,1,10:00,10:15,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/21/20,1,10:00,10:30,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,One male SH already FLOY tagged swam back into the trap. Moved DS again.,
+Y,5/22/20,1,9:45,10:30,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,5/23/20,1,9:30,9:48,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,"no fish in traps, no fish seen between traps.",1
+Y,5/24/20,1,9:20,9:35,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish in trap. No fish between pannels and trap 2.,1
+Y,5/25/20,1,9:45,10:15,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,Saw about 12 fish in pool directly downstream of Trap 1.,
+Y,5/26/20,1,9:50,10:00,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,5/27/20,1,10:05,10:25,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,no fish.,1
+Y,5/28/20,1,9:40,10:10,"JPerez, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,5/29/20,1,10:00,10:15,"AHay, JMeko",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,,
+Y,5/30/20,1,9:20,9:30,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,,
+Y,5/31/20,1,9:26,9:30,"LTakata, RBond",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,HPR_24,Weir_Balance,No fish.,1
+Y,6/1/20,1,10:00,10:05,"AHay, JKiernan, JMeko, JPerez, LTakata, MGreen",Adult trap,Scott Creek,Mainstem,GRTS_103,Weir,7,7,,Weir_Balance,End of season. Closed trap and removed panel.,

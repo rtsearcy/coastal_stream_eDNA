@@ -58,6 +58,7 @@ def do_regression(data):
     return reg_dict
 
 def get_lod_loq(df, t, method):
+    ### Determine LOD and LOQ for targets from standards
     if method == 'klymus':
         print('Using Klymus et al. 2020 for LOD/LOQ Calculation')
         dfk = pd.read_csv('../data/eDNA/LOD_LOQ_R_script/Assay summary.csv')
@@ -93,7 +94,7 @@ def get_lod_loq(df, t, method):
         # plt.figure()
         # plt.scatter(CV.index,CV.values)
         
-        ### TODO: NEED TO FIT A SPLINE TO FIND LOQ (see wileys SM)
+        ### TODO: NEED TO FIT A SPLINE TO FIND LOQ
         # spline = interpolate.UnivariateSpline(CV.index,CV.Ct,k=4)
         # x = np.arange(0,6,0.01)
         # plt.plot(x,spline(x),'k',ls="--")
@@ -107,6 +108,7 @@ def get_lod_loq(df, t, method):
     print(t.upper() + ' LOQ: ' + str(round(loq,2))  + ' copies/rxn' )
     
     return lod, loq
+
 
 ### Inputs
 folder = '../data/eDNA/'
@@ -127,6 +129,7 @@ df.loc[df.Ct=='Undetermined','detect'] = 0
 df = df.drop(df[df.source_file == '20201123_Scott_Creek_Okisutch_Kevan_P1.xls'].index) 
 
 df.to_csv(os.path.join(folder,'standard_data.csv')) # Save standard data separately
+
 
 ### Iterate through Targets
 df_stand = pd.DataFrame()
@@ -218,6 +221,7 @@ for t in targets:
     
 plt.tight_layout()
 plt.savefig(os.path.join('../figures/','standard_curves_combined.png'),dpi=300)
+
 
 ### Save
 df_stand.to_csv(os.path.join(folder,'standard_fits.csv'),index=False)# Save standard fits

@@ -6,7 +6,7 @@ Created on Wed Jan 13 21:03:18 2021
 
 @author: rtsearcy
 
-Stats and Plot of the ESP and eDNA data
+Stats and Plot of the ESP data
 
 ESP Sampling logs
 - Sample volumes/rates (distributions, time series)
@@ -29,7 +29,7 @@ from eDNA_corr import eDNA_corr
 
 folder = '../data/'  # Data folder
 
-# ### Load Combined ESP logs
+### Load Combined ESP logs
 # Contains sampling times, volumes, ESP name
 ESP = pd.read_csv(os.path.join(folder,'ESP_logs','ESP_logs_combined.csv'), 
                   parse_dates = ['sample_wake','sample_start','sample_mid','sample_end','date'], 

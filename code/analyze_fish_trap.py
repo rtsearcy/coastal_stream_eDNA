@@ -67,9 +67,9 @@ def plot_spines(axx, offset=8): # Offset position, Hide the right and top spines
     axx.spines['top'].set_visible(False)
 
 #%%Load Data
-
 folder = '../data/'  # Data folder
 dr = pd.date_range('2019-03-25', '2020-04-04')
+
 
 ### Load Fish data
 # Contains sampling times, volumes, ESP name
@@ -77,6 +77,7 @@ df = pd.read_csv(os.path.join(folder,'NOAA_data', 'fish_trap.csv'),
                  parse_dates = ['date','dt'], index_col=['id'], encoding='latin1')
 
 df['N'] = 1  # count for grouping
+
 
 ### Date variables
 df = df.sort_values('dt')  # Sort by datetime
@@ -92,6 +93,12 @@ df['season'] = 'winter' # Dec-Feb
 df.loc[df.month.isin([3,4,5]),'season'] = 'spring'
 df.loc[df.month.isin([6,7,8]),'season'] = 'summer'
 df.loc[df.month.isin([9,10,11]),'season'] = 'fall'
+
+
+### Load Trap Status Data
+traps = pd.read_csv(os.path.join(folder,'NOAA_data', 'trap_status_processed.csv'), 
+                 parse_dates = ['date'], index_col=['date'])
+
 
 ### Load Hatchery Data
 # For plots
@@ -243,22 +250,37 @@ df_vars = pd.concat([df_vars, blive], axis=1)
 
 df_vars['count_hour'] = group.median()['count_hour']                # median hour of fish counting
 
-## Fill in 0 counts for species
-for i in df.date.unique():
-    if len(df_vars.loc[i]) == 2:  # if observation for both trout and coho
-        continue
-    elif len(df_vars.loc[i]) == 0:
-        print('No obs for ' + str(i))
-    else:
-        s = [x for x in df.species.unique() if x != df_vars.loc[i].index[0]][0] # missing species
-        temp = pd.DataFrame({'N_fish':0},index=[(i,s)])
-        df_vars = df_vars.append(temp)
-df_vars.sort_index(inplace=True)
 
-df_vars = df_vars.fillna(0)
+## Species-specific columns (one row per date)
+df_vars.reset_index(inplace=True)
+df_vars.set_index('date', inplace=True)
+temp_fish = pd.DataFrame()
+for t in df_vars.species.unique():  
+    temp = df_vars[df_vars.species==t].copy()
+    temp.drop('species',axis=1,inplace=True)
+    temp.columns = [t+'_'+c for c in temp.columns]
+    temp_fish = pd.concat([temp_fish,temp],axis=1)
+df_vars = temp_fish
 
-## Save
-df_vars.to_csv(os.path.join(folder,'NOAA_data', 'fish_vars.csv'))
+## Add Trap status data (add missing dates)
+df_vars = df_vars.merge(traps, how='right', left_index=True,right_index=True)
+
+# ## Fill in 0 counts
+
+# for i in df.date.unique():
+#     if len(df_vars.loc[i]) == 2:  # if observation for both trout and coho
+#         continue
+#     elif len(df_vars.loc[i]) == 0:
+#         print('No obs for ' + str(i))
+#     else:
+#         s = [x for x in df.species.unique() if x != df_vars.loc[i].index[0]][0] # missing species
+#         temp = pd.DataFrame({'N_fish':0},index=[(i,s)])
+#         df_vars = df_vars.append(temp)
+# df_vars.sort_index(inplace=True)
+#df_vars = df_vars.fillna(0)
+
+## Save (some manual adjustment needed)
+df_vars.to_csv(os.path.join(folder,'NOAA_data', 'fish_vars_preadjust.csv'))
 
 #%% Counts
 print('Date Range: ' + str(df.date.iloc[0].date()) + ' to ' + str(df.date.iloc[-1].date()))
